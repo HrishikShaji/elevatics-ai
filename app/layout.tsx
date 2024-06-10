@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./contexts/ThemeContext";
-import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
+import ToggleSidebar from "./components/ToggleSidebar";
+import Sidebar from "./components/Sidebar";
 
 const poppins = Poppins({
 	subsets: ["latin"],
@@ -27,6 +28,7 @@ export default function RootLayout({
 				<ThemeProvider>
 					<div className="flex h-screen">
 						<Sidebar />
+						<ToggleSidebar />
 						<div className="flex flex-col w-full h-full">
 							<Navbar />
 							<div className=" h-full">{children}</div>
