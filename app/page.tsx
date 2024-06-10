@@ -1,10 +1,5 @@
-import Image from "next/image";
-import { Hero } from "./components/Hero";
+import HomeContainer from "./components/HomeContainer";
 
 export default function Home() {
-	return (
-		<main className="h-screen w-full relative">
-			<Hero />
-		</main>
-	);
+	return <HomeContainer />;
 }
