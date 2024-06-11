@@ -45,7 +45,6 @@ const SubTopicReport: React.FC<SubTopicReportProps> = ({
 
 	return (
 		<div className="relative w-full   h-full">
-			<h1 className="text-xl font-semibold text-black">{title}</h1>
 			<SingleReport
 				title={currentTopic[currentIndex].title}
 				desc={currentTopic[currentIndex].desc}
