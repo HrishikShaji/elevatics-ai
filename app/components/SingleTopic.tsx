@@ -5,7 +5,7 @@ import Spinner from "./svgs/Spinner";
 import { SubTopicType } from "../contexts/PromptContext";
 
 type SubTopicsDataResponse = {
-	subtopics: string[];
+	subtopics: string[][];
 };
 
 interface SingleTopicProps {
@@ -37,7 +37,6 @@ export const SingleTopic: React.FC<SingleTopicProps> = ({
 	const [data, setData] = useState<SubTopicsDataResponse>();
 	const excludedTopics = topics.filter((topic) => topic[0] !== title);
 	const excludedTopicTitles = excludedTopics.map((item) => item[0]);
-	console.log(data);
 
 	async function fetchSubTopics(prompt: string, prevQueries: string[]) {
 		const token = process.env.NEXT_PUBLIC_HFSPACE_TOKEN || "";

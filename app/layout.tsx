@@ -7,6 +7,7 @@ import ToggleSidebar from "./components/ToggleSidebar";
 import Sidebar from "./components/Sidebar";
 import Modal from "./components/Modal";
 import { PromptProvider } from "./contexts/PromptContext";
+import { AuthProvider } from "./providers/SessioProvider";
 
 const poppins = Poppins({
 	subsets: ["latin"],
@@ -27,20 +28,21 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={poppins.className}>
-				<ThemeProvider>
-					<PromptProvider>
-
-						<Modal />
-						<div className="flex h-screen">
-							<Sidebar />
-							<ToggleSidebar />
-							<div className="flex flex-col w-full h-full">
-								<Navbar />
-								<div className=" h-full">{children}</div>
+				<AuthProvider>
+					<ThemeProvider>
+						<PromptProvider>
+							<Modal />
+							<div className="flex h-screen">
+								<Sidebar />
+								<ToggleSidebar />
+								<div className="flex flex-col w-full h-full">
+									<Navbar />
+									<div className=" h-full">{children}</div>
+								</div>
 							</div>
-						</div>
-					</PromptProvider>
-				</ThemeProvider>
+						</PromptProvider>
+					</ThemeProvider>
+				</AuthProvider>
 			</body>
 		</html>
 	);

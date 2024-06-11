@@ -25,13 +25,10 @@ const SingleReport: React.FC<SingleReportProps> = ({
   useEffect(() => {
     const reportKey = `${parentIndex}-${title}-${desc}`;
 
-    // Check if the report has already been fetched
     if (fetchedReportsRef.current.has(reportKey)) {
       setReport(fetchedReportsRef.current.get(reportKey) || "");
       return;
     }
-
-    console.log("Fetching report for:", { title, desc, parentIndex });
 
     async function fetchReports() {
       try {
@@ -50,12 +47,10 @@ const SingleReport: React.FC<SingleReportProps> = ({
               topic: title,
               description: desc,
             }),
-          }
+          },
         );
         const reportData = await response.json();
-        console.log("Report fetched:", reportData);
 
-        // Save the fetched report and update the state
         fetchedReportsRef.current.set(reportKey, reportData.report);
         setReport(reportData.report);
       } catch (error) {
@@ -65,7 +60,6 @@ const SingleReport: React.FC<SingleReportProps> = ({
       }
     }
 
-    // Clear previous report and fetch new data
     setReport("");
     fetchReports();
   }, [title, desc, parentIndex]);
@@ -81,7 +75,8 @@ const SingleReport: React.FC<SingleReportProps> = ({
           <ReportContainer>
             <div
               className="w-full flex flex-col gap-5 pr-5"
-              dangerouslySetInnerHTML={{ __html: report }}></div>
+              dangerouslySetInnerHTML={{ __html: report }}
+            ></div>
           </ReportContainer>
         )}
       </div>
