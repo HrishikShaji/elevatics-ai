@@ -5,9 +5,11 @@ import { useTheme } from "../contexts/ThemeContext";
 const Navbar = () => {
   const { themeName, toggleTheme } = useTheme();
   return (
-    <div className="w-full h-[70px] bg-gray-500 flex justify-between items-center">
+    <div className="w-full h-[70px] bg-white flex-shrink-0 flex justify-between items-center">
       <div></div>
-      {themeName === "dark" ? (
+      {/**
+       * 
+       * {themeName === "dark" ? (
         <button
           className="p-2 rounded-md bg-black text-white"
           onClick={() => toggleTheme("light")}
@@ -22,6 +24,7 @@ const Navbar = () => {
           Dark
         </button>
       )}
+       */}
     </div>
   );
 };
