@@ -3,11 +3,11 @@
 import { useTheme } from "../contexts/ThemeContext";
 
 const Navbar = () => {
-  const { themeName, toggleTheme } = useTheme();
-  return (
-    <div className="w-full h-[70px] bg-white flex-shrink-0 flex justify-between items-center">
-      <div></div>
-      {/**
+	const { themeName, toggleTheme } = useTheme();
+	return (
+		<div className="w-full h-[70px] bg-white flex-shrink-0 flex justify-between items-center">
+			<div></div>
+			{/**
        * 
        * {themeName === "dark" ? (
         <button
@@ -25,8 +25,8 @@ const Navbar = () => {
         </button>
       )}
        */}
-    </div>
-  );
+		</div>
+	);
 };
 
 export default Navbar;
