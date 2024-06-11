@@ -1,7 +1,6 @@
-import { useState } from "react";
-import SingleReport from "./SingleReport";
-import { IoIosArrowDown } from "react-icons/io";
-import { IoIosArrowUp } from "react-icons/io";
+import { useEffect, useState } from "react";
+import ReportContainer from "./ReportContainer";
+import Spinner from "./svgs/Spinner";
 
 type TopicType = {
 	title: string;
@@ -19,39 +18,100 @@ const SubTopicReport: React.FC<SubTopicReportProps> = ({
 	currentTopic,
 	parentIndex,
 }) => {
-	const [currentIndex, setCurrentIndex] = useState(0);
-	const [fetchedReports, setFetchedReports] = useState<boolean[]>(
+	const [reportsData, setReportsData] = useState<(any | null)[]>(
+		new Array(currentTopic.length).fill(null),
+	);
+	const [loading, setLoading] = useState<boolean[]>(
 		new Array(currentTopic.length).fill(false),
 	);
 
-	const nextSlide = () => {
-		setCurrentIndex((prevIndex) => (prevIndex + 1) % currentTopic.length);
-	};
+	console.log(reportsData);
 
-	const prevSlide = () => {
-		setCurrentIndex(
-			(prevIndex) =>
-				(prevIndex - 1 + currentTopic.length) % currentTopic.length,
-		);
-	};
-
-	const markAsFetched = (index: number) => {
-		setFetchedReports((prev) => {
-			const newFetchedReports = [...prev];
-			newFetchedReports[index] = true;
-			return newFetchedReports;
+	async function fetchSubTopics(
+		{
+			title,
+			desc,
+		}: {
+			title: string;
+			desc: string;
+		},
+		index: number,
+	) {
+		setLoading((prev) => {
+			const newLoading = [...prev];
+			newLoading[index] = true;
+			return newLoading;
 		});
-	};
+
+		const token = process.env.NEXT_PUBLIC_HFSPACE_TOKEN || "";
+		const headers = {
+			Authorization: token,
+			"Content-Type": "application/json",
+		};
+		const response = await fetch(
+			"https://pvanand-search-generate.hf.space/generate_report",
+			{
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify({
+					query: title,
+					description: desc,
+					user_id: "",
+					user_name: "",
+					internet: true,
+					output_format: "Tabular Report",
+					data_format: "Structured data",
+				}),
+			},
+		);
+
+		if (!response.ok) {
+			throw new Error("Error fetching topics");
+		}
+
+		const data = await response.json();
+		setReportsData((prev) => {
+			const newData = [...prev];
+			newData[index] = data;
+			return newData;
+		});
+
+		setLoading((prev) => {
+			const newLoading = [...prev];
+			newLoading[index] = false;
+			return newLoading;
+		});
+	}
+
+	useEffect(() => {
+		const fetchAllReportsSequentially = async () => {
+			for (let i = 0; i < currentTopic.length; i++) {
+				await fetchSubTopics(
+					{ title: currentTopic[i].title, desc: currentTopic[i].desc },
+					i,
+				);
+			}
+		};
+
+		fetchAllReportsSequentially();
+	}, [currentTopic]);
 
 	return (
-		<div className="relative w-full   h-full">
-			<SingleReport
-				title={currentTopic[currentIndex].title}
-				desc={currentTopic[currentIndex].desc}
-				hasFetched={fetchedReports[currentIndex]}
-				markAsFetched={() => markAsFetched(currentIndex)}
-				parentIndex={parentIndex}
-			/>
+		<div className="relative w-full h-[600px] overflow-y-scroll custom-scrollbar">
+			{reportsData.map((report, i) => (
+				<ReportContainer key={i}>
+					{loading[i] ? (
+						<div className="w-10"><Spinner /></div>
+					) : (
+						report && (
+							<div
+								dangerouslySetInnerHTML={{ __html: report.report }}
+								className="flex flex-col gap-5"
+							></div>
+						)
+					)}
+				</ReportContainer>
+			))}
 		</div>
 	);
 };
