@@ -1,30 +1,30 @@
 "use client";
 
 import { useTheme } from "../contexts/ThemeContext";
+import { SignInSection } from "./SignInSection";
+import { IoIosCloseCircle } from "react-icons/io";
 
 const Modal = () => {
-  const { modal, setModal } = useTheme();
-  return (
-    <>
-      {modal !== "" ? (
-        <div className="h-screen w-full fixed top-0 left-0 bg-black/70 flex justify-center items-center z-50">
-          <div className="w-[500px] p-10 relative h-[500px] bg-white">
-            <button
-              className="p-2 rounded-md bg-black text-white absolute top-2 right-2"
-              onClick={() => setModal("")}
-            >
-              close
-            </button>
-            <div className="bg-green-500">
-              {modal === "library" ? "library" : null}
-              {modal === "signIn" ? "signin" : null}
-              {modal === "settings" ? "settings" : null}
-            </div>
-          </div>
-        </div>
-      ) : null}
-    </>
-  );
+	const { modal, setModal } = useTheme();
+	return (
+		<>
+			{modal !== "" ? (
+				<div className="h-screen w-full fixed top-0 left-0 bg-black/70 flex justify-center items-center z-50">
+					<div className="w-[500px] rounded-3xl p-10 relative h-[500px] bg-white">
+						<button
+							className="absolute top-2 right-2"
+							onClick={() => setModal("")}
+						>
+							<IoIosCloseCircle size={25} />
+						</button>
+						{modal === "library" ? "library" : null}
+						{modal === "signIn" ? <SignInSection /> : null}
+						{modal === "settings" ? "settings" : null}
+					</div>
+				</div>
+			) : null}
+		</>
+	);
 };
 
 export default Modal;
