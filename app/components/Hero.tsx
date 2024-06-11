@@ -8,11 +8,12 @@ import { PiPiggyBank } from "react-icons/pi";
 import { PiCodeBold } from "react-icons/pi";
 import { RiRobot2Line } from "react-icons/ri";
 import { MdAutoGraph } from "react-icons/md";
+import Link from "next/link";
 
 const agents = [
 	{
 		title: "iResearcher",
-		url: "/marketing",
+		url: "/researcher",
 		description: "for plan people allocation and people capacities",
 		online: true,
 		icon: BiNetworkChart,
@@ -75,7 +76,7 @@ export const Hero = () => {
 				{agents.map((agent, i) => {
 					const IconComponent = agent.icon;
 					return (
-						<div key={i}>
+						<Link href={agent.url} key={i}>
 							<div
 								style={{
 									backgroundColor: theme.primary.backgroundColor,
@@ -106,7 +107,7 @@ export const Hero = () => {
 									</h1>
 								</div>
 							</div>
-						</div>
+						</Link>
 					);
 				})}
 			</div>
