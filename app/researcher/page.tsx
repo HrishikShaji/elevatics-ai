@@ -2,8 +2,6 @@
 
 import Researcher from "../components/Researcher";
 
-const Page = () => {
-	return <Researcher />;
-};
-
-export default Page;
+export default function Page() {
+  return <Researcher />;
+}

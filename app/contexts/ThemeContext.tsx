@@ -1,5 +1,6 @@
 "use client";
 
+import { Modal, Theme, ThemeColors } from "@/types/types";
 import React, {
 	createContext,
 	useContext,
@@ -8,28 +9,6 @@ import React, {
 	Dispatch,
 	SetStateAction,
 } from "react";
-
-export type Theme = "dark" | "light";
-
-type ThemeItem = {
-	backgroundColor: string;
-	textColor: string;
-};
-
-type ThemeColors = {
-	primary: ThemeItem;
-	secondary: ThemeItem;
-	ternary: ThemeItem;
-	button: ThemeItem;
-	border: { color: string };
-	selectedTitle: { color: string };
-	unSelectedTitle: { color: string };
-	selectedSubTitle: { color: string };
-	unSelectedSubTitle: { color: string };
-	input: { textColor: string; borderColor: string };
-};
-
-type Modal = "signIn" | "library" | "settings" | ""
 
 interface ThemeData {
 	theme: ThemeColors;
@@ -53,16 +32,6 @@ export const useTheme = () => {
 
 type ThemeProviderProps = {
 	children: ReactNode;
-};
-
-export const ThemeColors = {
-	primary: "",
-	secondary: "",
-	ternary: "",
-	accent: "",
-	textPrimary: "",
-	textSecondary: "",
-	textTernary: "",
 };
 
 const darkTheme: ThemeColors = {
@@ -93,7 +62,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 	const [theme, setTheme] = useState<ThemeColors>(lightTheme);
 	const [themeName, setThemeName] = useState<Theme>("light");
 	const [isSideBarOpen, setIsSideBarOpen] = useState(false);
-	const [modal, setModal] = useState<Modal>("")
+	const [modal, setModal] = useState<Modal>("");
 
 	function toggleTheme(theme: Theme) {
 		if (theme === "light") {
@@ -111,7 +80,8 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 		setIsSideBarOpen,
 		isSideBarOpen,
 		themeName,
-		modal, setModal
+		modal,
+		setModal,
 	};
 
 	return (

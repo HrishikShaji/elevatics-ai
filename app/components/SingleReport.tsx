@@ -10,13 +10,13 @@ interface SingleReportProps {
   parentIndex: number;
 }
 
-const SingleReport: React.FC<SingleReportProps> = ({
+export default function SingleReport({
   title,
   desc,
   hasFetched,
   markAsFetched,
   parentIndex,
-}) => {
+}: SingleReportProps) {
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState("");
 
@@ -82,6 +82,4 @@ const SingleReport: React.FC<SingleReportProps> = ({
       </div>
     </div>
   );
-};
-
-export default SingleReport;
+}

@@ -4,10 +4,12 @@ import { useState } from "react";
 import { usePrompt } from "../contexts/PromptContext";
 import SubTopicReport from "./SubTopicReport";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useReports } from "../contexts/ReportsContext";
 
-const FinalReport = () => {
+export default function FinalReport() {
 	const { finalTopics } = usePrompt();
 	const data = Object.entries(finalTopics);
+	const { reportsData } = useReports();
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const nextSlide = () => {
 		setCurrentIndex((prevIndex) => (prevIndex + 1) % data.length);
@@ -21,8 +23,18 @@ const FinalReport = () => {
 		setCurrentIndex(page);
 	};
 
+	function handleDownload() {
+		console.log(reportsData);
+	}
+
 	return (
 		<div className="h-screen w-full  flex flex-col justify-end relative items-center">
+			<div
+				className="absolute top-2 right-2 bg-black text-white rounded-md p-2"
+				onClick={handleDownload}
+			>
+				Download
+			</div>
 			<div className="flex flex-col   h-[700px] items-center  w-full">
 				<div className="flex gap-10 h-[40px]  w-[95%] items-center justify-between">
 					<button
@@ -67,6 +79,4 @@ const FinalReport = () => {
 			</div>
 		</div>
 	);
-};
-
-export default FinalReport;
+}

@@ -1,5 +1,6 @@
 "use client";
 
+import { SelectedSubTopicsType } from "@/types/types";
 import React, {
 	createContext,
 	useContext,
@@ -8,22 +9,6 @@ import React, {
 	SetStateAction,
 	Dispatch,
 } from "react";
-
-export type TopicsDataResponse = {
-	topics: string[][];
-};
-
-export type SubTopicType = {
-	title: string;
-	desc: string;
-	report: string;
-};
-
-export type SelectedSubTopicsType = {
-	[key: string]: SubTopicType[];
-};
-
-
 
 interface PromptData {
 	prompt: string;

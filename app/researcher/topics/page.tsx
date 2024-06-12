@@ -1,8 +1,6 @@
 "use client";
 import TopicSection from "@/app/components/TopicSection";
 
-const Page = () => {
-	return <TopicSection />;
-};
-
-export default Page;
+export default function Page() {
+  return <TopicSection />;
+}

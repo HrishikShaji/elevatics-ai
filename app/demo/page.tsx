@@ -1,7 +1,5 @@
-import { Hero } from "../components/Hero";
+import Hero from "../components/Hero";
 
-const Page = () => {
-	return <Hero />;
-};
-
-export default Page;
+export default function Page() {
+  return <Hero />;
+}

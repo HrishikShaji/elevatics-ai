@@ -1,7 +1,7 @@
 "use client";
 import { PiRocketLaunchThin } from "react-icons/pi";
 
-export const SearchBar = () => {
+export default function SearchBar() {
   return (
     <div className="mt-10 relative w-[50%]">
       <input
@@ -13,4 +13,4 @@ export const SearchBar = () => {
       </button>
     </div>
   );
-};
+}

@@ -118,10 +118,8 @@ const StyledContainer = styled.div`
   }
 `;
 
-const ReportContainer: React.FC<ReportContainerProps> = ({ children }) => {
+export default function ReportContainer({ children }: ReportContainerProps) {
   return (
     <StyledContainer className="flex flex-col">{children}</StyledContainer>
   );
-};
-
-export default ReportContainer;
+}

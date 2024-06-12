@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { usePrompt } from "../contexts/PromptContext";
 import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 import Spinner from "./svgs/Spinner";
-import { SubTopicType } from "../contexts/PromptContext";
+import { SubTopicType } from "@/types/types";
 
 type SubTopicsDataResponse = {
 	subtopics: string[][];
@@ -20,7 +20,7 @@ interface SingleTopicProps {
 	setOpenTopic: Dispatch<SetStateAction<string | null>>;
 }
 
-export const SingleTopic: React.FC<SingleTopicProps> = ({
+export default function SingleTopic({
 	title,
 	desc,
 	onSelectSubtopic,
@@ -30,7 +30,7 @@ export const SingleTopic: React.FC<SingleTopicProps> = ({
 	isOpen,
 	setOpenTopic,
 	topics,
-}) => {
+}: SingleTopicProps) {
 	const { prompt } = usePrompt();
 	const [isLoading, setIsLoading] = useState(false);
 	const [isSuccess, setIsSuccess] = useState(false);
@@ -133,4 +133,4 @@ export const SingleTopic: React.FC<SingleTopicProps> = ({
 			) : null}
 		</div>
 	);
-};
+}
