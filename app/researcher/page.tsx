@@ -1,3 +1,5 @@
+"use client";
+
 import Researcher from "../components/Researcher";
 
 const Page = () => {

@@ -1,12 +1,14 @@
+"use client";
+
 import FinalReport from "@/app/components/FinalReport";
 import { ReportsProvider } from "@/app/contexts/ReportsContext";
 
 const Page = () => {
-  return (
-    <ReportsProvider>
-      <FinalReport />
-    </ReportsProvider>
-  );
+	return (
+		<ReportsProvider>
+			<FinalReport />
+		</ReportsProvider>
+	);
 };
 
 export default Page;

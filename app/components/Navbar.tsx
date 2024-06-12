@@ -5,14 +5,8 @@ import { useTheme } from "../contexts/ThemeContext";
 const Navbar = () => {
 	const { themeName, toggleTheme, setModal } = useTheme();
 	return (
-		<div className="w-full h-[70px] bg-white flex-shrink-0 flex justify-between items-center">
+		<div className="w-full h-[70px] fixed top-0 bg-transparent flex-shrink-0 flex justify-between items-center">
 			<div></div>
-			<button
-				className="p-2 pl-4 hover:bg-gray-200 text-left"
-				onClick={() => setModal("signIn")}
-			>
-				sign in
-			</button>
 			{/**
        * 
        * {themeName === "dark" ? (

@@ -1,11 +1,8 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import { useTheme } from "../contexts/ThemeContext";
 
 const HomeContainer = () => {
-	const { status, data } = useSession()
-	console.log(status)
 	const { theme } = useTheme();
 	return (
 		<div

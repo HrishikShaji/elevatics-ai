@@ -1,3 +1,4 @@
+"use client";
 import TopicSection from "@/app/components/TopicSection";
 
 const Page = () => {

@@ -28,21 +28,19 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={poppins.className}>
-				<AuthProvider>
-					<ThemeProvider>
-						<PromptProvider>
-							<Modal />
-							<div className="flex h-screen">
-								<Sidebar />
-								<ToggleSidebar />
-								<div className="flex flex-col w-full h-full">
-									<Navbar />
-									<div className=" h-full">{children}</div>
-								</div>
+				<ThemeProvider>
+					<PromptProvider>
+						<Modal />
+						<div className="flex h-screen">
+							<Sidebar />
+							<ToggleSidebar />
+							<div className="flex flex-col w-full h-full">
+								<Navbar />
+								<div className=" h-full">{children}</div>
 							</div>
-						</PromptProvider>
-					</ThemeProvider>
-				</AuthProvider>
+						</div>
+					</PromptProvider>
+				</ThemeProvider>
 			</body>
 		</html>
 	);

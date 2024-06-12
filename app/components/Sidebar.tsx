@@ -21,7 +21,6 @@ const Sidebar = () => {
 				>
 					library
 				</button>
-				<SignOutButton />
 			</div>
 		</div>
 	);
