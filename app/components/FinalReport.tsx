@@ -29,11 +29,28 @@ export default function FinalReport() {
 
 	return (
 		<div className="h-screen w-full  flex flex-col justify-end relative items-center">
-			<div
+			<button
 				className="absolute top-2 right-2 bg-black text-white rounded-md p-2"
 				onClick={handleDownload}
 			>
 				Download
+			</button>
+			<div className="flex gap-1 w-[800px] divide-x-2 divide-gray-300 overflow-x-scroll border-2 rounded-md border-gray-300 h-[60px]">
+				{data.map((item, i) => (
+					<div
+						key={i}
+						onClick={() => handlePageChange(i)}
+						className="w-full cursor-pointer h-full  flex items-center border-b-4  relative group"
+						style={{
+							backgroundColor: currentIndex === i ? "#EDF0FF" : "white",
+							borderColor: currentIndex === i ? "#2A42CB" : "white",
+						}}
+					>
+						<div className=" w-[300px] text-center "
+							style={{ color: currentIndex === i ? "#2A42CB" : "#7F7F7F" }}
+						>{data[i][0]}</div>
+					</div>
+				))}
 			</div>
 			<div className="flex flex-col   h-[700px] items-center  w-full">
 				<div className="flex gap-10 h-[40px]  w-[95%] items-center justify-between">
@@ -43,24 +60,27 @@ export default function FinalReport() {
 					>
 						<IoIosArrowBack />
 					</button>
-					<div className="flex gap-1 w-full h-[8px]">
-						{data.map((item, i) => (
-							<div
-								key={i}
-								onClick={() => handlePageChange(i)}
-								className="w-full cursor-pointer h-full relative group"
-								style={{
-									backgroundColor: currentIndex >= i ? "#22c55e" : "#d4d4d4",
-									borderBottomRightRadius:
-										i === data.length - 1 ? "24px" : "0px",
-									borderTopRightRadius: i === data.length - 1 ? "24px" : "0px",
-								}}
-							>
-								<div className="absolute group-hover:block hidden -top-14 p-2 rounded-xl bg-green-500 text-white">
-									{data[i][0]}
+					<div className="w-full gap-2">
+						<div className="flex gap-1 w-full h-[8px]">
+							{data.map((item, i) => (
+								<div
+									key={i}
+									onClick={() => handlePageChange(i)}
+									className="w-full cursor-pointer h-full relative group"
+									style={{
+										backgroundColor: currentIndex >= i ? "#22c55e" : "#d4d4d4",
+										borderBottomRightRadius:
+											i === data.length - 1 ? "24px" : "0px",
+										borderTopRightRadius:
+											i === data.length - 1 ? "24px" : "0px",
+									}}
+								>
+									<div className="absolute group-hover:block hidden -top-14 p-2 rounded-xl bg-green-500 text-white">
+										{data[i][0]}
+									</div>
 								</div>
-							</div>
-						))}
+							))}
+						</div>
 					</div>
 					<button
 						onClick={nextSlide}

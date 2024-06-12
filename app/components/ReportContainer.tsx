@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import styled from "styled-components";
 
 interface ReportContainerProps {
-  children: ReactNode;
+	children: ReactNode;
 }
 
 const StyledContainer = styled.div`
@@ -100,7 +100,7 @@ const StyledContainer = styled.div`
     display: flex;
     gap: 10px;
   }
-  li:before {
+  li:befor {
     content: "";
     flex-shrink: 0;
     width: 20px;
@@ -109,6 +109,7 @@ const StyledContainer = styled.div`
     border-radius: 50%;
     background: #d4d4d4;
     display: inline-block;
+padding:0px 10px 0px 10px;
   }
   p {
     color: black;
@@ -119,7 +120,7 @@ const StyledContainer = styled.div`
 `;
 
 export default function ReportContainer({ children }: ReportContainerProps) {
-  return (
-    <StyledContainer className="flex flex-col">{children}</StyledContainer>
-  );
+	return (
+		<StyledContainer className="flex flex-col">{children}</StyledContainer>
+	);
 }
