@@ -17,6 +17,7 @@ export default function Researcher() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isSuccess, setIsSuccess] = useState(false);
 	const [data, setData] = useState([]);
+	const [isPro, setIsPro] = useState(false);
 
 	useEffect(() => {
 		async function fetchSuggestions(prompt: string) {
@@ -80,6 +81,10 @@ export default function Researcher() {
 		setInput(prompt);
 	}
 
+	function handleProToggle() {
+		setIsPro((prev) => !prev);
+	}
+
 	return (
 		<div className="flex  w-full h-full">
 			<div className="flex flex-col items-center h-full pt-[200px] w-full">
@@ -103,6 +108,18 @@ export default function Researcher() {
 							placeholder="What's on your mind..."
 							className="rounded-xl border-2 shadow-md border-gray-100 bg-white focus:outline-gray-300 p-4 w-full"
 						/>{" "}
+						<div
+							onClick={handleProToggle}
+							className="absolute cursor-pointer right-12 flex p-1 rounded-3xl w-10 bg-gray-200"
+						>
+							<div
+								style={{
+									transform: isPro ? `translateX(16px)` : `translateX(0px)`,
+									transition: `transform 0.25s`,
+								}}
+								className="size-4 bg-green-500 rounded-full cursor-pointer"
+							></div>
+						</div>
 						<button className="text-black absolute right-2 ">
 							<PiRocketLaunchThin size={30} />
 						</button>
