@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import styled from "styled-components";
 
 interface ReportContainerProps {
-	children: ReactNode;
+  children: ReactNode;
 }
 
 const StyledContainer = styled.div`
@@ -38,9 +38,6 @@ const StyledContainer = styled.div`
   h3 {
     color: black;
     font-size: 20px;
-
-    border-color: gray;
-    padding: 0px 0px 5px 0px;
     //border-width: 0px 0px 1px 0px;
   }
 
@@ -58,6 +55,12 @@ const StyledContainer = styled.div`
   th {
     text-align: left;
     padding: 10px;
+  }
+
+  hr {
+    display: none;
+    color: white;
+    background-color: white;
   }
 
   th:first-of-type {
@@ -99,6 +102,7 @@ const StyledContainer = styled.div`
     color: black;
     display: flex;
     gap: 10px;
+    margin: 0px 0px 0px 20px;
   }
   li:befor {
     content: "";
@@ -109,7 +113,7 @@ const StyledContainer = styled.div`
     border-radius: 50%;
     background: #d4d4d4;
     display: inline-block;
-padding:0px 10px 0px 10px;
+    padding: 0px 10px 0px 10px;
   }
   p {
     color: black;
@@ -120,7 +124,7 @@ padding:0px 10px 0px 10px;
 `;
 
 export default function ReportContainer({ children }: ReportContainerProps) {
-	return (
-		<StyledContainer className="flex flex-col">{children}</StyledContainer>
-	);
+  return (
+    <StyledContainer className="flex flex-col">{children}</StyledContainer>
+  );
 }
