@@ -30,7 +30,6 @@ export default function SubTopicReport({
 		contentRef,
 		generatePDF,
 	} = useReports();
-	console.log(currentTopic);
 	const fetchSubTopics = async (
 		{ title, desc }: { title: string; desc: string },
 		index: number,
@@ -80,7 +79,6 @@ export default function SubTopicReport({
 
 	function getHostname(url: string) {
 		const parsedUrl = new URL(url);
-		console.log(parsedUrl.hostname);
 		const name = parsedUrl.hostname;
 		return (
 			<span className="flex items-center gap-3 hover:text-blue-500">

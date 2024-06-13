@@ -71,7 +71,6 @@ export default function SingleTopic({
 
 	async function getSubTopics() {
 		setOpenTopic(title);
-		console.log(subtopics[title]);
 		if (!subtopics[title]) {
 			try {
 				setIsLoading(true);
@@ -106,7 +105,6 @@ export default function SingleTopic({
 		}
 	};
 
-	console.log(subtopics);
 
 	return (
 		<div className="w-full bg-white py-1 border-b-2 border-gray-200  flex flex-col">
