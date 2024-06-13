@@ -10,15 +10,9 @@ import { SelectedSubTopicsType, SubTopicType } from "@/types/types";
 
 export default function TopicSection() {
   const { theme } = useTheme();
-  const { prompt, setFinalTopics } = usePrompt();
+  const { prompt, setFinalTopics, setSelectedSubtopics, selectedSubtopics } =
+    usePrompt();
   const router = useRouter();
-  const [selectedSubtopics, setSelectedSubtopics] =
-    useState<SelectedSubTopicsType>({});
-  const [currentSubTopic, setCurrentSubTopic] = useState<SubTopicType>({
-    title: "",
-    desc: "",
-    report: "",
-  });
   const [openTopic, setOpenTopic] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -80,8 +74,6 @@ export default function TopicSection() {
       ...prev,
       [topic]: prev[topic] ? [...prev[topic], subtopic] : [subtopic],
     }));
-
-    setCurrentSubTopic(subtopic);
   };
 
   const handleUnselectSubtopic = (topic: string, subtopic: SubTopicType) => {
@@ -89,7 +81,6 @@ export default function TopicSection() {
       ...prev,
       [topic]: prev[topic].filter((item) => item.title !== subtopic.title),
     }));
-    setCurrentSubTopic({ title: "", desc: "", report: "" });
   };
 
   return (
@@ -130,7 +121,6 @@ export default function TopicSection() {
                   onSelectSubtopic={handleSelectSubtopic}
                   onUnselectSubtopic={handleUnselectSubtopic}
                   selectedSubtopics={selectedSubtopics[topic[0]] || []}
-                  setCurrentSubTopic={setCurrentSubTopic}
                   isOpen={openTopic === topic[0]}
                   setOpenTopic={setOpenTopic}
                 />

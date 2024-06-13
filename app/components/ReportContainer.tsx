@@ -7,46 +7,49 @@ interface ReportContainerProps {
 
 const StyledContainer = styled.div`
   h1 {
-    font-size: 28px;
+    font-size: 32px;
     color: black;
-    width: 100%;
     font-weight: 500;
-    padding: 10px 0px 10px 0px;
+    padding: 0px 0px 20px 0px;
   }
 
   h2 {
-    display: flex;
-    align-items: center;
     font-size: 24px;
-    gap: 10px;
-
     color: black;
-    width: 100%;
-    //border-bottom: 1px solid black;
-  }
-
-  h2:befor {
-    content: "";
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background: #22c55e;
-    display: inline-block;
+    padding: 15px 0px 15px 0px;
   }
 
   h3 {
     color: black;
-    font-size: 20px;
-    //border-width: 0px 0px 1px 0px;
+    font-size: 24px;
+    font-weight: 500;
+    padding: 15px 0px 15px 0px;
   }
 
   h4 {
     color: black;
-
-    font-size: 16px;
+    font-size: 20px;
+    padding: 10px 0px 10px 0px;
+  }
+  p {
+    color: black;
+    padding: 10px 0px 10px 0px;
+  }
+  strong {
+    font-weight: 500;
   }
 
+  li {
+    color: black;
+    display: flex;
+    gap: 10px;
+    padding: 0px 0px 0px 15px;
+  }
+
+  li strong {
+    min-width: 500px;
+    margin-right: 10px;
+  }
   table {
     border-collapse: collapse;
   }
@@ -96,13 +99,6 @@ const StyledContainer = styled.div`
   ul {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-  }
-  li {
-    color: black;
-    display: flex;
-    gap: 10px;
-    margin: 0px 0px 0px 20px;
   }
   li:befor {
     content: "";
@@ -115,16 +111,17 @@ const StyledContainer = styled.div`
     display: inline-block;
     padding: 0px 10px 0px 10px;
   }
-  p {
-    color: black;
-  }
-  strong {
-    font-weight: 500;
+  h2:befor {
+    content: "";
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #22c55e;
+    display: inline-block;
   }
 `;
 
 export default function ReportContainer({ children }: ReportContainerProps) {
-  return (
-    <StyledContainer className="flex flex-col">{children}</StyledContainer>
-  );
+  return <StyledContainer>{children}</StyledContainer>;
 }

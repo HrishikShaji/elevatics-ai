@@ -1,6 +1,6 @@
 "use client";
 
-import { SelectedSubTopicsType } from "@/types/types";
+import { SelectedSubTopicsType, SubTopicType } from "@/types/types";
 import React, {
 	createContext,
 	useContext,
@@ -13,6 +13,8 @@ import React, {
 interface PromptData {
 	prompt: string;
 	setPrompt: Dispatch<SetStateAction<string>>;
+	selectedSubtopics: SelectedSubTopicsType;
+	setSelectedSubtopics: Dispatch<SetStateAction<SelectedSubTopicsType>>;
 	finalTopics: SelectedSubTopicsType;
 	setFinalTopics: Dispatch<SetStateAction<SelectedSubTopicsType>>;
 }
@@ -32,12 +34,16 @@ type PromptProviderProps = {
 
 export const PromptProvider = ({ children }: PromptProviderProps) => {
 	const [prompt, setPrompt] = useState("");
+	const [selectedSubtopics, setSelectedSubtopics] =
+		useState<SelectedSubTopicsType>({});
 	const [finalTopics, setFinalTopics] = useState<SelectedSubTopicsType>({});
 	const promptData = {
 		prompt,
 		setPrompt,
 		finalTopics,
 		setFinalTopics,
+		selectedSubtopics,
+		setSelectedSubtopics
 	};
 
 	return (
