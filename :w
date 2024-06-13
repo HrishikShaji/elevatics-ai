@@ -106,11 +106,8 @@ export default function SubTopicReport({
 	console.log(reportsData);
 
 	return (
-		<div
-			className="relative px-28 w-full h-[630px] flex flex-col  overflow-y-scroll custom-scrollbar"
-			ref={contentRef}
-		>
-			<div ref={contentRef} className="flex flex-col w-full h-full">
+		<div className="relative px-28 w-full h-[630px] flex flex-col  overflow-y-scroll custom-scrollbar">
+			<div ref={contentRef} id="report" className="flex flex-col w-full h-full">
 				{currentTopic.map((_, i) => (
 					<ReportContainer key={i}>
 						{loading[parentIndex]?.[i] ? (
