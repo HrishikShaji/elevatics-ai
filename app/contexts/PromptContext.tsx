@@ -25,13 +25,13 @@ type Report = {
 
 type ReportData = {
   [key: string]: {
-    [index: number]: Report;
+    [index: string]: Report;
   };
 };
 
 type ReportLoading = {
   [key: string]: {
-    [index: number]: boolean;
+    [index: string]: boolean;
   };
 };
 

@@ -13,7 +13,7 @@ type TopicType = {
 interface SubTopicReportProps {
 	title: string;
 	currentTopic: TopicType[];
-	parentIndex: number;
+	parentIndex: string;
 }
 
 export default function SubTopicReport({
@@ -30,13 +30,12 @@ export default function SubTopicReport({
 	} = usePrompt();
 	const fetchSubTopics = async (
 		{ title, desc }: { title: string; desc: string },
-		index: number,
+		index: string,
 	) => {
 		setReportLoading((prev) => ({
 			...prev,
 			[parentIndex]: { ...prev[parentIndex], [index]: true },
 		}));
-		console.log("starting fetch");
 		const token = process.env.NEXT_PUBLIC_HFSPACE_TOKEN || "";
 		const headers = {
 			Authorization: token,
@@ -64,7 +63,6 @@ export default function SubTopicReport({
 		}
 
 		const data = await response.json();
-		console.log(data);
 		setReportData((prev) => ({
 			...prev,
 			[parentIndex]: { ...prev[parentIndex], [index]: data },
@@ -91,7 +89,7 @@ export default function SubTopicReport({
 				for (let i = 0; i < currentTopic.length; i++) {
 					await fetchSubTopics(
 						{ title: currentTopic[i].title, desc: currentTopic[i].desc },
-						i,
+						currentTopic[i].title,
 					);
 				}
 			}
@@ -106,24 +104,23 @@ export default function SubTopicReport({
 			ref={reportContainerRef}
 		>
 			<div className="flex flex-col w-full h-full">
-				{currentTopic.map((_, i) => {
-					console.log(reportData[parentIndex]?.[i]);
+				{currentTopic.map((item, i) => {
 					return (
 						<ReportContainer key={i}>
-							{reportLoading[parentIndex]?.[i] ? (
+							{reportLoading[parentIndex]?.[item.title] ? (
 								<div className="w-10">
 									<Spinner />
 								</div>
 							) : (
-								reportData[parentIndex]?.[i] && (
+								reportData[parentIndex]?.[item.title] && (
 									<div className="py-10 ">
 										<div
 											dangerouslySetInnerHTML={{
-												__html: reportData[parentIndex][i].report,
+												__html: reportData[parentIndex][item.title].report,
 											}}
 										></div>
 										<div className="flex flex-col gap-2 mt-10">
-											{Object.keys(reportData[parentIndex][i].references).map(
+											{Object.keys(reportData[parentIndex][item.title].references).map(
 												(key, i) => (
 													<Link href={key} key={i}>
 														{getHostname(key)}

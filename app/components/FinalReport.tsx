@@ -133,7 +133,7 @@ export default function FinalReport() {
         </div>
         {data.length > 0 ? (
           <SubTopicReport
-            parentIndex={currentIndex}
+            parentIndex={data[currentIndex][0]}
             currentTopic={data[currentIndex][1]}
             title={data[currentIndex][0]}
           />
