@@ -70,12 +70,12 @@ export default function FinalReport() {
 	async function pdfGenerate() {
 		const topics = Object.values(reportData).map((item) => item);
 		const topicsData = Object.values(topics[0]).map((item) => item.report);
-		const finalHtml = topicsData.join();
-		const styled = styledHtml(finalHtml)
-		console.log(finalHtml);
+		const finalHtmlArray = topicsData.map((html) => styledHtml(html)); // Style each HTML element separately
+
+		console.log(finalHtmlArray);
 		const response = await fetch("/api/pdf", {
 			method: "POST",
-			body: JSON.stringify({ html: styled }),
+			body: JSON.stringify({ htmlArray: finalHtmlArray }),
 			headers: { "Content-Type": "application/json" },
 		});
 
@@ -93,6 +93,7 @@ export default function FinalReport() {
 			console.error("Failed to generate PDF");
 		}
 	}
+
 	const getTargetElement = () => document.getElementById("report");
 
 	return (
