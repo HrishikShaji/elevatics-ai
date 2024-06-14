@@ -1,11 +1,11 @@
 "use client";
 
 import { useTheme } from "../contexts/ThemeContext";
+import { html } from "../lib/sample";
 
 export default function HomeContainer() {
 	const { theme } = useTheme();
 
-	const html = "<div>Hello World</div>";
 
 	async function generatePDF() {
 		const response = await fetch("/api/pdf", {
