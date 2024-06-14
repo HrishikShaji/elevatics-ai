@@ -8,6 +8,7 @@ import { useReports } from "../contexts/ReportsContext";
 import generatePDF, { Resolution, Margin } from "react-to-pdf";
 import { formatPDF } from "../lib/formatPDF";
 import { formatMultiplePDF } from "../lib/formatMultiplePDF";
+import { styledHtml } from "../lib/sample";
 
 export default function FinalReport() {
 	const { finalTopics, reportLoading, reportData, reportContainerRef } =
@@ -17,9 +18,9 @@ export default function FinalReport() {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [isDownload, setIsDownload] = useState(false);
 	const htmlStrings = [
-		'<div>Your HTML content 1</div>',
-		'<div>Your HTML content 2</div>',
-		'<div>Your HTML content 3</div>'
+		"<div>Your HTML content 1</div>",
+		"<div>Your HTML content 2</div>",
+		"<div>Your HTML content 3</div>",
 	];
 
 	const scrollLeft = () => {
@@ -66,11 +67,43 @@ export default function FinalReport() {
 		},
 	};
 
+	async function pdfGenerate() {
+		const topics = Object.values(reportData).map((item) => item);
+		const topicsData = Object.values(topics[0]).map((item) => item.report);
+		const finalHtml = topicsData.join();
+		const styled = styledHtml(finalHtml)
+		console.log(finalHtml);
+		const response = await fetch("/api/pdf", {
+			method: "POST",
+			body: JSON.stringify({ html: styled }),
+			headers: { "Content-Type": "application/json" },
+		});
+
+		if (response.ok) {
+			const blob = await response.blob();
+			const url = window.URL.createObjectURL(blob);
+			const a = document.createElement("a");
+			a.href = url;
+			a.download = "generated.pdf";
+			document.body.appendChild(a);
+			a.click();
+			a.remove();
+			window.URL.revokeObjectURL(url);
+		} else {
+			console.error("Failed to generate PDF");
+		}
+	}
 	const getTargetElement = () => document.getElementById("report");
 
 	return (
 		<div className="h-screen w-full  flex flex-col justify-end relative items-center">
 			<div className="flex gap-2 absolute top-3 right-20">
+				<button
+					className="text-sm bg-black text-white rounded-md py-2 w-[100px]"
+					onClick={pdfGenerate}
+				>
+					Download One
+				</button>
 				<button
 					className="text-sm bg-black text-white rounded-md py-2 w-[100px]"
 					onClick={() => formatMultiplePDF(htmlStrings)}
