@@ -33,3 +33,29 @@ export type ThemeColors = {
 };
 
 export type Modal = "signIn" | "library" | "settings" | "";
+
+export type Reference = {
+	[key: string]: string;
+};
+
+export type Report = {
+	report: string;
+	references: Reference;
+	search_qury: string;
+};
+
+export type ReportData = {
+	[key: string]: {
+		[index: string]: Report;
+	};
+};
+
+export type ReportLoading = {
+	[key: string]: {
+		[index: string]: boolean;
+	};
+};
+
+export type SubTopicsType = {
+	[key: string]: string[][];
+};

@@ -105,6 +105,12 @@ font-family:"Poppins",sans-serif;
     display: flex;
     flex-direction: column;
   }
+
+.links {
+display:flex;
+flex-direction:column;
+}
+
   li:befor {
     content: "";
     flex-shrink: 0;
