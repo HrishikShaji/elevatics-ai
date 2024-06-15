@@ -19,7 +19,9 @@ export default function NewFinalReport() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDownload, setIsDownload] = useState(false);
-
+  const [selectedReports, setSelectedReports] = useState<
+    Record<string, boolean>
+  >({});
   const scrollLeft = () => {
     if (containerRef.current) {
       containerRef.current.scrollBy({
@@ -27,6 +29,13 @@ export default function NewFinalReport() {
         behavior: "smooth",
       });
     }
+  };
+
+  const handleReportSelection = (report: string) => {
+    setSelectedReports((prev) => ({
+      ...prev,
+      [report]: !prev[report],
+    }));
   };
 
   const scrollRight = () => {
@@ -41,6 +50,57 @@ export default function NewFinalReport() {
   const handlePageChange = (page: number) => {
     setCurrentIndex(page);
   };
+  function extractReports(data: ReportData): string[] {
+    const reports: string[] = [];
+    Object.keys(data).forEach((reportKey) => {
+      const sections = data[reportKey];
+      Object.keys(sections).forEach((sectionKey) => {
+        const report = sections[sectionKey].report;
+        reports.push(report);
+      });
+    });
+    return reports;
+  }
+  async function handleDownload() {
+    console.log(selectedReports);
+    const selectedTopics = Object.entries(selectedReports).filter(
+      ([key, value]) => value === true,
+    );
+    const topics = selectedTopics.map(([key]) => key);
+    console.log(topics);
+    const reportsToDownload = Object.keys(reportData)
+      .filter((key) => topics.includes(key))
+      .reduce(
+        (obj, key) => {
+          obj[key] = reportData[key];
+          return obj;
+        },
+        {} as Record<string, any>,
+      );
+    console.log(reportsToDownload);
+
+    const htmlArray = extractReports(reportsToDownload);
+    console.log(htmlArray);
+    const response = await fetch("/api/pdf", {
+      method: "POST",
+      body: JSON.stringify({ htmlArray }),
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "generated.pdf";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } else {
+      console.error("Failed to generate PDF");
+    }
+  }
 
   async function fetchSubTopics(
     { title, desc }: { title: string; desc: string },
@@ -123,10 +183,21 @@ export default function NewFinalReport() {
               <h1 className="whitespace-nowrap">Select Reports</h1>
               <div className="flex flex-col gap-1">
                 {Object.keys(reportData).map((key, i) => (
-                  <h1 key={key} className="whitespace-nowrap">
+                  <label key={key} className="whitespace-nowrap">
+                    <input
+                      type="checkbox"
+                      checked={selectedReports[key] || false}
+                      onChange={() => handleReportSelection(key)}
+                    />
                     {key}
-                  </h1>
+                  </label>
                 ))}
+                <button
+                  className="bg-black text-white p-2 rounded-md"
+                  onClick={handleDownload}
+                >
+                  Download PDF
+                </button>
               </div>
             </div>
           ) : null}
