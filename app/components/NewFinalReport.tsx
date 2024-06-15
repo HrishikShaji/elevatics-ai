@@ -89,7 +89,25 @@ export default function NewFinalReport() {
 	}
 
 	useEffect(() => {
+		const initializeLoadingState = () => {
+			const initialLoadingState = {};
+
+			for (const [parentIndex, topics] of Object.entries(finalTopics)) {
+				if (!reportLoading[parentIndex]) {
+					initialLoadingState[parentIndex] = {};
+					for (const subtopic of topics) {
+						initialLoadingState[parentIndex][subtopic.title] = true;
+					}
+				}
+			}
+
+			setReportLoading((prev) => ({
+				...prev,
+				...initialLoadingState,
+			}));
+		};
 		const fetchAllReportsSequentially = async () => {
+			initializeLoadingState();
 			for (const [parentIndex, topics] of Object.entries(finalTopics)) {
 				if (!reportData[parentIndex]) {
 					for (const subtopic of topics) {
