@@ -1,13 +1,20 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { usePrompt } from "../contexts/PromptContext";
 import SubTopicReport from "./SubTopicReport";
 import { styledHtml } from "../lib/sample";
+import NewSubTopicReport from "./NewSubTopicReport";
 
-export default function FinalReport() {
-	const { finalTopics, reportLoading, reportData, reportContainerRef } =
-		usePrompt();
+export default function NewFinalReport() {
+	const {
+		finalTopics,
+		reportLoading,
+		reportData,
+		reportContainerRef,
+		setReportData,
+		setReportLoading,
+	} = usePrompt();
 	const data = Object.entries(finalTopics);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -35,46 +42,72 @@ export default function FinalReport() {
 		setCurrentIndex(page);
 	};
 
-	function handleDownload() {
-		console.log(reportData);
-	}
+	async function fetchSubTopics(
+		{ title, desc }: { title: string; desc: string },
+		parentIndex: string,
+		index: string,
+	) {
+		setReportLoading((prev) => ({
+			...prev,
+			[parentIndex]: { ...prev[parentIndex], [index]: true },
+		}));
+		const token = process.env.NEXT_PUBLIC_HFSPACE_TOKEN || "";
+		const headers = {
+			Authorization: token,
+			"Content-Type": "application/json",
+		};
+		const response = await fetch(
+			"https://pvanand-search-generate.hf.space/generate_report",
+			{
+				method: "POST",
+				headers: headers,
+				body: JSON.stringify({
+					query: title,
+					description: desc,
+					user_id: "",
+					user_name: "",
+					internet: true,
+					output_format: "Tabular Report",
+					data_format: "Structured data",
+				}),
+			},
+		);
 
-	function handleLoading() {
-		console.log(reportLoading);
-	}
-
-	async function pdfGenerate() {
-		const topics = Object.values(reportData).map((item) => item);
-		const topicsData = Object.values(topics[0]).map((item) => item.report);
-		const finalHtmlArray = topicsData.map((html) => styledHtml(html));
-
-		const response = await fetch("/api/pdf", {
-			method: "POST",
-			body: JSON.stringify({ htmlArray: finalHtmlArray }),
-			headers: { "Content-Type": "application/json" },
-		});
-
-		if (response.ok) {
-			const blob = await response.blob();
-			const url = window.URL.createObjectURL(blob);
-			const a = document.createElement("a");
-			a.href = url;
-			a.download = "generated.pdf";
-			document.body.appendChild(a);
-			a.click();
-			a.remove();
-			window.URL.revokeObjectURL(url);
-		} else {
-			console.error("Failed to generate PDF");
+		if (!response.ok) {
+			throw new Error("Error fetching topics");
 		}
+
+		const data = await response.json();
+		setReportData((prev) => ({
+			...prev,
+			[parentIndex]: { ...prev[parentIndex], [index]: data },
+		}));
+		setReportLoading((prev) => ({
+			...prev,
+			[parentIndex]: { ...prev[parentIndex], [index]: false },
+		}));
 	}
+
+	useEffect(() => {
+		const fetchAllReportsSequentially = async () => {
+			for (const [parentIndex, topics] of Object.entries(finalTopics)) {
+				if (!reportData[parentIndex]) {
+					for (const subtopic of topics) {
+						await fetchSubTopics(subtopic, parentIndex, subtopic.title);
+					}
+				}
+			}
+		};
+
+		fetchAllReportsSequentially();
+	}, [finalTopics]);
 
 	return (
 		<div className="h-screen w-full  flex flex-col justify-end relative items-center">
 			<div className="flex gap-2 absolute top-3 right-20">
 				<button
 					className="text-sm bg-black text-white rounded-md py-2 w-[100px]"
-					onClick={pdfGenerate}
+					onClick={() => console.log(reportData)}
 				>
 					Download One
 				</button>
@@ -100,7 +133,7 @@ export default function FinalReport() {
 				</div>
 				<button
 					className="text-sm bg-black text-white rounded-md py-2 w-[100px]"
-					onClick={handleLoading}
+					onClick={() => console.log(reportLoading)}
 				>
 					See Loading
 				</button>
@@ -147,7 +180,7 @@ export default function FinalReport() {
 					</button>
 				</div>
 				{data.length > 0 ? (
-					<SubTopicReport
+					<NewSubTopicReport
 						parentIndex={data[currentIndex][0]}
 						currentTopic={data[currentIndex][1]}
 						title={data[currentIndex][0]}
