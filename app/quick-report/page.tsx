@@ -1,3 +1,5 @@
+"use client";
+
 import QuickReport from "../components/QuickReport";
 
 export default function Page() {
