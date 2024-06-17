@@ -1,6 +1,7 @@
 import puppeteer from "puppeteer";
 import { NextResponse } from "next/server";
 import { PDFDocument } from "pdf-lib";
+//@ts-ignore
 import nodemailer from "nodemailer";
 
 export const POST = async (req: Request) => {

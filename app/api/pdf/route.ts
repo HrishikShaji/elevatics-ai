@@ -1,8 +1,8 @@
-import puppeteer from 'puppeteer';
-import { NextResponse } from 'next/server';
-import { PDFDocument } from 'pdf-lib';
+import puppeteer from "puppeteer";
+import { NextResponse } from "next/server";
+import { PDFDocument } from "pdf-lib";
 
-export const POST = async (req) => {
+export const POST = async (req: Request) => {
 	try {
 		const { htmlArray } = await req.json();
 		const browser = await puppeteer.launch();
@@ -48,8 +48,7 @@ export const POST = async (req) => {
 		console.error(err);
 		return new NextResponse(
 			JSON.stringify({ message: "Something went wrong" }),
-			{ status: 500 }
+			{ status: 500 },
 		);
 	}
 };
-
