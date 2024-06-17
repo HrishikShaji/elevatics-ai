@@ -53,6 +53,7 @@ export default function SingleTopic({
 			{
 				method: "POST",
 				headers: headers,
+				cache: "no-store",
 				body: JSON.stringify({
 					main_task: desc,
 					user_input: title,

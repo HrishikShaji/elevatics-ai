@@ -35,6 +35,7 @@ export default function TopicSection() {
 				"https://pvanand-generate-subtopics.hf.space/generate_topics",
 				{
 					method: "POST",
+					cache: "no-store",
 					headers: headers,
 					body: JSON.stringify({
 						user_input: prompt,
@@ -51,7 +52,6 @@ export default function TopicSection() {
 			return response.json();
 		}
 		if (topics.length === 0) {
-
 			setIsLoading(true);
 			setIsSuccess(false);
 
@@ -148,7 +148,7 @@ export default function TopicSection() {
 						</button>
 					</div>
 					<div className="w-[50%] h-full bg-black p-10  text-white pt-24">
-						<div className="w-full h-[80vh] custom-scrollbar pr-5 overflow-y-scroll">
+						<div className="w-full h-[80vh] custom-scrollbar pr-5 overflow-y-auto">
 							{Object.entries(selectedSubtopics).map(([key, value], i) => (
 								<div key={i} className=" w-full">
 									<div

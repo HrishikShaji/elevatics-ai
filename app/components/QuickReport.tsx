@@ -23,14 +23,15 @@ export default function QuickReport() {
 				{
 					method: "POST",
 					headers: headers,
+					cache: "no-store",
 					body: JSON.stringify({
-						query: prompt,
-						description: "",
+						topic: "",
+						description: prompt,
 						user_id: "",
 						user_name: "",
 						internet: true,
 						output_format: "Tabular Report",
-						data_format: "Structured data",
+						data_format: "No presets",
 					}),
 				},
 			);

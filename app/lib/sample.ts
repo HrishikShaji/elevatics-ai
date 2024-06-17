@@ -15,30 +15,30 @@ font-family:"Poppins",sans-serif;
     font-size: 32px;
     color: black;
     font-weight: 500;
-    padding: 0px 0px 20px 0px;
+    padding: 0px 0px 15px 0px;
   }
 
   h2 {
     font-size: 24px;
     color: black;
-    padding: 15px 0px 15px 0px;
+    padding: 10px 0px 10px 0px;
   }
 
   h3 {
     color: black;
     font-size: 24px;
     font-weight: 500;
-    padding: 15px 0px 15px 0px;
+    padding: 10px 0px 10px 0px;
   }
 
   h4 {
     color: black;
     font-size: 20px;
-    padding: 10px 0px 10px 0px;
+    padding: 5px 0px 5px 0px;
   }
   p {
     color: black;
-    padding: 10px 0px 10px 0px;
+    padding: 5px 0px 5px 0px;
   }
   strong {
     font-weight: 500;
@@ -52,9 +52,15 @@ font-family:"Poppins",sans-serif;
   }
 
   li strong {
-    min-width: 500px;
+    min-width: 300px;
     margin-right: 10px;
   }
+
+
+li:first-child{
+min-width:300px;
+margin-right:10px;
+}
   table {
     border-collapse: collapse;
   }

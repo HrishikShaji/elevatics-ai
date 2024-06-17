@@ -116,8 +116,9 @@ export default function Researcher() {
 								style={{
 									transform: isPro ? `translateX(16px)` : `translateX(0px)`,
 									transition: `transform 0.25s`,
+									backgroundColor: isPro ? "#4ade80" : "#9ca3af",
 								}}
-								className="size-4 bg-green-500 rounded-full cursor-pointer"
+								className="size-4  rounded-full cursor-pointer"
 							></div>
 						</div>
 						<button className="text-black absolute right-2 ">

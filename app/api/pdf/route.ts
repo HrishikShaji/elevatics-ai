@@ -15,8 +15,8 @@ export const POST = async (req) => {
 			const pdfBuffer = await page.pdf({
 				format: "A4",
 				margin: {
-					top: "40px",
-					bottom: "40px",
+					top: "20px",
+					bottom: "20px",
 					left: "40px",
 					right: "40px",
 				},
