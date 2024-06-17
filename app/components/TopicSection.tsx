@@ -40,7 +40,6 @@ export default function TopicSection() {
 					body: JSON.stringify({
 						user_input: prompt,
 						num_topics: 5,
-						previous_queries: [],
 					}),
 				},
 			);
