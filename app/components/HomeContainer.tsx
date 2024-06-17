@@ -1,44 +1,34 @@
 "use client";
 
+import Link from "next/link";
 import { useTheme } from "../contexts/ThemeContext";
-import { html, styledHtml } from "../lib/sample";
+import SearchBar from "./ui/SearchBar";
 
 export default function HomeContainer() {
-  const { theme } = useTheme();
+	const { theme } = useTheme();
 
-  async function generatePDF() {
-    const response = await fetch("/api/pdf", {
-      method: "POST",
-      body: JSON.stringify({ html: styledHtml }),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (response.ok) {
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "generated.pdf";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-    } else {
-      console.error("Failed to generate PDF");
-    }
-  }
-  return (
-    <div
-      style={{ backgroundColor: theme.primary.backgroundColor }}
-      className="h-full w-full flex items-center p-10 justify-center"
-    >
-      <button
-        className="p-2 rounded-md bg-black text-white"
-        onClick={generatePDF}
-      >
-        Generate
-      </button>
-      <h1 style={{ color: theme.primary.textColor }}>Home</h1>
-    </div>
-  );
+	return (
+		<div
+			style={{
+				color: theme.primary.textColor,
+				backgroundColor: theme.primary.backgroundColor,
+			}}
+			className="relative flex flex-col items-center  justify-center  px-10   h-full  w-full"
+		>
+			<Link
+				className="hover:bg-gray-100 rounded-md p-2 absolute top-2 right-2"
+				href="/demo"
+			>
+				Demo
+			</Link>
+			<h1 className="text-[20px]  sm:text-[40px] font-semibold  w-[80%] md:w-[60%] text-center">
+				Elevate your thinking,{" "}
+				<span className="text-gray-500">Amplify your impact.</span>
+			</h1>
+			<h1 className="text-[20px] text-[#8282AD] text-center  font-light mt-3">
+				The smartest way to search the internet.
+			</h1>
+			<SearchBar />
+		</div>
+	);
 }
