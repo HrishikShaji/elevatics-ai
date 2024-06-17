@@ -105,7 +105,7 @@ export default function NewFinalReport() {
 				);
 
 			const htmlArray = extractReports(reportsToDownload);
-			const response = await fetch("/api/pdf", {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/pdf`, {
 				method: "POST",
 				cache: "no-store",
 				body: JSON.stringify({ htmlArray }),
@@ -151,7 +151,7 @@ export default function NewFinalReport() {
 		const htmlArray = extractReports(reportsToDownload);
 		try {
 			setSending(true);
-			const response = await fetch("/api/email", {
+			const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/email`, {
 				method: "POST",
 				body: JSON.stringify({ htmlArray, email }),
 				headers: { "Content-Type": "application/json" },
