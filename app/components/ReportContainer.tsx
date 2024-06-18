@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import styled from "styled-components";
 
 interface ReportContainerProps {
-	children: ReactNode;
+  children: ReactNode;
 }
 
 const StyledContainer = styled.div`
@@ -46,10 +46,10 @@ const StyledContainer = styled.div`
     padding: 0px 0px 0px 15px;
   }
 
-li:first-child{
-min-width:500px;
-margin-right:10px;
-}
+  li:first-child {
+    min-width: 500px;
+    margin-right: 10px;
+  }
 
   li strong {
     min-width: 500px;
@@ -128,5 +128,5 @@ margin-right:10px;
 `;
 
 export default function ReportContainer({ children }: ReportContainerProps) {
-	return <StyledContainer>{children}</StyledContainer>;
+  return <StyledContainer>{children}</StyledContainer>;
 }

@@ -11,7 +11,12 @@ import { IoIosCloseCircle, IoMdShare } from "react-icons/io";
 import { FaFilePdf } from "react-icons/fa";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { TbFileTypeDocx } from "react-icons/tb";
-import { GENERATE_PDF_URL, SEND_EMAIL_URL } from "../lib/endpoints";
+import {
+  GENERATE_EXCEL_URL,
+  GENERATE_PDF_URL,
+  SEND_EMAIL_URL,
+} from "../lib/endpoints";
+import { useSearchParams } from "next/navigation";
 
 export default function QuickReport() {
   const { prompt } = useQuickReport();
@@ -21,6 +26,7 @@ export default function QuickReport() {
   const [isShare, setIsShare] = useState(false);
   const [isDownload, setIsDownload] = useState(false);
   const [downloading, setDownloading] = useState(false);
+  const [excelDownloading, setExcelDownloading] = useState(false);
   const [sending, setSending] = useState(false);
 
   useEffect(() => {
@@ -85,7 +91,7 @@ export default function QuickReport() {
           const url = window.URL.createObjectURL(blob);
           const a = document.createElement("a");
           a.href = url;
-          a.download = "generated.pdf";
+          a.download = `${prompt}.pdf`;
           document.body.appendChild(a);
           a.click();
           a.remove();
@@ -101,6 +107,41 @@ export default function QuickReport() {
     }
   }
 
+  async function handleExcelDownload() {
+    if (report) {
+      const styledReport = styledHtml(report);
+      const htmlArray = [styledReport];
+      console.log(htmlArray);
+      try {
+        setExcelDownloading(true);
+        const response = await fetch(GENERATE_EXCEL_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ htmlArray }),
+        });
+
+        if (response.ok) {
+          const blob = await response.blob();
+          console.log(blob);
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.style.display = "none";
+          a.href = url;
+          a.download = "generated.xlsx";
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+        } else {
+          console.error("Failed to generate PDF");
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setExcelDownloading(false);
+      }
+    }
+  }
+
   async function handleEmail(e: FormEvent) {
     e.preventDefault();
     if (report) {
@@ -110,7 +151,7 @@ export default function QuickReport() {
         const htmlArray = [styledReport];
         const response = await fetch(SEND_EMAIL_URL, {
           method: "POST",
-          body: JSON.stringify({ htmlArray, email }),
+          body: JSON.stringify({ htmlArray, email, prompt }),
           headers: { "Content-Type": "application/json" },
         });
 
@@ -153,8 +194,16 @@ export default function QuickReport() {
                     <FaFilePdf />
                   )}
                 </button>
-                <button className="bg-black text-white p-3 rounded-full">
-                  <RiFileExcel2Fill />
+                <button
+                  onClick={handleExcelDownload}
+                  className="bg-black text-white p-3 rounded-full">
+                  {excelDownloading ? (
+                    <div className="w-10">
+                      <Spinner />
+                    </div>
+                  ) : (
+                    <RiFileExcel2Fill />
+                  )}
                 </button>
                 <button className="bg-black text-white p-3 rounded-full">
                   <TbFileTypeDocx />
