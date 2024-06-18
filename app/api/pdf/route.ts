@@ -27,7 +27,6 @@ export const POST = async (req: Request) => {
 
 		await browser.close();
 
-		// Merge PDFs
 		const mergedPdf = await PDFDocument.create();
 		for (const pdfBuffer of pdfBuffers) {
 			const pdf = await PDFDocument.load(pdfBuffer);
