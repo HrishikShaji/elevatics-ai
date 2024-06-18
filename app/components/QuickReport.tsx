@@ -11,6 +11,7 @@ import { IoIosCloseCircle, IoMdShare } from "react-icons/io";
 import { FaFilePdf } from "react-icons/fa";
 import { RiFileExcel2Fill } from "react-icons/ri";
 import { TbFileTypeDocx } from "react-icons/tb";
+import { GENERATE_PDF_URL, SEND_EMAIL_URL } from "../lib/endpoints";
 
 export default function QuickReport() {
   const { prompt } = useQuickReport();
@@ -46,7 +47,7 @@ export default function QuickReport() {
               output_format: "Tabular Report",
               data_format: "No presets",
             }),
-          },
+          }
         );
 
         if (!response.ok) {
@@ -69,16 +70,18 @@ export default function QuickReport() {
     if (report) {
       const styledReport = styledHtml(report);
       const htmlArray = [styledReport];
+      console.log(htmlArray);
       try {
         setDownloading(true);
-        const response = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/pdf`, {
+        const response = await fetch(GENERATE_PDF_URL, {
           method: "POST",
-          body: JSON.stringify({ htmlArray }),
           headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ htmlArray }),
         });
 
         if (response.ok) {
           const blob = await response.blob();
+          console.log(blob);
           const url = window.URL.createObjectURL(blob);
           const a = document.createElement("a");
           a.href = url;
@@ -105,14 +108,11 @@ export default function QuickReport() {
         setSending(true);
         const styledReport = styledHtml(report);
         const htmlArray = [styledReport];
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_URL}/api/email`,
-          {
-            method: "POST",
-            body: JSON.stringify({ htmlArray, email }),
-            headers: { "Content-Type": "application/json" },
-          },
-        );
+        const response = await fetch(SEND_EMAIL_URL, {
+          method: "POST",
+          body: JSON.stringify({ htmlArray, email }),
+          headers: { "Content-Type": "application/json" },
+        });
 
         if (response.ok) {
           console.log("success");
@@ -134,8 +134,7 @@ export default function QuickReport() {
           <div className="relative  p-2 flex flex-col gap-2 bg-white rounded-3xl">
             <button
               onClick={() => setIsDownload(false)}
-              className="absolute top-2 right-2"
-            >
+              className="absolute top-2 right-2">
               <IoIosCloseCircle size={25} />
             </button>
             <div className="flex flex-col gap-5 p-5 items-center justify-center">
@@ -145,8 +144,7 @@ export default function QuickReport() {
               <div className="flex justify-center gap-5">
                 <button
                   className="bg-black text-white p-3 rounded-full"
-                  onClick={handleDownload}
-                >
+                  onClick={handleDownload}>
                   {downloading ? (
                     <div className="w-10">
                       <Spinner />
@@ -186,14 +184,12 @@ export default function QuickReport() {
           <div className="flex gap-3 absolute top-2 right-32">
             <button
               className="text-sm bg-[#EDF0FF] flex text-[#2A42CB] gap-2 rounded-md p-2 items-center justify-center w-[120px]"
-              onClick={() => setIsDownload((prev) => !prev)}
-            >
+              onClick={() => setIsDownload((prev) => !prev)}>
               <AiOutlineDownload size={25} /> Download
             </button>
             <button
               onClick={() => setIsShare(true)}
-              className="text-sm gap-2 text-gray-500 border-2 border-gray-500 rounded-md p-2 flex items-center justify-center w-[120px]"
-            >
+              className="text-sm gap-2 text-gray-500 border-2 border-gray-500 rounded-md p-2 flex items-center justify-center w-[120px]">
               <IoMdShare /> Share
             </button>
           </div>
@@ -204,8 +200,7 @@ export default function QuickReport() {
                   <div
                     dangerouslySetInnerHTML={{
                       __html: report,
-                    }}
-                  ></div>
+                    }}></div>
                 </div>
               </ReportContainer>
             </div>
