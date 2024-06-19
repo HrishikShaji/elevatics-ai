@@ -6,6 +6,7 @@ import { useTheme } from "../contexts/ThemeContext";
 import { PiRocketLaunchThin } from "react-icons/pi";
 import Spinner from "./svgs/Spinner";
 import useDebounce from "../hooks/useDebounce";
+import fetchSuggestions from "../lib/fetchSuggestions";
 
 export default function Researcher() {
 	const [input, setInput] = useState("");
@@ -20,31 +21,6 @@ export default function Researcher() {
 	const [isPro, setIsPro] = useState(false);
 
 	useEffect(() => {
-		async function fetchSuggestions(prompt: string) {
-			const token = process.env.NEXT_PUBLIC_HFSPACE_TOKEN || "";
-			const headers = {
-				Authorization: token,
-				"Content-Type": "application/json",
-			};
-			const response = await fetch(
-				"https://pvanand-generate-subtopics.hf.space/get_recommendations",
-				{
-					method: "POST",
-					headers: headers,
-					body: JSON.stringify({
-						user_input: prompt,
-						num_recommendations: 6,
-					}),
-				},
-			);
-
-			if (!response.ok) {
-				throw new Error("Error fetching recommendations");
-			}
-
-			return response.json();
-		}
-
 		if (shouldFetch) {
 			setIsLoading(true);
 			setIsSuccess(false);

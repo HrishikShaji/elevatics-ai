@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import Spinner from "./svgs/Spinner";
 import SingleTopic from "./SingleTopic";
 import { SelectedSubTopicsType, SubTopicType } from "@/types/types";
+import fetchTopics from "../lib/fetchTopics";
 
 export default function TopicSection() {
 	const { theme } = useTheme();
@@ -21,48 +22,18 @@ export default function TopicSection() {
 	const router = useRouter();
 	const [openTopic, setOpenTopic] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
-	const [isSuccess, setIsSuccess] = useState(false);
 	const [data, setData] = useState<string[][]>([]);
 
 	useEffect(() => {
-		async function fetchTopics(prompt: string) {
-			const token = process.env.NEXT_PUBLIC_HFSPACE_TOKEN || "";
-			const headers = {
-				Authorization: token,
-				"Content-Type": "application/json",
-			};
-			const response = await fetch(
-				"https://pvanand-generate-subtopics.hf.space/generate_topics",
-				{
-					method: "POST",
-					cache: "no-store",
-					headers: headers,
-					body: JSON.stringify({
-						user_input: prompt,
-						num_topics: 5,
-					}),
-				},
-			);
-
-			if (!response.ok) {
-				throw new Error("Error fetching topics");
-			}
-
-			return response.json();
-		}
 		if (topics.length === 0) {
 			setIsLoading(true);
-			setIsSuccess(false);
-
 			fetchTopics(prompt)
 				.then((response) => {
 					setData(response.topics);
 					setTopics(response.topics);
-					setIsSuccess(true);
 				})
 				.catch((error) => {
 					console.log(error);
-					setIsSuccess(false);
 				})
 				.finally(() => {
 					setIsLoading(false);

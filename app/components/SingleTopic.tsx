@@ -3,6 +3,7 @@ import { usePrompt } from "../contexts/PromptContext";
 import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 import Spinner from "./svgs/Spinner";
 import { SubTopicType } from "@/types/types";
+import fetchSubTopics from "../lib/fetchSubTopics";
 
 type SubTopicsDataResponse = {
 	subtopics: string[][];
@@ -37,56 +38,26 @@ export default function SingleTopic({
 		setHasFetchedSubtopics,
 	} = usePrompt();
 	const [isLoading, setIsLoading] = useState(false);
-	const [isSuccess, setIsSuccess] = useState(false);
-	const [data, setData] = useState<SubTopicsDataResponse>();
 	const excludedTopics = topics.filter((topic) => topic[0] !== title);
 	const excludedTopicTitles = excludedTopics.map((item) => item[0]);
-
-	async function fetchSubTopics(prompt: string, prevQueries: string[]) {
-		const token = process.env.NEXT_PUBLIC_HFSPACE_TOKEN || "";
-		const headers = {
-			Authorization: token,
-			"Content-Type": "application/json",
-		};
-		const response = await fetch(
-			"https://pvanand-generate-subtopics.hf.space/generate_subtopics",
-			{
-				method: "POST",
-				headers: headers,
-				cache: "no-store",
-				body: JSON.stringify({
-					main_task: desc,
-					user_input: title,
-					num_topics: 3,
-					excluded_topics: excludedTopicTitles,
-				}),
-			},
-		);
-
-		if (!response.ok) {
-			throw new Error("Error fetching topics");
-		}
-
-		return response.json();
-	}
 
 	async function getSubTopics() {
 		setOpenTopic(title);
 		if (!subtopics[title]) {
 			try {
 				setIsLoading(true);
-				setIsSuccess(false);
-				const response = await fetchSubTopics(title, [prompt]);
-				setData(response);
+				const response = await fetchSubTopics({
+					desc: desc,
+					title: title,
+					excludedTopicTitles: excludedTopicTitles,
+				});
 				setSubtopics((prev) => ({
 					...prev,
 					[title]: (response as SubTopicsDataResponse).subtopics,
 				}));
-				setIsSuccess(true);
 				setHasFetchedSubtopics((prev) => [...prev, title]);
 			} catch (error) {
 				console.log(error);
-				setIsSuccess(false);
 			} finally {
 				setIsLoading(false);
 			}
@@ -105,7 +76,6 @@ export default function SingleTopic({
 			onSelectSubtopic(title, subtopicObject);
 		}
 	};
-
 
 	return (
 		<div className="w-full bg-white py-1 border-b-2 border-gray-200  flex flex-col">
