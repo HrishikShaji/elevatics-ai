@@ -71,6 +71,10 @@ export default function Hero() {
         Elevate your thinking,{" "}
         <span className="text-gray-500">Amplify your impact.</span>
       </h1>
+      <h1 className="text-[20px]  sm:text-[40px] font-semibold  w-[80%] md:w-[60%] text-center">
+        Elevate your thinking,{" "}
+        <span className="text-gray-500">Amplify your impact.</span>
+      </h1>
       <h1 className="text-[20px] text-[#8282AD] text-center  font-light mt-3">
         The smartest way to search the internet.
       </h1>
