@@ -50,6 +50,11 @@ FREE
 PREMIUM
 }
 
+enum ReportType {
+QUICK
+FULL
+}
+
 model User {
   id            String    @id @default(cuid()) @map("_id")
   name          String?
@@ -60,6 +65,16 @@ model User {
   plan          Plan     @default(FREE)
   coins         Int      @default(3)
   accounts      Account[]
+  profileImg    String?
+  queries       Int      @default(3)
+  phoneNumber   Int?
+  address       String?
+  occupation    String?
+  age           Int?
+  gender        String?
+  interests     String[]
+  nationality   String?
+  dob           DateTime?
   sessions      Session[]
   flows         Flow[]
   report        Report[]
@@ -77,6 +92,7 @@ model VerificationToken {
 model Report {
 id String @id @default(cuid()) @map("_id")
 name      String
+reportType ReportType
 createdAt DateTime @default(now())
 data      String
 userEmail String
