@@ -26,23 +26,54 @@ export default function QuickReport() {
   const [excelDownloading, setExcelDownloading] = useState(false);
   const [sending, setSending] = useState(false);
 
-  useLayoutEffect(() => {}, []);
-
   useEffect(() => {
-    async function fetchSubTopics() {
+    let isMounted = true;
+    async function fetchReport() {
+      console.log(prompt);
       setLoading(true);
       try {
         const data = await generateQuickReport();
-        setReport(data.report);
+        if (isMounted) {
+          setReport(data.report);
+        }
       } catch (error) {
         console.log(error);
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
     }
 
-    fetchSubTopics();
+    fetchReport();
+    return () => {
+      isMounted = false;
+    };
   }, [prompt]);
+
+  useEffect(() => {
+    async function saveReport() {
+      if (report) {
+        try {
+          const response = await fetch("/api/report", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ report, reportType: "QUICK", name: prompt }),
+          });
+          console.log(await response.json());
+          if (!response.ok) {
+            throw new Error("Failed to send report to backend");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+
+    saveReport();
+  }, [report]);
 
   async function handleDownload() {
     if (report) {
