@@ -3,6 +3,7 @@
 import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "../contexts/ThemeContext";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Sidebar() {
   const { isSideBarOpen, setModal } = useTheme();
@@ -18,12 +19,9 @@ export default function Sidebar() {
         >
           settings
         </button>
-        <button
-          className="p-2 pl-4 text-left hover:bg-gray-200"
-          onClick={() => setModal("library")}
-        >
+        <Link className="p-2 pl-4 text-left hover:bg-gray-200" href="/history">
           library
-        </button>
+        </Link>
       </div>
       {status === "authenticated" ? (
         <div className="absolute flex justify-between items-center w-full bottom-5 left-0 px-4 p-2">
