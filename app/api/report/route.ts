@@ -45,3 +45,24 @@ export const POST = async (req: Request) => {
     );
   }
 };
+
+export const DELETE = async (req: Request) => {
+  const session = await getServerSession(authOptions);
+  const { id } = await req.json();
+  if (!session || !session.user || !session.user.email) {
+    return new Response(JSON.stringify({ message: "Not authenticated" }));
+  }
+  try {
+    await prisma.report.delete({
+      where: {
+        id: id,
+      },
+    });
+    return new NextResponse(JSON.stringify({ message: "success" }));
+  } catch (err) {
+    console.log(err);
+    return new NextResponse(
+      JSON.stringify({ message: "Something went wrong" }),
+    );
+  }
+};

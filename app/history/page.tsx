@@ -24,6 +24,14 @@ export default function Page() {
     fetchReports();
   }, []);
 
+  async function handleDelete(id: string) {
+    await fetch("/api/report", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+  }
+
   console.log(reports);
   return (
     <div className="p-10">
@@ -41,6 +49,9 @@ export default function Page() {
               <td className="">{item.name}</td>
               <td>{item.reportType}</td>
               <td>{item.userEmail}</td>
+              <td>
+                <button onClick={() => handleDelete(item.id)}>delete</button>
+              </td>
             </tr>
           ))}
         </tbody>
