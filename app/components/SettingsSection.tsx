@@ -1,18 +1,40 @@
 import { useState } from "react"
 import DropDown from "./ui/DropDown";
-import { DropDownItem } from "@/types/types";
+import { DataFormatType, DropDownItem, OutputFormatType } from "@/types/types";
 import { useTheme } from "../contexts/ThemeContext";
+import { useSettings } from "../contexts/SettingsContext";
 
 export default function SettingsSection() {
   const [section, setSection] = useState<"appearance" | "customize">("appearance")
   const [isOpen, setIsOpen] = useState(false)
   const { toggleTheme } = useTheme()
+  const { setReportOptions } = useSettings()
   const items: DropDownItem[] = [
     { label: "Light", value: "light" }, { label: "Dark", value: "dark" }
   ]
 
+  const dataFormatItems: DropDownItem[] = [
+    { label: "No Presets", value: "No presets" }, { label: "Structured Data", value: "Structured data" }, { label: "Quantitative Data", value: "Quantitative data" }
+  ]
+
+  const outputFormatItems: DropDownItem[] = [
+    { label: "Chat", value: "chat" }, { label: "Report", value: "report" }, { label: "Report Table", value: "report_table" }
+  ]
+
+  function dataFormatChange(item: DropDownItem) {
+    setReportOptions(prev => ({
+      ...prev,
+      dataFormat: item.value as DataFormatType
+    }))
+  }
+
+  function outputFormatChange(item: DropDownItem) {
+    setReportOptions(prev => ({
+      ...prev,
+      outputFormat: item.value as OutputFormatType
+    }))
+  }
   function handleChange(item: DropDownItem) {
-    console.log(item)
     toggleTheme(item.value as "light" | "dark")
   }
 
@@ -25,9 +47,13 @@ export default function SettingsSection() {
       </div>
       <div className="w-[70%] bg-gray-200">
         {section === "appearance" ? <div className="w-full h-full p-2">
-          <DropDown onChange={handleChange} title="Theme" items={items} />
+          <DropDown defaultValue={items[0]} width="150px" onChange={handleChange} title="Theme" items={items} />
         </div> : null}
-        {section === "customize" ? <div></div> : null}
+        {section === "customize" ? <div className="w-full h-full flex flex-col gap-1">
+          <DropDown width="250px" defaultValue={dataFormatItems[0]} onChange={dataFormatChange} title="Data Format" items={dataFormatItems} />
+          <DropDown width="250px" defaultValue={outputFormatItems[0]} onChange={outputFormatChange} title="Output Format" items={outputFormatItems} />
+
+        </div> : null}
       </div>
     </div>
   )

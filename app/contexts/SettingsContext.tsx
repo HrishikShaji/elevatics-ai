@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Modal, Theme, ThemeColors } from "@/types/types";
+import { Modal, ReportOptions, Theme, ThemeColors, TopicsLimit } from "@/types/types";
 import React, {
   createContext,
   useContext,
@@ -11,16 +11,6 @@ import React, {
   SetStateAction,
 } from "react";
 
-type ReportOptions = {
-  outputFormat: "chat" | "report" | "report_table";
-  internet: boolean;
-  dataFormat: "No presets" | "Structured data" | "Quantitative data"
-}
-
-type TopicsLimit = {
-  topics: number;
-  subTopics: number;
-}
 
 interface SettingsData {
   reportOptions: ReportOptions;
