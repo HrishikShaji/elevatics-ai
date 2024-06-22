@@ -10,6 +10,8 @@ import Link from "next/link";
 import SearchBar from "./ui/SearchBar";
 import { useQuickReport } from "../contexts/QuickReportContext";
 import { useRouter } from "next/navigation";
+import { useUser } from "../contexts/UserContext";
+import toast from "react-hot-toast";
 
 export default function Hero() {
   const agents = [
@@ -57,8 +59,18 @@ export default function Hero() {
     },
   ];
   const { theme } = useTheme();
+  const { user } = useUser();
   const { prompt, setPrompt } = useQuickReport();
   const router = useRouter();
+
+  function handleSubmit() {
+    if (user && user.queries > 0) {
+      console.log("this ran")
+      router.push("/quick-report");
+    } else {
+      toast.error("you have exhausted your limit");
+    }
+  }
   return (
     <div
       style={{
@@ -82,7 +94,7 @@ export default function Hero() {
           className="rounded-xl border-2 border-gray-100 focus:outline-gray-300 p-3 w-full"
         />{" "}
         <button
-          onClick={() => router.push("/quick-report")}
+          onClick={handleSubmit}
           className="text-black absolute right-2 top-2"
         >
           <PiRocketLaunchThin size={30} />
