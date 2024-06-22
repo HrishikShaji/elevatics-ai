@@ -10,6 +10,7 @@ import { PromptProvider } from "./contexts/PromptContext";
 import { QuickReportProvider } from "./contexts/QuickReportContext";
 import SignInButton from "./components/SignInButton";
 import AuthProvider from "./providers/AuthProvider";
+import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -35,7 +36,7 @@ export default function RootLayout({
             <PromptProvider>
               <QuickReportProvider>
                 <Modal />
-
+                <Toaster />
                 <div className="flex h-screen ">
                   <Sidebar />
                   <ToggleSidebar />

@@ -28,7 +28,17 @@ export const POST = async (req: Request) => {
   if (!session || !session.user || !session.user.email) {
     return new Response(JSON.stringify({ message: "Not authenticated" }));
   }
+
   try {
+    const profile = await prisma.user.findUnique({
+      where: { email: session.user.email },
+      select: { queries: true },
+    });
+    if (!profile) {
+      return new NextResponse(JSON.stringify({ message: "Profile not found" }));
+    }
+    console.log(profile.queries);
+
     await prisma.report.create({
       data: {
         userEmail: session.user.email,
@@ -36,6 +46,11 @@ export const POST = async (req: Request) => {
         reportType: reportType,
         name: name,
       },
+    });
+
+    await prisma.user.update({
+      where: { email: session.user.email },
+      data: { queries: profile.queries - 1 },
     });
     return new NextResponse(JSON.stringify({ message: "success" }));
   } catch (err) {
