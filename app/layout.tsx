@@ -12,6 +12,7 @@ import SignInButton from "./components/SignInButton";
 import AuthProvider from "./providers/AuthProvider";
 import { Toaster } from "react-hot-toast";
 import { UserProvider } from "./contexts/UserContext";
+import { SettingsProvider } from "./contexts/SettingsContext";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -35,21 +36,23 @@ export default function RootLayout({
         <ThemeProvider>
           <AuthProvider>
             <UserProvider>
-              <PromptProvider>
-                <QuickReportProvider>
-                  <Modal />
-                  <Toaster />
-                  <div className="flex h-screen ">
-                    <Sidebar />
-                    <ToggleSidebar />
-                    <SignInButton />
-                    <div className="flex flex-col  w-full h-full">
-                      <Navbar />
-                      <div className=" h-full">{children}</div>
+              <SettingsProvider>
+                <PromptProvider>
+                  <QuickReportProvider>
+                    <Modal />
+                    <Toaster />
+                    <div className="flex h-screen ">
+                      <Sidebar />
+                      <ToggleSidebar />
+                      <SignInButton />
+                      <div className="flex flex-col  w-full h-full">
+                        <Navbar />
+                        <div className=" h-full">{children}</div>
+                      </div>
                     </div>
-                  </div>
-                </QuickReportProvider>
-              </PromptProvider>
+                  </QuickReportProvider>
+                </PromptProvider>
+              </SettingsProvider>
             </UserProvider>
           </AuthProvider>
         </ThemeProvider>

@@ -1,11 +1,20 @@
 import { useState } from "react"
-import { BiDownArrow, BiUpArrow } from "react-icons/bi";
 import DropDown from "./ui/DropDown";
+import { DropDownItem } from "@/types/types";
+import { useTheme } from "../contexts/ThemeContext";
 
 export default function SettingsSection() {
   const [section, setSection] = useState<"appearance" | "customize">("appearance")
   const [isOpen, setIsOpen] = useState(false)
+  const { toggleTheme } = useTheme()
+  const items: DropDownItem[] = [
+    { label: "Light", value: "light" }, { label: "Dark", value: "dark" }
+  ]
 
+  function handleChange(item: DropDownItem) {
+    console.log(item)
+    toggleTheme(item.value as "light" | "dark")
+  }
 
   return (
     <div className="h-[50vh] w-[70vw] flex">
@@ -16,7 +25,7 @@ export default function SettingsSection() {
       </div>
       <div className="w-[70%] bg-gray-200">
         {section === "appearance" ? <div className="w-full h-full p-2">
-          <DropDown />
+          <DropDown onChange={handleChange} title="Theme" items={items} />
         </div> : null}
         {section === "customize" ? <div></div> : null}
       </div>

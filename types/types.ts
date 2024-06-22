@@ -59,3 +59,11 @@ export type ReportLoading = {
 export type SubTopicsType = {
   [key: string]: string[][];
 };
+
+
+
+export type DropDownItem = {
+  label: string;
+  value: string;
+}
+
