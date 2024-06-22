@@ -39,6 +39,7 @@ export const SettingsProvider = ({ children }: SettingsProviderProps) => {
     internet: true,
     dataFormat: "Structured data"
   })
+  console.log(reportOptions)
   const [topicsLimit, setTopicsLimit] = useState<TopicsLimit>({ topics: 5, subTopics: 3 })
 
   const settingsData: SettingsData = {
