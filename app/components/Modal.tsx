@@ -4,6 +4,7 @@ import { useTheme } from "../contexts/ThemeContext";
 import { IoIosCloseCircle } from "react-icons/io";
 import SignInSection from "./SignInSection";
 import ProfileSection from "./ProfileSection";
+import SettingsSection from "./SettingsSection";
 
 export default function Modal() {
   const { modal, setModal } = useTheme();
@@ -20,7 +21,7 @@ export default function Modal() {
             </button>
             {modal === "library" ? "library" : null}
             {modal === "signIn" ? <SignInSection /> : null}
-            {modal === "settings" ? "settings" : null}
+            {modal === "settings" ? <SettingsSection /> : null}
             {modal === "profile" ? <ProfileSection /> : null}
           </div>
         </div>

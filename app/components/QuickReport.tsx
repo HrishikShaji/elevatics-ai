@@ -27,28 +27,21 @@ export default function QuickReport() {
   const [sending, setSending] = useState(false);
 
   useEffect(() => {
-    let isMounted = true;
     async function fetchReport() {
       console.log(prompt);
       setLoading(true);
       try {
-        const data = await generateQuickReport();
-        if (isMounted) {
-          setReport(data.report);
-        }
+        const data = await generateQuickReport(prompt);
+
+        setReport(data.report);
       } catch (error) {
         console.log(error);
       } finally {
-        if (isMounted) {
-          setLoading(false);
-        }
+        setLoading(false);
       }
     }
 
     fetchReport();
-    return () => {
-      isMounted = false;
-    };
   }, [prompt]);
 
   useEffect(() => {
@@ -113,8 +106,7 @@ export default function QuickReport() {
           <div className="relative  p-2 flex flex-col gap-2 bg-white rounded-3xl">
             <button
               onClick={() => setIsDownload(false)}
-              className="absolute top-2 right-2"
-            >
+              className="absolute top-2 right-2">
               <IoIosCloseCircle size={25} />
             </button>
             <div className="flex flex-col gap-5 p-5 items-center justify-center">
@@ -124,8 +116,7 @@ export default function QuickReport() {
               <div className="flex justify-center gap-5">
                 <button
                   className="bg-black text-white p-3 rounded-full"
-                  onClick={handleDownload}
-                >
+                  onClick={handleDownload}>
                   {downloading ? (
                     <div className="w-10">
                       <Spinner />
@@ -171,14 +162,12 @@ export default function QuickReport() {
           <div className="flex gap-3 absolute top-2 right-32">
             <button
               className="text-sm bg-[#EDF0FF] flex text-[#2A42CB] gap-2 rounded-md p-2 items-center justify-center w-[120px]"
-              onClick={() => setIsDownload((prev) => !prev)}
-            >
+              onClick={() => setIsDownload((prev) => !prev)}>
               <AiOutlineDownload size={25} /> Download
             </button>
             <button
               onClick={() => setIsShare(true)}
-              className="text-sm gap-2 text-gray-500 border-2 border-gray-500 rounded-md p-2 flex items-center justify-center w-[120px]"
-            >
+              className="text-sm gap-2 text-gray-500 border-2 border-gray-500 rounded-md p-2 flex items-center justify-center w-[120px]">
               <IoMdShare /> Share
             </button>
           </div>
@@ -189,8 +178,7 @@ export default function QuickReport() {
                   <div
                     dangerouslySetInnerHTML={{
                       __html: report,
-                    }}
-                  ></div>
+                    }}></div>
                 </div>
               </ReportContainer>
             </div>
