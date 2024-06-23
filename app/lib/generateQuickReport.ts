@@ -1,6 +1,5 @@
 export default async function generateQuickReport(prompt: string) {
   const token = process.env.NEXT_PUBLIC_HFSPACE_TOKEN || "";
-  console.log("token is", token);
   const headers = {
     "Content-Type": "application/json",
   };

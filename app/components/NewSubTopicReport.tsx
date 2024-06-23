@@ -56,13 +56,8 @@ export default function NewSubTopicReport({
                   <div className="flex flex-col gap-2 mt-10">
                     {Object.keys(
                       reportData[parentIndex][item.title].references
-                    ).map((key, i) => (
-                      <Link
-                        href={key}
-                        key={i}
-                        className="flex items-center gap-3 hover:text-blue-500">
-                        {key} <RxArrowTopRight />
-                      </Link>
+                    ).map((key, i) => (<a key={i} href={key} className="cursor-pointer flex gap-3 items-center hover:text-blue-500" target="_blank" rel="noopener noreferrer">
+                      {key ? (<>{getHostname(key)} < RxArrowTopRight /></>) : null}</a>
                     ))}
                   </div>
                 </div>
