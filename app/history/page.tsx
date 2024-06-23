@@ -61,7 +61,7 @@ export default function Page() {
               <td className="">{item.name}</td>
               <td>{item.reportType}</td>
               <td>{item.userEmail}</td>
-              <td>
+              <td className="flex gap-5">
                 <button onClick={() => handleDelete(item.id)}>delete</button>
                 <button onClick={() => router.push(item.reportType === "FULL" ? `/full-report/${item.id}` : `/quick-report/${item.id}`)} >go</button>
               </td>
