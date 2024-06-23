@@ -5,16 +5,24 @@ import { authOptions } from "@/app/lib/auth";
 
 export const GET = async (req: Request) => {
   const session = await getServerSession(authOptions);
+  const { searchParams } = new URL(req.url)
+  const page = parseInt(searchParams.get("page") as string);
+  const pageSize = parseInt(searchParams.get("pageSize") as string);
+
+
   if (!session || !session.user || !session.user.email) {
     return new Response(JSON.stringify({ message: "Not authenticated" }));
   }
   try {
-    const reports = await prisma.report.findMany({
-      where: {
-        userEmail: session.user.email,
-      },
-    });
-    return new NextResponse(JSON.stringify({ reports }));
+    const [reports, totalCount] = await Promise.all([
+      prisma.report.findMany({
+        where: { userEmail: session.user.email },
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      prisma.report.count(),
+    ]);
+    return new NextResponse(JSON.stringify({ reports, totalCount }));
   } catch (err) {
     console.log(err);
     return new NextResponse(
