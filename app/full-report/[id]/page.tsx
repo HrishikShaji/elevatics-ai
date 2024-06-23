@@ -1,11 +1,5 @@
-"use client"
-
-import { useParams } from "next/navigation"
+import SavedFinalReport from "@/app/components/SavedFinalReport";
 
 export default function Page() {
-  const params = useParams()
-  console.log(params)
-  return (
-    <div></div>
-  )
+  return <SavedFinalReport />
 }
