@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useLayoutEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useQuickReport } from "../contexts/QuickReportContext";
 import Spinner from "./svgs/Spinner";
 import ReportContainer from "./ReportContainer";
@@ -8,28 +8,19 @@ import ShareEmail from "./ShareEmail";
 import { styledHtml } from "../lib/sample";
 import { AiOutlineDownload } from "react-icons/ai";
 import { IoIosCloseCircle, IoMdShare } from "react-icons/io";
-import { FaFilePdf } from "react-icons/fa";
-import { RiFileExcel2Fill } from "react-icons/ri";
-import { TbFileTypeDocx } from "react-icons/tb";
-import downloadPdf from "../lib/downloadPdf";
-import sendEmail from "../lib/sendEmail";
 import generateQuickReport from "../lib/generateQuickReport";
 import saveReport from "../lib/saveReport";
+import DownloadPdfButton from "./DownloadPdfButton";
 
 export default function QuickReport() {
   const { prompt } = useQuickReport();
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState<string>("");
-  const [email, setEmail] = useState("");
   const [isShare, setIsShare] = useState(false);
   const [isDownload, setIsDownload] = useState(false);
-  const [downloading, setDownloading] = useState(false);
-  const [excelDownloading, setExcelDownloading] = useState(false);
-  const [sending, setSending] = useState(false);
 
   useEffect(() => {
     async function fetchReport() {
-      console.log(prompt);
       setLoading(true);
       try {
         const data = await generateQuickReport(prompt);
@@ -49,36 +40,13 @@ export default function QuickReport() {
     saveReport({ name: prompt, reportType: "QUICK", report: report });
   }, [report]);
 
-  async function handleDownload() {
-    if (report) {
-      const styledReport = styledHtml(report);
-      const htmlArray = [styledReport];
-      try {
-        setDownloading(true);
-        await downloadPdf({ htmlArray: htmlArray, prompt: prompt });
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setDownloading(false);
-      }
-    }
+  function getHtmlArray() {
+    const styledReport = styledHtml(report);
+    const htmlArray = [styledReport];
+    return htmlArray
   }
 
-  async function handleEmail(e: FormEvent) {
-    e.preventDefault();
-    if (report) {
-      try {
-        setSending(true);
-        const styledReport = styledHtml(report);
-        const htmlArray = [styledReport];
-        await sendEmail({ htmlArray: htmlArray, email: email, prompt: prompt });
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setSending(false);
-      }
-    }
-  }
+
 
   return (
     <div className="h-screen relative w-full text-black flex flex-col justify-end items-center">
@@ -95,29 +63,7 @@ export default function QuickReport() {
                 Download as
               </h1>
               <div className="flex justify-center gap-5">
-                <button
-                  className="bg-black text-white p-3 rounded-full"
-                  onClick={handleDownload}>
-                  {downloading ? (
-                    <div className="w-10">
-                      <Spinner />
-                    </div>
-                  ) : (
-                    <FaFilePdf />
-                  )}
-                </button>
-                <button className="bg-black text-white p-3 rounded-full">
-                  {excelDownloading ? (
-                    <div className="w-10">
-                      <Spinner />
-                    </div>
-                  ) : (
-                    <RiFileExcel2Fill />
-                  )}
-                </button>
-                <button className="bg-black text-white p-3 rounded-full">
-                  <TbFileTypeDocx />
-                </button>
+                <DownloadPdfButton htmlArray={getHtmlArray()} prompt={prompt} />
               </div>
             </div>
           </div>
@@ -125,11 +71,9 @@ export default function QuickReport() {
       ) : null}
       {isShare && (
         <ShareEmail
-          loading={sending}
           setIsShare={setIsShare}
-          handleEmail={handleEmail}
-          email={email}
-          setEmail={setEmail}
+          prompt={prompt}
+          htmlArray={getHtmlArray()}
         />
       )}
       {loading ? (
