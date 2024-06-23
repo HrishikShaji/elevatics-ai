@@ -6,23 +6,18 @@ import { usePrompt } from "../contexts/PromptContext";
 import NewSubTopicReport from "./NewSubTopicReport";
 import { IoIosCloseCircle } from "react-icons/io";
 import { FaFilePdf } from "react-icons/fa6";
-import { RiFileExcel2Fill } from "react-icons/ri";
-import { TbFileTypeDocx } from "react-icons/tb";
 import ShareEmail from "./ShareEmail";
 import Spinner from "./svgs/Spinner";
-import fetchReport from "../lib/fetchReport";
 import sendEmail from "../lib/sendEmail";
 import downloadPdf from "../lib/downloadPdf";
 import { extractReports, scrollLeft, scrollRight } from "../lib/utils";
 import useReports from "../hooks/useReports";
+import { Record } from "@prisma/client/runtime/library";
 
 export default function NewFinalReport() {
   const {
-    finalTopics,
     reportData,
-    setReportData,
     prompt,
-    setReportLoading,
   } = usePrompt();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isDownload, setIsDownload] = useState(false);
@@ -30,7 +25,6 @@ export default function NewFinalReport() {
   const [email, setEmail] = useState("");
   const [sending, setSending] = useState(false);
   const [downloading, setDownloading] = useState(false);
-  const [excelDownloading, setExcelDownloading] = useState(false);
   const [selectedReports, setSelectedReports] = useState<
     Record<string, boolean>
   >({});
@@ -44,35 +38,8 @@ export default function NewFinalReport() {
     }));
   };
 
+  function getHtmlArray(selectedReports: Record<string, boolean>) {
 
-  async function handleDownload() {
-    try {
-      setDownloading(true);
-      const selectedTopics = Object.entries(selectedReports).filter(
-        ([key, value]) => value === true,
-      );
-      const topics = selectedTopics.map(([key]) => key);
-      const reportsToDownload = Object.keys(reportData)
-        .filter((key) => topics.includes(key))
-        .reduce(
-          (obj, key) => {
-            obj[key] = reportData[key];
-            return obj;
-          },
-          {} as Record<string, any>,
-        );
-
-      const htmlArray = extractReports(reportsToDownload);
-      await downloadPdf({ htmlArray: htmlArray, prompt: prompt });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setDownloading(false);
-    }
-  }
-
-  async function handleEmail(e: FormEvent) {
-    e.preventDefault();
     const selectedTopics = Object.entries(selectedReports).filter(
       ([key, value]) => value === true,
     );
@@ -88,9 +55,28 @@ export default function NewFinalReport() {
       );
 
     const htmlArray = extractReports(reportsToDownload);
+    return htmlArray
+
+  }
+
+  async function handleDownload() {
+    try {
+      console.log("clicked")
+      setDownloading(true);
+      await downloadPdf({ htmlArray: getHtmlArray(selectedReports), prompt: prompt });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setDownloading(false);
+    }
+  }
+
+
+  async function handleEmail(e: FormEvent) {
+    e.preventDefault();
     try {
       setSending(true);
-      await sendEmail({ htmlArray: htmlArray, email: email, prompt: prompt });
+      await sendEmail({ htmlArray: getHtmlArray(selectedReports), email: email, prompt: prompt });
     } catch (error) {
       console.log(error);
     } finally {

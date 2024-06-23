@@ -14,6 +14,7 @@ import { TbFileTypeDocx } from "react-icons/tb";
 import downloadPdf from "../lib/downloadPdf";
 import sendEmail from "../lib/sendEmail";
 import generateQuickReport from "../lib/generateQuickReport";
+import saveReport from "../lib/saveReport";
 
 export default function QuickReport() {
   const { prompt } = useQuickReport();
@@ -45,27 +46,7 @@ export default function QuickReport() {
   }, [prompt]);
 
   useEffect(() => {
-    async function saveReport() {
-      if (report) {
-        try {
-          const response = await fetch("/api/report", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ report, reportType: "QUICK", name: prompt }),
-          });
-          console.log(await response.json());
-          if (!response.ok) {
-            throw new Error("Failed to send report to backend");
-          }
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    }
-
-    saveReport();
+    saveReport({ name: prompt, reportType: "QUICK", report: report });
   }, [report]);
 
   async function handleDownload() {

@@ -1,9 +1,8 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { usePrompt } from "../contexts/PromptContext";
 import fetchReport from "../lib/fetchReport";
-import { extractReports } from "../lib/utils";
-import downloadPdf from "../lib/downloadPdf";
-import sendEmail from "../lib/sendEmail";
+import { ReportLoading } from "@/types/types";
+import saveReport from "../lib/saveReport";
 
 export default function useReports() {
 
@@ -12,6 +11,7 @@ export default function useReports() {
     reportData,
     setReportData,
     prompt,
+    reportLoading,
     setReportLoading,
   } = usePrompt();
   const data = Object.entries(finalTopics);
@@ -20,9 +20,13 @@ export default function useReports() {
   const handlePageChange = (page: number) => {
     setCurrentIndex(page);
   };
+  const allReportsFetched = (loadingState: ReportLoading) => {
+    return Object.keys(loadingState).length > 0 && Object.values(loadingState).every((topic) =>
+      Object.values(topic).every((isLoading) => !isLoading)
+    );
+  };
 
-
-  async function fetchSubTopics(
+  async function fetchReports(
     { title, desc }: { title: string; desc: string },
     parentIndex: string,
     index: string,
@@ -48,7 +52,7 @@ export default function useReports() {
       for (const [parentIndex, topics] of Object.entries(finalTopics)) {
         if (!reportData[parentIndex]) {
           for (const subtopic of topics) {
-            await fetchSubTopics(subtopic, parentIndex, subtopic.title);
+            await fetchReports(subtopic, parentIndex, subtopic.title);
           }
         }
       }
@@ -56,6 +60,14 @@ export default function useReports() {
 
     fetchAllReportsSequentially();
   }, [finalTopics]);
+
+  useEffect(() => {
+    if (allReportsFetched(reportLoading)) {
+      console.log("for saving", reportData)
+      const report = JSON.stringify(reportData)
+      saveReport({ name: prompt, reportType: "FULL", report: report })
+    }
+  }, [reportLoading, reportData]);
 
   return { handlePageChange, data, currentIndex }
 }
