@@ -3,6 +3,7 @@ import { usePrompt } from "../contexts/PromptContext";
 import fetchReport from "../lib/fetchReport";
 import { ReportLoading } from "@/types/types";
 import saveReport from "../lib/saveReport";
+import { extractReports } from "../lib/utils";
 
 export default function useReports() {
 
@@ -22,6 +23,38 @@ export default function useReports() {
     );
   };
 
+  const [selectedReports, setSelectedReports] = useState<
+    Record<string, boolean>
+  >({});
+
+
+  const handleReportSelection = (report: string) => {
+    setSelectedReports((prev) => ({
+      ...prev,
+      [report]: !prev[report],
+    }));
+  };
+
+  function getHtmlArray(selectedReports: Record<string, boolean>) {
+
+    const selectedTopics = Object.entries(selectedReports).filter(
+      ([key, value]) => value === true,
+    );
+    const topics = selectedTopics.map(([key]) => key);
+    const reportsToDownload = Object.keys(reportData)
+      .filter((key) => topics.includes(key))
+      .reduce(
+        (obj, key) => {
+          obj[key] = reportData[key];
+          return obj;
+        },
+        {} as Record<string, any>,
+      );
+
+    const htmlArray = extractReports(reportsToDownload);
+    return htmlArray
+
+  }
   async function fetchReports(
     { title, desc }: { title: string; desc: string },
     parentIndex: string,
@@ -79,5 +112,5 @@ export default function useReports() {
     }
   }, [reportsFetched]);
 
-  return { data }
+  return { data, selectedReports, handleReportSelection, getHtmlArray }
 }
