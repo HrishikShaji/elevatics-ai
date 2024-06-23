@@ -40,14 +40,12 @@ export default function RootLayout({
                 <PromptProvider>
                   <QuickReportProvider>
                     <Modal />
-                    <Toaster />
-                    <div className="flex h-screen ">
+                    <div className=" h-screen w-full flex">
                       <Sidebar />
                       <ToggleSidebar />
                       <SignInButton />
-                      <div className="flex flex-col  w-full h-full">
-                        <Navbar />
-                        <div className=" h-full">{children}</div>
+                      <div className="  w-full flex flex-col h-full">
+                        <div className=" h-full w-full ">{children}</div>
                       </div>
                     </div>
                   </QuickReportProvider>
