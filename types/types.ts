@@ -80,3 +80,8 @@ export type TopicsLimit = {
   topics: number;
   subTopics: number;
 }
+
+
+export type SubTopicsDataResponse = {
+  subtopics: string[][];
+};

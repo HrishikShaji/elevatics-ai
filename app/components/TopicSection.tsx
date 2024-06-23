@@ -15,7 +15,7 @@ export default function TopicSection() {
     topics, prompt
   } = usePrompt();
 
-  const { isLoading, data, setOpenTopic, openTopic, handleSelectSubtopic, handleUnselectSubtopic } = useTopics()
+  const { isLoading, data, setOpenTopic, openTopic } = useTopics()
   const router = useRouter();
 
   function handleNext() {
@@ -59,8 +59,6 @@ export default function TopicSection() {
                   topics={data}
                   title={topic[0]}
                   desc={topic[1]}
-                  onSelectSubtopic={handleSelectSubtopic}
-                  onUnselectSubtopic={handleUnselectSubtopic}
                   selectedSubtopics={selectedSubtopics[topic[0]] || []}
                   isOpen={openTopic === topic[0]}
                   setOpenTopic={setOpenTopic}
