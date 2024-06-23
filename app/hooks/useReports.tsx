@@ -15,11 +15,7 @@ export default function useReports() {
     setReportLoading,
   } = usePrompt();
   const data = Object.entries(finalTopics);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [reportsFetched, setReportsFetched] = useState(false);
-  const handlePageChange = (page: number) => {
-    setCurrentIndex(page);
-  };
   const allReportsFetched = (loadingState: ReportLoading) => {
     return Object.keys(loadingState).length > 0 && Object.values(loadingState).every((topic) =>
       Object.values(topic).every((isLoading) => !isLoading)
@@ -83,5 +79,5 @@ export default function useReports() {
     }
   }, [reportsFetched]);
 
-  return { handlePageChange, data, currentIndex }
+  return { data }
 }
