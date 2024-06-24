@@ -5,15 +5,12 @@ import { useEffect, useState } from "react";
 import Spinner from "./svgs/Spinner";
 import ReportContainer from "./ReportContainer";
 import ShareEmail from "./ShareEmail";
-import ReportActions from "./ReportActions";
 import { getHtmlArray } from "../lib/utils";
-import DownloadModal from "./DownloadModal";
-import DownloadPdfButton from "./DownloadPdfButton";
 import useSavedQuickReport from "../hooks/useSavedQuickReport";
+import QuickReportActions from "./QuickReportActions";
 
 export default function SavedQuickReport() {
   const [isShare, setIsShare] = useState(false);
-  const [isDownload, setIsDownload] = useState(false);
   const { loading, prompt, report, reportId, type } = useSavedQuickReport()
 
   return (
@@ -26,7 +23,7 @@ export default function SavedQuickReport() {
         </div>
       ) : (
         <>
-          <ReportActions setIsShare={setIsShare} setIsDownload={setIsDownload} />
+          <QuickReportActions setIsShare={setIsShare} htmlArray={getHtmlArray(report)} prompt={prompt} />
           <div className="relative px-28 w-full h-[660px] flex flex-col overflow-y-scroll custom-scrollbar">
             <div className="flex flex-col w-full h-full">
               <ReportContainer>
@@ -41,16 +38,6 @@ export default function SavedQuickReport() {
           </div>
         </>
       )}
-      {isDownload ? (
-        <DownloadModal setIsDownload={setIsDownload}>
-          <h1 className="whitespace-nowrap border-b-[1px] border-gray-300 w-full pb-2 text-center font-semibold text-xl">
-            Download as
-          </h1>
-          <div className="flex justify-center gap-5">
-            <DownloadPdfButton htmlArray={getHtmlArray(report)} prompt={prompt} />
-          </div>
-        </DownloadModal>
-      ) : null}
       {isShare && (
         <ShareEmail
           id={reportId}

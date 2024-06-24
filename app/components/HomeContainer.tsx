@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { useTheme } from "../contexts/ThemeContext";
 import SearchBar from "./ui/SearchBar";
-import CheckBox from "./ui/CheckBox";
 
 export default function HomeContainer() {
   const { theme } = useTheme();
@@ -22,7 +21,6 @@ export default function HomeContainer() {
       >
         Demo
       </Link>
-      <CheckBox />
       <h1 className="text-[20px]  sm:text-[40px] font-semibold  w-[80%] md:w-[60%] text-center">
         Elevate your thinking,{" "}
         <span className="text-gray-500">Amplify your impact.</span>

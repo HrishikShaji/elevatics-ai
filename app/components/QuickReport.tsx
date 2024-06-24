@@ -5,16 +5,13 @@ import { useQuickReport } from "../contexts/QuickReportContext";
 import Spinner from "./svgs/Spinner";
 import ReportContainer from "./ReportContainer";
 import ShareEmail from "./ShareEmail";
-import DownloadPdfButton from "./DownloadPdfButton";
-import ReportActions from "./ReportActions";
 import useFetchQuickReport from "../hooks/useFetchQuickReport";
 import { getHtmlArray } from "../lib/utils";
-import DownloadModal from "./DownloadModal";
+import QuickReportActions from "./QuickReportActions";
 
 export default function QuickReport() {
   const { prompt } = useQuickReport();
   const [isShare, setIsShare] = useState(false);
-  const [isDownload, setIsDownload] = useState(false);
   const { loading, report, savedReport } = useFetchQuickReport(prompt)
   return (
     <div className="h-screen  relative w-full text-black flex flex-col justify-end items-center">
@@ -26,7 +23,7 @@ export default function QuickReport() {
         </div>
       ) : (
         <>
-          <ReportActions setIsDownload={setIsDownload} setIsShare={setIsShare} />
+          <QuickReportActions setIsShare={setIsShare} htmlArray={getHtmlArray(report)} prompt={prompt} />
           <div className="relative px-28 w-full  h-[660px] flex flex-col overflow-y-scroll custom-scrollbar">
             <div className="flex flex-col w-full h-full ">
               <ReportContainer>
@@ -41,16 +38,6 @@ export default function QuickReport() {
           </div>
         </>
       )}
-      {isDownload ? (
-        <DownloadModal setIsDownload={setIsDownload}>
-          <h1 className="whitespace-nowrap border-b-[1px] border-gray-300 w-full pb-2 text-center font-semibold text-xl">
-            Download as
-          </h1>
-          <div className="flex justify-center gap-5">
-            <DownloadPdfButton htmlArray={getHtmlArray(report)} prompt={prompt} />
-          </div>
-        </DownloadModal>
-      ) : null}
       {isShare && savedReport ? (
         <ShareEmail
           id={savedReport.id}

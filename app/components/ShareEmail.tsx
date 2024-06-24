@@ -4,7 +4,8 @@ import Spinner from "./svgs/Spinner";
 import { IoIosCloseCircle } from "react-icons/io";
 import sendEmail from "../lib/sendEmail";
 import { IoCloseOutline } from "react-icons/io5";
-
+import { PiCopySimpleFill } from "react-icons/pi";
+import { IoSend } from "react-icons/io5";
 
 interface ShareEmailProps {
   setIsShare: Dispatch<SetStateAction<boolean>>;
@@ -66,40 +67,37 @@ export default function ShareEmail({
   }
   return (
     <div className="fixed z-50 top-0 left-0 h-screen w-full bg-black/70 flex items-center justify-center">
-      <div className="relative w-[50vw] h-[50vh]  p-2 flex flex-col gap-2 bg-white rounded-md">
+      <div className="relative w-[50vw] h-[50vh] justify-center items-center  p-10 flex flex-col gap-2 bg-white rounded-md">
         <button
           onClick={() => setIsShare(false)}
           className="absolute text-black p-2 rounded-md bg-gray-300 -top-3 -right-3"
         >
           <IoCloseOutline size={20} />
         </button>
-        <div className="flex flex-col gap-5 p-5 items-center justify-center">
-          <div className="flex flex-col gap-5 items-center justify-center ">
-            <h1 className="pb-3 border-b-[1px] border-gray-300 text-center">
-              Share Via link
+        <h1 className="text-xl font-semibold border-b-[1px] border-gray-300 w-full text-center">Share</h1>
+        <div className="flex flex-col gap-5 py-5  w-full">
+          <div className="flex flex-col gap-5  items-start">
+            <h1 className="pb-2 font-semibold border-b-[1px] border-gray-300 ">
+              Share Link
             </h1>
-            <button onClick={() => setCreateLink(true)} className="p-2 rounded-md bg-gray-400 ">Generate Link</button>
-            {createLink ? (
-
-              <div className=" flex gap-5">
-                <input
-                  className="p-2 w-[300px] rounded-md bg-gray-200"
-                  type="text"
-                  value={inputValue}
-                  onChange={handleInputChange}
-                  ref={inputRef}
-                />
-                <button className="p-2 rounded-md bg-black text-white" onClick={copyToClipboard}>Copy</button>
-              </div>
-            ) : null}
-            <h1 className="pb-3 border-b-[1px] border-gray-300 text-center">
-              Share Via Email
+            <div className=" flex gap-5 items-center w-full relative">
+              <input
+                className="p-2 w-full rounded-md bg-gray-200"
+                type="text"
+                value={inputValue}
+                onChange={handleInputChange}
+                ref={inputRef}
+              />
+              <button className=" absolute right-2 hover:text-gray-700 z-10" onClick={copyToClipboard}><PiCopySimpleFill size={25} /></button>
+            </div>
+            <h1 className="pb-2 border-b-[1px] font-semibold border-gray-300 ">
+              Share Email
             </h1>
-            <form className="flex gap-3 items-center">
+            <form className="flex gap-3  w-full items-center relative">
               <input
                 type="email"
                 value={email}
-                className="p-2 rounded-md bg-gray-200 w-[300px] focus:outline-none"
+                className="p-2 rounded-md bg-gray-200 w-full focus:outline-none"
                 placeholder="Address"
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -107,14 +105,14 @@ export default function ShareEmail({
               <button
                 onClick={handleEmail}
                 type="submit"
-                className="p-2 rounded-full bg-black text-white"
+                className="absolute right-2 z-10"
               >
                 {sending ? (
                   <div className="w-10">
                     <Spinner />
                   </div>
                 ) : (
-                  <TbSquareRoundedArrowRightFilled size={25} />
+                  <IoSend size={20} />
                 )}
               </button>
             </form>
