@@ -6,7 +6,7 @@ import SearchBar from "./ui/SearchBar";
 
 export default function HomeContainer() {
   const { theme } = useTheme();
-
+  console.log(process.env.NEXT_PUBLIC_URL)
   return (
     <div
       style={{

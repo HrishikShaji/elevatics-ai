@@ -1,7 +1,5 @@
 import React, { ChangeEvent, Dispatch, FormEvent, SetStateAction, useEffect, useRef, useState } from "react";
-import { TbSquareRoundedArrowRightFilled } from "react-icons/tb";
 import Spinner from "./svgs/Spinner";
-import { IoIosCloseCircle } from "react-icons/io";
 import sendEmail from "../lib/sendEmail";
 import { IoCloseOutline } from "react-icons/io5";
 import { PiCopySimpleFill } from "react-icons/pi";
@@ -25,16 +23,15 @@ export default function ShareEmail({
 
   const [email, setEmail] = useState("")
   const [sending, setSending] = useState(false)
-  const [createLink, setCreateLink] = useState(false)
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (type === "FULL") {
 
-      setInputValue(`http://localhost:3000/full-report/${id}`)
+      setInputValue(`${process.env.NEXT_PUBLIC_URL}/full-report/${id}`)
     } else {
-      setInputValue(`http://localhost:3000/quick-report/${id}`)
+      setInputValue(`${process.env.NEXT_PUBLIC_URL}/quick-report/${id}`)
     }
   }, [id])
 
