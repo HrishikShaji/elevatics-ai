@@ -14,7 +14,7 @@ import useSavedQuickReport from "../hooks/useSavedQuickReport";
 export default function SavedQuickReport() {
   const [isShare, setIsShare] = useState(false);
   const [isDownload, setIsDownload] = useState(false);
-  const { loading, prompt, report } = useSavedQuickReport()
+  const { loading, prompt, report, reportId, type } = useSavedQuickReport()
 
   return (
     <div className="h-screen relative w-full text-black flex flex-col justify-end items-center">
@@ -53,6 +53,8 @@ export default function SavedQuickReport() {
       ) : null}
       {isShare && (
         <ShareEmail
+          id={reportId}
+          type={type}
           setIsShare={setIsShare}
           htmlArray={getHtmlArray(report)}
           prompt={prompt}

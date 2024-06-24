@@ -17,7 +17,7 @@ export default function NewFinalReport() {
   const [isDownload, setIsDownload] = useState(false);
   const [isShare, setIsShare] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { data, getHtmlArray, handleReportSelection, selectedReports } = useReports()
+  const { savedReport, data, getHtmlArray, handleReportSelection, selectedReports } = useReports()
 
 
   return (
@@ -55,8 +55,10 @@ export default function NewFinalReport() {
           <DownloadPdfButton prompt={prompt} htmlArray={getHtmlArray(selectedReports)} />
         </DownloadModal>
       ) : null}
-      {isShare ? (
+      {isShare && savedReport ? (
         <ShareEmail
+          id={savedReport.id}
+          type={savedReport.reportType}
           setIsShare={setIsShare}
           htmlArray={getHtmlArray(selectedReports)}
           prompt={prompt}

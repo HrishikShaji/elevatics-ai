@@ -15,8 +15,7 @@ export default function QuickReport() {
   const { prompt } = useQuickReport();
   const [isShare, setIsShare] = useState(false);
   const [isDownload, setIsDownload] = useState(false);
-  const { loading, report } = useFetchQuickReport(prompt)
-
+  const { loading, report, savedReport } = useFetchQuickReport(prompt)
   return (
     <div className="h-screen  relative w-full text-black flex flex-col justify-end items-center">
       {loading ? (
@@ -52,13 +51,15 @@ export default function QuickReport() {
           </div>
         </DownloadModal>
       ) : null}
-      {isShare && (
+      {isShare && savedReport ? (
         <ShareEmail
+          id={savedReport.id}
+          type={savedReport.reportType}
           setIsShare={setIsShare}
           prompt={prompt}
           htmlArray={getHtmlArray(report)}
         />
-      )}
+      ) : null}
     </div>
   );
 }

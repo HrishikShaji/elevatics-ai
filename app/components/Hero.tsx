@@ -12,6 +12,7 @@ import { useQuickReport } from "../contexts/QuickReportContext";
 import { useRouter } from "next/navigation";
 import { useUser } from "../contexts/UserContext";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 export default function Hero() {
   const agents = [
@@ -58,16 +59,18 @@ export default function Hero() {
       icon: RiRobot2Line,
     },
   ];
-  const { theme } = useTheme();
+  const { theme, setModal } = useTheme();
   const { user } = useUser();
   const { prompt, setPrompt } = useQuickReport();
   const router = useRouter();
+
 
   function handleSubmit() {
     if (user && user.queries > 0) {
       console.log("this ran")
       router.push("/quick-report");
     } else {
+      setModal("limit")
       toast.error("you have exhausted your limit");
     }
   }

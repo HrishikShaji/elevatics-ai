@@ -5,6 +5,8 @@ import { IoIosCloseCircle } from "react-icons/io";
 import SignInSection from "./SignInSection";
 import ProfileSection from "./ProfileSection";
 import SettingsSection from "./SettingsSection";
+import LimitModal from "./LimitModal";
+import PlanModal from "./PlanModal";
 
 export default function Modal() {
   const { modal, setModal } = useTheme();
@@ -23,6 +25,8 @@ export default function Modal() {
             {modal === "signIn" ? <SignInSection /> : null}
             {modal === "settings" ? <SettingsSection /> : null}
             {modal === "profile" ? <ProfileSection /> : null}
+            {modal === "limit" ? <LimitModal /> : null}
+            {modal === "plan" ? <PlanModal /> : null}
           </div>
         </div>
       ) : null}

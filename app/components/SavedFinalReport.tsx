@@ -13,7 +13,7 @@ export default function SavedFinalReport() {
   const [isDownload, setIsDownload] = useState(false);
   const [isShare, setIsShare] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { selectedReports, report, prompt, handleReportSelection, loading, getHtmlArray } = useSavedFullReport()
+  const { reportId, type, selectedReports, report, prompt, handleReportSelection, loading, getHtmlArray } = useSavedFullReport()
 
 
   return (
@@ -64,7 +64,7 @@ export default function SavedFinalReport() {
         </DownloadModal>
       ) : null}
       {isShare ?
-        <ShareEmail setIsShare={setIsShare} htmlArray={getHtmlArray(selectedReports)} prompt={prompt} />
+        <ShareEmail id={reportId} type={type} setIsShare={setIsShare} htmlArray={getHtmlArray(selectedReports)} prompt={prompt} />
         : null}
     </div>
   );

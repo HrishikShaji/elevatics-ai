@@ -47,7 +47,7 @@ export const POST = async (req: Request) => {
     }
     console.log(profile.queries);
 
-    await prisma.report.create({
+    const savedReport = await prisma.report.create({
       data: {
         userEmail: session.user.email,
         data: report,
@@ -60,7 +60,7 @@ export const POST = async (req: Request) => {
       where: { email: session.user.email },
       data: { queries: profile.queries - 1 },
     });
-    return new NextResponse(JSON.stringify({ message: "success" }));
+    return new NextResponse(JSON.stringify({ message: "success", report: savedReport }));
   } catch (err) {
     console.log(err);
     return new NextResponse(

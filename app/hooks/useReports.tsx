@@ -4,6 +4,7 @@ import fetchReport from "../lib/fetchReport";
 import { ReportLoading } from "@/types/types";
 import saveReport from "../lib/saveReport";
 import { extractReports } from "../lib/utils";
+import { Report } from "@prisma/client";
 
 export default function useReports() {
 
@@ -17,6 +18,7 @@ export default function useReports() {
   } = usePrompt();
   const data = Object.entries(finalTopics);
   const [reportsFetched, setReportsFetched] = useState(false);
+  const [savedReport, setSavedReport] = useState<Report | null>(null)
   const allReportsFetched = (loadingState: ReportLoading) => {
     return Object.keys(loadingState).length > 0 && Object.values(loadingState).every((topic) =>
       Object.values(topic).every((isLoading) => !isLoading)
@@ -106,11 +108,20 @@ export default function useReports() {
   }, [reportLoading]);
 
   useEffect(() => {
+    const fetchSavedReport = async () => {
+      try {
+        const report = JSON.stringify(reportData);
+        const result = await saveReport({ name: prompt, reportType: "FULL", report: report });
+        setSavedReport(result);
+      } catch (error) {
+        console.error("Error saving report:", error);
+      }
+    };
+
     if (reportsFetched) {
-      const report = JSON.stringify(reportData);
-      saveReport({ name: prompt, reportType: "FULL", report: report });
+      fetchSavedReport()
     }
   }, [reportsFetched]);
 
-  return { data, selectedReports, handleReportSelection, getHtmlArray }
+  return { data, selectedReports, handleReportSelection, getHtmlArray, savedReport }
 }

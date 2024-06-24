@@ -8,7 +8,8 @@ export default function() {
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState<string>("");
   const [prompt, setPrompt] = useState("")
-
+  const [reportId, setReportId] = useState("")
+  const [type, setType] = useState("")
   useEffect(() => {
     async function fetchReport() {
       setLoading(true);
@@ -16,6 +17,8 @@ export default function() {
         const data = await fetchReportFromDatabase(id as string);
         setReport(data.data);
         setPrompt(data.name)
+        setReportId(data.id)
+        setType(data.reportType)
       } catch (error) {
         console.log(error);
       } finally {
@@ -28,5 +31,5 @@ export default function() {
 
 
 
-  return { report, loading, prompt }
+  return { report, loading, prompt, reportId, type }
 }

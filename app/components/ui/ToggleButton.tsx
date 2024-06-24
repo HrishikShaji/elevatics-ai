@@ -18,7 +18,7 @@ export default function ToggleButton({ onChange, defaultValue }: ToggleButtonPro
 
     <div
       onClick={handleToggle}
-      className="absolute cursor-pointer right-12 flex p-1 rounded-3xl w-10 bg-gray-200"
+      className=" cursor-pointer  flex p-1 rounded-3xl w-10 bg-gray-200"
     >
       <div
         style={{

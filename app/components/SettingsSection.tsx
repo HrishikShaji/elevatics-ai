@@ -49,21 +49,31 @@ export default function SettingsSection() {
 
   return (
     <div className="h-[50vh] w-[70vw] flex">
-      <div className="w-[30%] bg-gray-100 flex flex-col"
+      <div className="w-[30%]  flex flex-col pr-10 border-r-[1px] border-gray-400"
       >
-        <button className="w-full p-2 hover:bg-gray-200 text-left" onClick={() => setSection("appearance")}>Appearance</button>
-        <button className="w-full p-2 hover:bg-gray-200 text-left" onClick={() => setSection("customize")} >customize</button>
+        <button className="w-full p-2 hover:bg-gray-200 text-left border-b-[1px] border-gray-400" onClick={() => setSection("appearance")}>Appearance</button>
+        <button className="w-full p-2 hover:bg-gray-200 text-left border-b-[1px] border-gray-400" onClick={() => setSection("customize")} >customize</button>
       </div>
       <div className="w-[70%] ">
         {section === "appearance" ? <div className="w-full h-full p-2">
           <DropDown defaultValue={items[0]} width="150px" onChange={handleChange} title="Theme" items={items} />
         </div> : null}
-        {section === "customize" ? <div className="w-full h-full flex flex-col gap-1">
-          <DropDown width="250px" defaultValue={dataFormatItems[0]} onChange={dataFormatChange} title="Data Format" items={dataFormatItems} />
-          <DropDown width="250px" defaultValue={outputFormatItems[0]} onChange={outputFormatChange} title="Output Format" items={outputFormatItems} />
-          <div className="flex gap-2 items-center">
+        {section === "customize" ? <div className="w-full h-full p-2 flex flex-col gap-4">
+          <div className="flex gap-10 items-center w-[60%] justify-between">
+            <h1>Data Format</h1>
+
+            <DropDown width="250px" defaultValue={dataFormatItems[0]} onChange={dataFormatChange} items={dataFormatItems} />
+          </div>
+          <div className="flex gap-10 items-center w-[60%] justify-between">
+            <h1>Output Format</h1>
+
+            <DropDown width="250px" defaultValue={outputFormatItems[0]} onChange={outputFormatChange} items={outputFormatItems} />
+          </div>
+          <div className="flex gap-10 items-center w-[60%] justify-between">
             <h1>Internet</h1>
-            <ToggleButton defaultValue={reportOptions.internet} onChange={handleInternet} />
+            <div className="w-[250px]">
+              <ToggleButton defaultValue={reportOptions.internet} onChange={handleInternet} />
+            </div>
           </div>
         </div> : null}
       </div>

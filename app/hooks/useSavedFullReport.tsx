@@ -9,6 +9,8 @@ export default function useSavedFullReport() {
   const { id } = useParams();
   const [prompt, setPrompt] = useState("")
   const [loading, setLoading] = useState(false);
+  const [reportId, setReportId] = useState("")
+  const [type, setType] = useState("")
   const [selectedReports, setSelectedReports] = useState<
     Record<string, boolean>
   >({});
@@ -23,6 +25,8 @@ export default function useSavedFullReport() {
         const savedReport = JSON.parse(data.data);
         setPrompt(data.name)
         setReport(savedReport);
+        setReportId(data.id);
+        setType(data.reportType)
       } catch (error) {
         console.log(error);
       } finally {
@@ -60,5 +64,5 @@ export default function useSavedFullReport() {
     return htmlArray;
   }
 
-  return { report, getHtmlArray, handleReportSelection, selectedReports, prompt, loading }
+  return { reportId, type, report, getHtmlArray, handleReportSelection, selectedReports, prompt, loading }
 }

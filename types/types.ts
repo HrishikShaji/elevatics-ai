@@ -32,7 +32,7 @@ export type ThemeColors = {
   input: { textColor: string; borderColor: string };
 };
 
-export type Modal = "profile" | "signIn" | "library" | "settings" | "";
+export type Modal = "limit" | "plan" | "profile" | "signIn" | "library" | "settings" | "";
 
 export type Reference = {
   [key: string]: string;

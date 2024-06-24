@@ -6,11 +6,15 @@ import { useTheme } from "../contexts/ThemeContext";
 import { PiRocketLaunchThin } from "react-icons/pi";
 import Spinner from "./svgs/Spinner";
 import useRecommendations from "../hooks/useRecommendations";
+import { useUser } from "../contexts/UserContext";
+import { useQuickReport } from "../contexts/QuickReportContext";
 
 export default function Researcher() {
   const { setPrompt } = usePrompt();
+  const { setPrompt: setQuickPrompt } = useQuickReport()
   const router = useRouter();
-  const { theme } = useTheme();
+  const { user } = useUser()
+  const { theme, setModal } = useTheme();
   const [isPro, setIsPro] = useState(false);
 
 
@@ -18,13 +22,23 @@ export default function Researcher() {
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setPrompt(input);
-    router.push(`/researcher/topics`);
+    if (isPro) {
+      setPrompt(input);
+      router.push(`/researcher/topics`);
+    } else {
+      setQuickPrompt(input)
+      router.push(`/quick-report`);
+    }
   }
 
 
   function handleProToggle() {
-    setIsPro((prev) => !prev);
+    if (user?.plan === "PREMIUM") {
+
+      setIsPro((prev) => !prev);
+    } else {
+      setModal("plan")
+    }
   }
 
   return (
