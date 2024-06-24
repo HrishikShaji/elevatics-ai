@@ -28,15 +28,13 @@ export default function DownloadPdfButton({ htmlArray, prompt }: DownloadPdfButt
 
   return (
     <button
-      className="bg-black text-white p-3 rounded-full"
+      className="bg-black text-white h-[40px] rounded-md w-[200px]"
       onClick={handleDownload}>
       {downloading ? (
         <div className="w-10">
           <Spinner />
         </div>
-      ) : (
-        <FaFilePdf />
-      )}
+      ) : "Download"}
     </button>
   );
 }

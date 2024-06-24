@@ -5,6 +5,7 @@ import Spinner from "./svgs/Spinner";
 import { SubTopicType } from "@/types/types";
 import fetchSubTopics from "../lib/fetchSubTopics";
 import useSubTopics from "../hooks/useSubTopics";
+import CheckBox from "./ui/CheckBox";
 
 
 interface SingleTopicProps {
@@ -50,16 +51,7 @@ export default function SingleTopic({
       {isOpen && subtopics[title] ? (
         <div>
           {subtopics[title].map((subtopic, i) => (
-            <div className="py-1 px-3 flex gap-3 w-full" key={i}>
-              <input
-                type="checkbox"
-                checked={
-                  !!selectedSubtopics.find((item) => item.title === subtopic[0])
-                }
-                onChange={() => handleSubtopicToggle(subtopic)}
-              />
-              {subtopic[0]}
-            </div>
+            <CheckBox key={i} checked={!!selectedSubtopics.find((item) => item.title === subtopic[0])} onChange={() => handleSubtopicToggle(subtopic)} title={subtopic[0]} />
           ))}
         </div>
       ) : null}

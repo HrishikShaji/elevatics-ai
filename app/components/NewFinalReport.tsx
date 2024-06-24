@@ -8,6 +8,7 @@ import Slider from "./ui/Slider";
 import DownloadModal from "./DownloadModal";
 import DownloadPdfButton from "./DownloadPdfButton";
 import ReportActions from "./ReportActions";
+import CheckBox from "./ui/CheckBox";
 
 export default function NewFinalReport() {
   const {
@@ -41,18 +42,13 @@ export default function NewFinalReport() {
           </h1>
           <div className="flex flex-col gap-1 p-5">
             {Object.keys(reportData).map((key, i) => (
-              <label key={key} className=" whitespace-nowrap">
-                <input
-                  className="mr-3"
-                  type="checkbox"
-                  checked={selectedReports[key] || false}
-                  onChange={() => handleReportSelection(key)}
-                />
-                {key}
-              </label>
+              <CheckBox key={key} checked={selectedReports[key] || false} onChange={() => handleReportSelection(key)} title={key} />
             ))}
           </div>
-          <DownloadPdfButton prompt={prompt} htmlArray={getHtmlArray(selectedReports)} />
+          <div className="w-full flex justify-center">
+
+            <DownloadPdfButton prompt={prompt} htmlArray={getHtmlArray(selectedReports)} />
+          </div>
         </DownloadModal>
       ) : null}
       {isShare && savedReport ? (
