@@ -1,4 +1,4 @@
-export default async function generateQuickReport(prompt: string) {
+export default async function generateQuickReport({ prompt, internet, dataFormat, outputFormat }: { prompt: string; internet: boolean; dataFormat: string; outputFormat: string }) {
   const token = process.env.NEXT_PUBLIC_HFSPACE_TOKEN || "";
   const headers = {
     "Content-Type": "application/json",
@@ -14,9 +14,9 @@ export default async function generateQuickReport(prompt: string) {
         description: prompt,
         user_id: "",
         user_name: "",
-        internet: true,
-        output_format: "report_table",
-        data_format: "Structured data",
+        internet: internet,
+        output_format: outputFormat,
+        data_format: dataFormat,
       }),
     }
   );

@@ -1,24 +1,23 @@
 import { FaGoogle } from "react-icons/fa";
 import { IoLogoGithub } from "react-icons/io";
 import { signIn } from "next-auth/react";
-import { RiLoginCircleFill } from "react-icons/ri";
 
 export default function SignInSection() {
   return (
-    <div className="h-full w-full flex flex-col items-center justify-center gap-5">
+    <div className="h-full w-[30vw] flex flex-col items-center justify-center gap-5">
       <h1 className="text-2xl font-semibold text-black">Sign In </h1>
       <div className="w-full flex flex-col gap-10">
         <form className="flex w-full flex-col gap-2 items-center justify-center">
           <input
-            className="p-2 w-full rounded-md bg-gray-300"
+            className="p-2 w-full  border-b-[2px] border-gray-300 focus:outline-none"
             placeholder="hrishik@gmail.com"
           />
           <input
-            className="p-2 w-full rounded-md bg-gray-300"
+            className="p-2 w-full border-b-[2px] border-gray-300 focus:outline-none"
             placeholder="password12345"
           />
-          <button className="mt-3 text-black">
-            <RiLoginCircleFill size={40} />
+          <button className="mt-3 text-white rounded-md w-full p-2 bg-black ">
+            Log In
           </button>
         </form>
         <div className="w-full items-center flex justify-center gap-4">

@@ -1,4 +1,4 @@
-export default async function fetchReport({ title, desc }: { title: string, desc: string }) {
+export default async function fetchReport({ title, desc, internet, dataFormat, outputFormat }: { title: string, desc: string, internet: boolean, dataFormat: string; outputFormat: string }) {
 
   const token = process.env.NEXT_PUBLIC_HFSPACE_TOKEN || "";
   const headers = {
@@ -16,9 +16,9 @@ export default async function fetchReport({ title, desc }: { title: string, desc
         description: desc,
         user_id: "",
         user_name: "",
-        internet: true,
-        output_format: "report_table",
-        data_format: "Structured data",
+        internet: internet,
+        output_format: outputFormat,
+        data_format: dataFormat,
       }),
     }
   );

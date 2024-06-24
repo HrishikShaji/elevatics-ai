@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Spinner from "./svgs/Spinner";
 import SingleTopic from "./SingleTopic";
 import useTopics from "../hooks/useTopics";
+import { useSettings } from "../contexts/SettingsContext";
 
 export default function TopicSection() {
   const { theme } = useTheme();
@@ -14,7 +15,8 @@ export default function TopicSection() {
     selectedSubtopics,
     topics, prompt
   } = usePrompt();
-
+  const { topicsLimit } = useSettings()
+  console.log(topicsLimit)
   const { isLoading, data, setOpenTopic, openTopic } = useTopics()
   const router = useRouter();
 

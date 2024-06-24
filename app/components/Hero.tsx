@@ -13,6 +13,8 @@ import { useRouter } from "next/navigation";
 import { useUser } from "../contexts/UserContext";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import { useSettings } from "../contexts/SettingsContext";
+import { report } from "process";
 
 export default function Hero() {
   const agents = [
@@ -63,6 +65,7 @@ export default function Hero() {
   const { user } = useUser();
   const { prompt, setPrompt } = useQuickReport();
   const router = useRouter();
+  const { reportOptions, topicsLimit } = useSettings()
 
 
   function handleSubmit() {

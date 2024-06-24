@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { usePrompt } from "../contexts/PromptContext";
 import fetchSubTopics from "../lib/fetchSubTopics";
 import { SubTopicsDataResponse, SubTopicType } from "@/types/types";
+import { useSettings } from "../contexts/SettingsContext";
 
 interface Props {
   title: string;
@@ -11,6 +12,8 @@ interface Props {
 }
 
 export default function useSubTopics({ selectedSubtopics, title, desc, setOpenTopic }: Props) {
+  const { topicsLimit } = useSettings()
+
 
   const {
     subtopics,
@@ -33,6 +36,7 @@ export default function useSubTopics({ selectedSubtopics, title, desc, setOpenTo
           desc: desc,
           title: title,
           excludedTopicTitles: excludedTopicTitles,
+          subTopicsNum: topicsLimit.subTopics
         });
         setSubtopics((prev) => ({
           ...prev,

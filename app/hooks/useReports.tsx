@@ -5,6 +5,7 @@ import { ReportLoading } from "@/types/types";
 import saveReport from "../lib/saveReport";
 import { extractReports } from "../lib/utils";
 import { Report } from "@prisma/client";
+import { useSettings } from "../contexts/SettingsContext";
 
 export default function useReports() {
 
@@ -24,6 +25,7 @@ export default function useReports() {
       Object.values(topic).every((isLoading) => !isLoading)
     );
   };
+  const { reportOptions } = useSettings()
 
   const [selectedReports, setSelectedReports] = useState<
     Record<string, boolean>
@@ -69,7 +71,7 @@ export default function useReports() {
         [parentIndex]: { ...prev[parentIndex], [index]: true },
       }));
 
-      const data = await fetchReport({ title: title, desc: desc });
+      const data = await fetchReport({ internet: reportOptions.internet, dataFormat: reportOptions.dataFormat, outputFormat: reportOptions.outputFormat, title: title, desc: desc });
       setReportData((prev) => ({
         ...prev,
         [parentIndex]: { ...prev[parentIndex], [index]: data },
