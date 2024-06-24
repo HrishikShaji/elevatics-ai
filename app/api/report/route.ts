@@ -8,7 +8,7 @@ export const GET = async (req: Request) => {
   const { searchParams } = new URL(req.url)
   const page = parseInt(searchParams.get("page") as string);
   const pageSize = parseInt(searchParams.get("pageSize") as string);
-
+  const reportType = searchParams.get("reportType") as string;
 
   if (!session || !session.user || !session.user.email) {
     return new Response(JSON.stringify({ message: "Not authenticated" }));
@@ -16,7 +16,7 @@ export const GET = async (req: Request) => {
   try {
     const [reports, totalCount] = await Promise.all([
       prisma.report.findMany({
-        where: { userEmail: session.user.email },
+        where: { userEmail: session.user.email, ...(reportType && reportType !== "" ? { reportType: reportType as "FULL" | "QUICK" } : {}), },
         skip: (page - 1) * pageSize,
         take: pageSize,
       }),

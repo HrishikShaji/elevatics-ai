@@ -6,7 +6,7 @@ import { BiDownArrow, BiUpArrow } from "react-icons/bi";
 
 interface DropDownProps {
   width: string;
-  title: string;
+  title?: string;
   items: DropDownItem[];
   defaultValue: DropDownItem;
   onChange: (item: DropDownItem) => void;
@@ -26,7 +26,10 @@ export default function DropDown({ defaultValue, width, title, items, onChange }
 
   return (
     <div className="flex gap-3 items-center">
-      <h1>{title}</h1>
+      {title ?
+
+        <h1>{title}</h1>
+        : null}
       <div style={{ width: width }} className="flex bg-gray-300 rounded-md z-1  justify-between py-1 px-5 relative">
         <h1>{selectedItem.label}</h1>
         <button onClick={() => setIsOpen(prev => !prev)}>
