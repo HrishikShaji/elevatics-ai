@@ -2,11 +2,10 @@
 
 import Link from "next/link";
 import { useTheme } from "../contexts/ThemeContext";
-import SearchBar from "./ui/SearchBar";
+import QuickSearch from "./QuickSearch";
 
 export default function HomeContainer() {
   const { theme } = useTheme();
-  console.log(process.env.NEXT_PUBLIC_URL)
   return (
     <div
       style={{
@@ -28,7 +27,7 @@ export default function HomeContainer() {
       <h1 className="text-[20px] text-[#8282AD] text-center  font-light mt-3">
         The smartest way to search the internet.
       </h1>
-      <SearchBar />
+      <QuickSearch />
     </div>
   );
 }

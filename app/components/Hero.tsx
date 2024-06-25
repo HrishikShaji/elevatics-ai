@@ -7,14 +7,10 @@ import { PiCodeBold } from "react-icons/pi";
 import { RiRobot2Line } from "react-icons/ri";
 import { MdAutoGraph } from "react-icons/md";
 import Link from "next/link";
-import SearchBar from "./ui/SearchBar";
 import { useQuickReport } from "../contexts/QuickReportContext";
 import { useRouter } from "next/navigation";
 import { useUser } from "../contexts/UserContext";
-import toast from "react-hot-toast";
-import { useState } from "react";
-import { useSettings } from "../contexts/SettingsContext";
-import { report } from "process";
+import QuickSearch from "./QuickSearch";
 
 export default function Hero() {
   const agents = [
@@ -61,22 +57,9 @@ export default function Hero() {
       icon: RiRobot2Line,
     },
   ];
-  const { theme, setModal } = useTheme();
-  const { user } = useUser();
-  const { prompt, setPrompt } = useQuickReport();
-  const router = useRouter();
-  const { reportOptions, topicsLimit } = useSettings()
+  const { theme } = useTheme();
 
 
-  function handleSubmit() {
-    if (user && user.queries > 0) {
-      console.log("this ran")
-      router.push("/quick-report");
-    } else {
-      setModal("limit")
-      toast.error("you have exhausted your limit");
-    }
-  }
   return (
     <div
       style={{
@@ -92,20 +75,7 @@ export default function Hero() {
       <h1 className="text-[20px] text-[#8282AD] text-center  font-light mt-3">
         The smartest way to search the internet.
       </h1>
-      <div className="mt-10 relative w-[50%]">
-        <input
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          placeholder="What's on your mind..."
-          className="rounded-xl border-2 border-gray-100 focus:outline-gray-300 p-3 w-full"
-        />{" "}
-        <button
-          onClick={handleSubmit}
-          className="text-black absolute right-2 top-2"
-        >
-          <PiRocketLaunchThin size={30} />
-        </button>
-      </div>
+      <QuickSearch />
       <div className="grid grid-cols-3 gap-5 w-[90%]  mt-10">
         {agents.map((agent, i) => {
           const IconComponent = agent.icon;

@@ -26,8 +26,12 @@ export default function Researcher() {
       setPrompt(input);
       router.push(`/researcher/topics`);
     } else {
-      setQuickPrompt(input)
-      router.push(`/quick-report`);
+      if (user && user.queries > 0) {
+        setQuickPrompt(input)
+        router.push(`/quick-report`);
+      } else {
+        setModal("limit")
+      }
     }
   }
 
