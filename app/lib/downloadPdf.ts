@@ -24,6 +24,8 @@ export default async function downloadPdf({
     a.remove();
     window.URL.revokeObjectURL(url);
   } else {
+    const result = await response.json()
+    console.log(result)
     console.error("Failed to generate PDF");
   }
 }
