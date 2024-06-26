@@ -41,7 +41,7 @@ export default function RootLayout({
                 <PromptProvider>
                   <QuickReportProvider>
                     <Modal />
-                    <div className=" h-screen w-full flex">
+                    <div className="overflow-hidden h-screen w-full flex">
                       <Sidebar />
                       <ToggleSidebar />
                       <SignInButton />

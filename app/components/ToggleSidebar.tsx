@@ -7,7 +7,8 @@ export default function ToggleSidebar() {
   const { setIsSideBarOpen, isSideBarOpen } = useTheme();
   return (
     <button
-      className="fixed top-2 left-2 p-2 z-20 rounded-md"
+      style={{ color: isSideBarOpen ? "black" : "" }}
+      className="fixed top-4 left-4  z-20 text-gray-500 hover:text-black rounded-md"
       onClick={() => setIsSideBarOpen((prev) => !prev)}
     >
       <GiHamburgerMenu size={35} />
