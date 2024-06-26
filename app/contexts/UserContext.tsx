@@ -8,10 +8,14 @@ import React, {
   ReactNode,
   useState,
   useEffect,
+  Dispatch,
+  SetStateAction
 } from "react";
 
 interface UserData {
+  setRefetch: Dispatch<SetStateAction<boolean>>;
   user: User | null;
+  queries: number;
   status: "authenticated" | "loading" | "unauthenticated";
 }
 
@@ -32,9 +36,13 @@ type UserProviderProps = {
 export const UserProvider = ({ children }: UserProviderProps) => {
   const { status, data } = useSession();
   const [user, setUser] = useState<User | null>(null);
+  const [refetch, setRefetch] = useState(false)
+  const [queries, setQueries] = useState(0)
+
 
   useEffect(() => {
     async function fetchProfile() {
+      console.log("refetched")
       const response = await fetch("/api/profile", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -47,14 +55,14 @@ export const UserProvider = ({ children }: UserProviderProps) => {
       const result = await response.json();
 
       setUser(result.profile);
+      setQueries(result.profile.queries)
     }
 
     if (status === "authenticated") {
       fetchProfile();
     }
-  }, [status, data]);
-
-  const userData: UserData = { user, status };
+  }, [status, data, refetch]);
+  const userData: UserData = { queries, user, status, setRefetch };
   return (
     <UserContext.Provider value={userData}>{children}</UserContext.Provider>
   );

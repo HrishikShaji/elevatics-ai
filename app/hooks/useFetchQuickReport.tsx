@@ -3,12 +3,14 @@ import generateQuickReport from "../lib/generateQuickReport";
 import saveReport from "../lib/saveReport";
 import { Report } from "@prisma/client";
 import { useSettings } from "../contexts/SettingsContext";
+import { useUser } from "../contexts/UserContext";
 
 export default function(prompt: string) {
 
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState<string>("");
   const { reportOptions } = useSettings()
+  const { setRefetch } = useUser()
   const [savedReport, setSavedReport] = useState<Report | null>(null);
   useEffect(() => {
     async function fetchReport() {
@@ -21,6 +23,7 @@ export default function(prompt: string) {
         console.log(error);
       } finally {
         setLoading(false);
+        setRefetch(prev => !prev)
       }
     }
 

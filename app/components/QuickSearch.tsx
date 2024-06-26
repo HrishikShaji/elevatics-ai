@@ -9,13 +9,14 @@ import { useState } from "react";
 
 export default function QuickSearch() {
   const { theme, setModal } = useTheme();
-  const { user } = useUser();
+  const { user, queries } = useUser();
   const [input, setInput] = useState("")
   const { setPrompt } = useQuickReport();
   const router = useRouter();
 
 
   function handleSubmit() {
+    console.log("queries are", queries)
     if (user && user.queries > 0) {
       setPrompt(input)
       router.push("/quick-report");

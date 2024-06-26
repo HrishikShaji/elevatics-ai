@@ -6,6 +6,7 @@ import saveReport from "../lib/saveReport";
 import { extractReports } from "../lib/utils";
 import { Report } from "@prisma/client";
 import { useSettings } from "../contexts/SettingsContext";
+import { useUser } from "../contexts/UserContext";
 
 export default function useReports() {
 
@@ -20,6 +21,7 @@ export default function useReports() {
   const data = Object.entries(finalTopics);
   const [reportsFetched, setReportsFetched] = useState(false);
   const [savedReport, setSavedReport] = useState<Report | null>(null)
+  const { setRefetch } = useUser()
   const allReportsFetched = (loadingState: ReportLoading) => {
     return Object.keys(loadingState).length > 0 && Object.values(loadingState).every((topic) =>
       Object.values(topic).every((isLoading) => !isLoading)
@@ -84,6 +86,7 @@ export default function useReports() {
         ...prev,
         [parentIndex]: { ...prev[parentIndex], [index]: false },
       }));
+      setRefetch(prev => !prev)
     }
   }
 
