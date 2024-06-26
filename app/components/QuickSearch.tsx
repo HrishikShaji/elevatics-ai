@@ -24,16 +24,16 @@ export default function QuickSearch() {
     }
   }
   return (
-    <div className="mt-10 relative w-[50%]">
+    <div className="mt-10 h-[100px] relative flex items-center w-[50%] ">
       <input
         value={input}
         onChange={(e) => setInput(e.target.value)}
         placeholder="What's on your mind..."
-        className="rounded-xl border-2 border-gray-100 focus:outline-gray-300 p-3 w-full"
+        className="rounded-xl border-2 text-xl h-full border-gray-100 shadow-lg focus:outline-gray-300 p-3 w-full"
       />{" "}
       <button
         onClick={handleSubmit}
-        className="text-black absolute right-2 top-2"
+        className="text-black absolute right-2 "
       >
         <PiRocketLaunchThin size={30} />
       </button>

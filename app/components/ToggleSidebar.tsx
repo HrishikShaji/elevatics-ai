@@ -10,7 +10,7 @@ export default function ToggleSidebar() {
       className="fixed top-2 left-2 p-2 z-20 rounded-md"
       onClick={() => setIsSideBarOpen((prev) => !prev)}
     >
-      <GiHamburgerMenu />
+      <GiHamburgerMenu size={35} />
     </button>
   );
 }

@@ -4,6 +4,7 @@ import { DataFormatType, DropDownItem, OutputFormatType } from "@/types/types";
 import { useTheme } from "../contexts/ThemeContext";
 import { useSettings } from "../contexts/SettingsContext";
 import ToggleButton from "./ui/ToggleButton";
+import BasicButtonExample from "./ui/DropDownExample";
 
 export default function SettingsSection() {
   const [section, setSection] = useState<"appearance" | "customize">("appearance")
@@ -61,16 +62,20 @@ export default function SettingsSection() {
 
   return (
     <div className="h-[50vh] w-[70vw] flex">
-      <div className="w-[30%]  flex flex-col pr-10 border-r-[1px] border-gray-400"
+      <div className="w-[30%]  flex flex-col "
       >
-        <button className="w-full p-2 hover:bg-gray-200 text-left border-b-[1px] border-gray-400" onClick={() => setSection("appearance")}>Appearance</button>
-        <button className="w-full p-2 hover:bg-gray-200 text-left border-b-[1px] border-gray-400" onClick={() => setSection("customize")} >customize</button>
+        <button className="w-full p-2  text-left text-xl" style={{ color: section === "appearance" ? "black" : "gray" }} onClick={() => setSection("appearance")}>Appearance</button>
+        <button className="w-full p-2  text-left text-xl" style={{ color: section === "customize" ? "black" : "gray" }} onClick={() => setSection("customize")} >Customize</button>
       </div>
       <div className="w-[70%] ">
-        {section === "appearance" ? <div className="w-full h-full p-2">
-          <DropDown defaultValue={getCurrentThemeValue() as DropDownItem} width="150px" onChange={handleChange} title="Theme" items={items} />
+        {section === "appearance" ? <div className="w-full flex flex-col gap-4 h-full p-2">
+          <div className="flex gap-10 items-center w-[60%] justify-between">
+            <h1>Theme</h1>
+
+            <DropDown defaultValue={getCurrentThemeValue() as DropDownItem} width="150px" onChange={handleChange} items={items} />
+          </div>
         </div> : null}
-        {section === "customize" ? <div className="w-full h-full p-2 flex flex-col gap-4">
+        {section === "customize" ? <div className="w-full  border-l-[2px] border-gray-200 pl-5 p-2 flex flex-col gap-4">
           <div className="flex gap-10 items-center w-[60%] justify-between">
             <h1>Data Format</h1>
 
@@ -90,7 +95,7 @@ export default function SettingsSection() {
           <div className="flex gap-10 items-center w-[60%] justify-between">
             <h1>Topics Limit</h1>
             <input
-              className="w-[250px] bg-gray-300 p-1 pl-5 rounded-md focus:outline-none"
+              className="w-[250px] border-gray-200 border-[2px]  p-1 pl-5 rounded-xl focus:outline-none"
               value={topicsLimit.topics}
               type="number"
               onChange={(e) => setTopicsLimit(prev => ({
@@ -102,7 +107,7 @@ export default function SettingsSection() {
           <div className="flex gap-10 items-center w-[60%] justify-between">
             <h1>SubTopics Limit</h1>
             <input
-              className="w-[250px] bg-gray-300 p-1 pl-5 rounded-md focus:outline-none"
+              className="w-[250px] border-gray-200 border-[2px]  p-1 pl-5 rounded-xl focus:outline-none"
               value={topicsLimit.subTopics}
               type="number"
               onChange={(e) => setTopicsLimit(prev => ({

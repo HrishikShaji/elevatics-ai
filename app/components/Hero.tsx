@@ -7,10 +7,13 @@ import { PiCodeBold } from "react-icons/pi";
 import { RiRobot2Line } from "react-icons/ri";
 import { MdAutoGraph } from "react-icons/md";
 import Link from "next/link";
+import { IoDocument, IoDocuments } from "react-icons/io5";
 import { useQuickReport } from "../contexts/QuickReportContext";
 import { useRouter } from "next/navigation";
 import { useUser } from "../contexts/UserContext";
 import QuickSearch from "./QuickSearch";
+import { IoDocumentsOutline } from "react-icons/io5";
+
 
 export default function Hero() {
   const agents = [
@@ -19,7 +22,7 @@ export default function Hero() {
       url: "/researcher",
       description: "Take your unbiased research to new level",
       online: true,
-      icon: BiNetworkChart,
+      icon: IoDocumentsOutline,
     },
     {
       title: "Career Agent",
@@ -57,7 +60,7 @@ export default function Hero() {
       icon: RiRobot2Line,
     },
   ];
-  const { theme } = useTheme();
+  const { theme, isSideBarOpen } = useTheme();
 
 
   return (
@@ -68,12 +71,9 @@ export default function Hero() {
       }}
       className="flex flex-col items-center  justify-center  px-10   h-full relative w-full"
     >
-      <h1 className="text-[20px]  sm:text-[40px] font-semibold  w-[80%] md:w-[60%] text-center">
+      <h1 style={{ fontSize: isSideBarOpen ? "30px" : "40px" }} className=" font-semibold  w-[80%] md:w-[60%] text-center">
         Elevate your thinking,{" "}
         <span className="text-gray-500">Amplify your impact.</span>
-      </h1>
-      <h1 className="text-[20px] text-[#8282AD] text-center  font-light mt-3">
-        The smartest way to search the internet.
       </h1>
       <QuickSearch />
       <div className="grid grid-cols-3 gap-5 w-[90%]  mt-10">

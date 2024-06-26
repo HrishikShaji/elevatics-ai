@@ -14,6 +14,7 @@ import { Toaster } from "react-hot-toast";
 import { UserProvider } from "./contexts/UserContext";
 import { SettingsProvider } from "./contexts/SettingsContext";
 
+
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],

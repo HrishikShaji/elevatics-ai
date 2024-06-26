@@ -1,6 +1,6 @@
 
 "use client";
-
+import { CiFileOn } from "react-icons/ci";
 import { Report } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,7 +8,7 @@ import { MdDelete } from "react-icons/md";
 import { RxArrowTopRight } from "react-icons/rx";
 import DropDown from "../components/ui/DropDown";
 import { DropDownItem } from "@/types/types";
-
+import { FaRegTrashAlt } from "react-icons/fa";
 export default function Page() {
   const [reports, setReports] = useState<Report[]>([]);
   const [page, setPage] = useState(1);
@@ -49,7 +49,6 @@ export default function Page() {
 
   const totalPages = Math.ceil(totalCount / pageSize);
 
-  console.log(reports)
   const dateConverter = (date: Date) => {
 
     const initdate = new Date(date);
@@ -59,7 +58,6 @@ export default function Page() {
   }
 
   function onChange(item: DropDownItem) {
-    console.log(item)
     setReportType(item.value)
   }
 
@@ -74,22 +72,22 @@ export default function Page() {
       <table className="w-full" style={{ borderCollapse: "collapse" }}>
         <thead>
           <tr className="" style={{ borderBottom: "1px solid #d1d5db" }}>
-            <th className="text-left p-2 w-[40%]">Query</th>
-            <th className="text-left p-2 w-[20%] ">Type</th>
-            <th className="text-left p-2 w-[20%]">Date</th>
-            <th className="text-left p-2 w-[20%]">Actions</th>
+            <th className="text-left text-xl font-normal p-2 w-[40%]">Query</th>
+            <th className="text-left p-2 w-[20%] text-xl font-normal">Type</th>
+            <th className="text-left p-2 w-[20%] text-xl font-normal">Date</th>
+            <th className="text-left p-2 w-[20%] text-xl font-normal">Actions</th>
           </tr>
         </thead>
         <tbody>
           {reports.map((item, i) => (
             <tr key={i} style={{ borderBottom: "1px solid #d1d5db" }}>
-              <td className="p-2">{item.name}</td>
-              <td className="p-2">{item.reportType}</td>
-              <td className="p-2">{dateConverter(item.createdAt)}</td>
+              <td className="p-2 text-gray-600">{item.name}</td>
+              <td className="p-2 text-gray-600">{item.reportType}</td>
+              <td className="p-2 text-gray-600">{dateConverter(item.createdAt)}</td>
               <td className="p-2">
                 <div className="flex gap-5">
-                  <button onClick={() => handleDelete(item.id)}><MdDelete /></button>
-                  <button onClick={() => router.push(item.reportType === "FULL" ? `/full-report/${item.id}` : `/quick-report/${item.id}`)} ><RxArrowTopRight /></button>
+                  <button onClick={() => handleDelete(item.id)} className="hover:text-red-500"><FaRegTrashAlt /></button>
+                  <button onClick={() => router.push(item.reportType === "FULL" ? `/full-report/${item.id}` : `/quick-report/${item.id}`)} ><CiFileOn /></button>
                 </div>
               </td>
             </tr>

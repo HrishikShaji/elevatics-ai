@@ -28,14 +28,18 @@ export default function SignInSection() {
         <div className="flex gap-5 justify-center">
           <button
             className="p-2 rounded-md bg-white"
-            onClick={() => signIn("google", { callbackUrl: "/" })}
-          >
+            onClick={(e) => {
+              e.preventDefault();
+              signIn("google", { callbackUrl: "/" })            
+}}>
             <FaGoogle size={30} />
           </button>
           <button
             className="p-2 rounded-md bg-white"
-            onClick={() => signIn("github", { callbackUrl: "/" })}
-          >
+            onClick={(e) => {
+              e.preventDefault();
+              signIn("github", { callbackUrl: "/" })            
+}}>
             <IoLogoGithub size={30} />
           </button>
         </div>

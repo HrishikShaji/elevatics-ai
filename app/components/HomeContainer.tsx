@@ -5,7 +5,7 @@ import { useTheme } from "../contexts/ThemeContext";
 import QuickSearch from "./QuickSearch";
 
 export default function HomeContainer() {
-  const { theme } = useTheme();
+  const { theme, isSideBarOpen } = useTheme();
   return (
     <div
       style={{
@@ -20,11 +20,11 @@ export default function HomeContainer() {
       >
         Demo
       </Link>
-      <h1 className="text-[20px]  sm:text-[40px] font-semibold  w-[80%] md:w-[60%] text-center">
+      <h1 style={{ fontSize: isSideBarOpen ? "30px" : "40px" }} className=" font-semibold  w-[80%] md:w-[60%] text-center">
         Elevate your thinking,{" "}
         <span className="text-gray-500">Amplify your impact.</span>
       </h1>
-      <h1 className="text-[20px] text-[#8282AD] text-center  font-light mt-3">
+      <h1 className="text-xl text-[#8282AD] text-center  font-light mt-3">
         The smartest way to search the internet.
       </h1>
       <QuickSearch />

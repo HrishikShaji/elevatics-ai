@@ -18,11 +18,11 @@ export default function ToggleButton({ onChange, defaultValue }: ToggleButtonPro
 
     <div
       onClick={handleToggle}
-      className=" cursor-pointer  flex p-1 rounded-3xl w-10 bg-gray-200"
+      className=" cursor-pointer  flex p-1 rounded-3xl w-12 border-[2px] border-gray-200"
     >
       <div
         style={{
-          transform: active ? `translateX(16px)` : `translateX(0px)`,
+          transform: active ? `translateX(20px)` : `translateX(0px)`,
           transition: `transform 0.25s`,
           backgroundColor: active ? "#4ade80" : "#9ca3af",
         }}

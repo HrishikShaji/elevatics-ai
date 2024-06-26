@@ -14,19 +14,19 @@ export default function Sidebar() {
     <div className="h-full relative w-[250px] bg-gray-100 ">
       <div className="mt-20 flex flex-col">
         <button
-          className="p-2 pl-4 text-left hover:bg-gray-200"
+          className="p-2 text-xl pl-4 text-left hover:bg-gray-200"
           onClick={() => setModal("settings")}
         >
-          settings
+          Settings
         </button>
-        <Link className="p-2 pl-4 text-left hover:bg-gray-200" href="/history">
-          library
+        <Link className="p-2 pl-4 text-xl text-left hover:bg-gray-200" href="/history">
+          Library
         </Link>
       </div>
       {status === "authenticated" ? (
         <div className="absolute flex justify-between items-center w-full bottom-5 left-0 px-4 p-2">
           <button
-            className="p-2 rounded-md hover:bg-red-500 hover:text-white "
+            className="p-2 rounded-md text-xl hover:bg-red-500 hover:text-white "
             onClick={() => signOut()}
           >
             Logout
