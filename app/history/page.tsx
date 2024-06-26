@@ -9,6 +9,9 @@ import { RxArrowTopRight } from "react-icons/rx";
 import DropDown from "../components/ui/DropDown";
 import { DropDownItem } from "@/types/types";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { FiEdit } from "react-icons/fi";
+import { PiShareNetworkLight } from "react-icons/pi";
+import { IoSearch } from "react-icons/io5";
 export default function Page() {
   const [reports, setReports] = useState<Report[]>([]);
   const [page, setPage] = useState(1);
@@ -67,12 +70,23 @@ export default function Page() {
   return (
     <div className="p-20 w-full flex flex-col items-center justify-center gap-10">
       <div className="flex w-full flex-start">
+        <div className="relative flex items-center w-[200px]">
+
+          <input placeholder="search report..." className="p-1 pl-3 rounded-xl border-[2px] border-gray-200" />
+          <button className="absolute right-1">
+            <IoSearch />
+          </button>
+        </div>
+        {/*  
+
         <DropDown width="200px" title="" defaultValue={items[0]} items={items} onChange={onChange} />
+        */}
       </div>
       <table className="w-full" style={{ borderCollapse: "collapse" }}>
         <thead>
           <tr className="" style={{ borderBottom: "1px solid #d1d5db" }}>
             <th className="text-left text-xl font-normal p-2 w-[40%]">Query</th>
+            <th className="text-left p-2 w-[20%] text-xl font-normal">Report</th>
             <th className="text-left p-2 w-[20%] text-xl font-normal">Type</th>
             <th className="text-left p-2 w-[20%] text-xl font-normal">Date</th>
             <th className="text-left p-2 w-[20%] text-xl font-normal">Actions</th>
@@ -82,12 +96,18 @@ export default function Page() {
           {reports.map((item, i) => (
             <tr key={i} style={{ borderBottom: "1px solid #d1d5db" }}>
               <td className="p-2 text-gray-600">{item.name}</td>
-              <td className="p-2 text-gray-600">{item.reportType}</td>
+              <td className="p-2">
+                <div className="flex gap-5">
+                  <button onClick={() => router.push(item.reportType === "FULL" ? `/full-report/${item.id}` : `/quick-report/${item.id}`)} ><CiFileOn /></button>
+                </div>
+              </td>
+              <td className="p-2 text-gray-600">{item.reportType === "QUICK" ? "short" : "full"}</td>
               <td className="p-2 text-gray-600">{dateConverter(item.createdAt)}</td>
               <td className="p-2">
                 <div className="flex gap-5">
+                  <button onClick={() => handleDelete(item.id)} className="hover:text-red-500"><FiEdit /></button>
                   <button onClick={() => handleDelete(item.id)} className="hover:text-red-500"><FaRegTrashAlt /></button>
-                  <button onClick={() => router.push(item.reportType === "FULL" ? `/full-report/${item.id}` : `/quick-report/${item.id}`)} ><CiFileOn /></button>
+                  <button onClick={() => handleDelete(item.id)} className="hover:text-red-500"><PiShareNetworkLight /></button>
                 </div>
               </td>
             </tr>
