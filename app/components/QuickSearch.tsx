@@ -33,7 +33,7 @@ export default function QuickSearch() {
       />{" "}
       <button
         onClick={handleSubmit}
-        className="text-black absolute top-28 p-2 cursor-pointer rounded-full bg-gray-300 sm:top-auto sm:right-5 "
+        className="text-gray-400 absolute top-28 p-2 cursor-pointer rounded-full bg-gray-100 sm:top-auto sm:right-5 "
       >
         <PiRocketLaunchThin size={30} />
       </button>

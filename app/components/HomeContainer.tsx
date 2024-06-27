@@ -18,7 +18,7 @@ export default function HomeContainer() {
         <ParticlesContainer />
       </div>
       <Link
-        className="p-2 text-xl rounded-md bg-white text-gray-500 hover:text-black fixed z-40 top-2 right-4"
+        className="p-2 text-xl rounded-md  text-gray-500 hover:text-black fixed z-40 top-2 right-4"
         href="/demo"
       >
         Demo

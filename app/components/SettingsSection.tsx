@@ -83,13 +83,13 @@ export default function SettingsSection() {
   }
 
   return (
-    <div className="h-[50vh] w-[70vw] flex">
-      <div className="w-[30%]  flex flex-col "
+    <div className="h-[50vh] w-[70vw] flex flex-col sm:flex-row">
+      <div className="sm:w-[30%]  flex sm:flex-col flex-row "
       >
         <button className="w-full p-2  text-left text-xl" style={{ color: section === "appearance" ? "black" : "gray" }} onClick={() => setSection("appearance")}>Appearance</button>
         <button className="w-full p-2  text-left text-xl" style={{ color: section === "customize" ? "black" : "gray" }} onClick={() => setSection("customize")} >Customize</button>
       </div>
-      <div className="w-[70%] ">
+      <div className="sm:w-[70%] w-full">
         {section === "appearance" ? <div className="w-full flex flex-col gap-4 h-full p-2">
           <div className="flex gap-10 items-center w-[60%] justify-between">
             <h1>Theme</h1>
@@ -97,8 +97,8 @@ export default function SettingsSection() {
             <DropDown defaultValue={getCurrentThemeValue() as DropDownItem} width="150px" onChange={handleChange} items={items} />
           </div>
         </div> : null}
-        {section === "customize" ? <div className="w-full  border-l-[2px] border-gray-200 pl-5 p-2 flex flex-col gap-4">
-          <div className="flex gap-10 items-center w-[60%] justify-between">
+        {section === "customize" ? <div className="w-full  sm:border-l-[2px] border-gray-200 pl-5 p-2 flex flex-col gap-4">
+          <div className="flex sm:gap-10 sm:items-center w-full sm:w-[60%] sm:justify-between flex-col sm:flex-row">
             <h1>Data Format</h1>
 
             <DropDown width="250px" defaultValue={getCurrentDataFormat() as DropDownItem} onChange={dataFormatChange} items={dataFormatItems} />

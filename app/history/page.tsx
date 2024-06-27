@@ -61,7 +61,7 @@ export default function Page() {
   }
 
   function onChange(item: DropDownItem) {
-    setReportType(item.value)
+    setReportType(item.value as number)
   }
 
   const items: DropDownItem[] = [{ label: 'All', value: "" },

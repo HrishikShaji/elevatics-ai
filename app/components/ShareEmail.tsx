@@ -4,6 +4,8 @@ import sendEmail from "../lib/sendEmail";
 import { IoCloseOutline } from "react-icons/io5";
 import { PiCopySimpleFill } from "react-icons/pi";
 import { IoSend } from "react-icons/io5";
+import { FaRegCopy } from "react-icons/fa";
+import { MdOutline1K, MdOutlineAttachEmail } from "react-icons/md";
 
 interface ShareEmailProps {
   setIsShare: Dispatch<SetStateAction<boolean>>;
@@ -79,13 +81,13 @@ export default function ShareEmail({
             </h1>
             <div className=" flex gap-5 items-center w-full relative">
               <input
-                className="p-2 w-full pr-10 rounded-md bg-gray-200"
+                className="p-2 w-full pr-10 rounded-md bg-gray-100"
                 type="text"
                 value={inputValue}
                 onChange={handleInputChange}
                 ref={inputRef}
               />
-              <button className=" absolute right-2  hover:text-gray-700 z-10" onClick={copyToClipboard}><PiCopySimpleFill size={25} /></button>
+              <button className=" absolute right-2  hover:text-gray-700 z-10" onClick={copyToClipboard}><FaRegCopy size={20} /></button>
             </div>
             <h1 className="pb-2 border-b-[1px] font-semibold border-gray-300 ">
               Share Email
@@ -94,7 +96,7 @@ export default function ShareEmail({
               <input
                 type="email"
                 value={email}
-                className="p-2 pr-10 rounded-md bg-gray-200 w-full focus:outline-none"
+                className="p-2 pr-10 rounded-md bg-gray-100 w-full focus:outline-none"
                 placeholder="Address"
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -109,7 +111,7 @@ export default function ShareEmail({
                     <Spinner />
                   </div>
                 ) : (
-                  <IoSend size={20} />
+                  <MdOutlineAttachEmail size={20} />
                 )}
               </button>
             </form>

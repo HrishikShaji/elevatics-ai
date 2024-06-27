@@ -4,10 +4,11 @@ import { signOut, useSession } from "next-auth/react";
 import { useTheme } from "../contexts/ThemeContext";
 import Image from "next/image";
 import Link from "next/link";
+import { IoIosLogOut } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
 import { BiLibrary } from "react-icons/bi";
 import { VscAccount } from "react-icons/vsc";
-
+import { HiOutlineFolderArrowDown } from "react-icons/hi2";
 export default function Sidebar() {
   const { isSideBarOpen, setModal, modal } = useTheme();
   const { status, data } = useSession();
@@ -15,7 +16,7 @@ export default function Sidebar() {
   if (!isSideBarOpen) return null;
   return (
     <>
-      <div className="sm:hidden bg-gray-100 fixed top-0 items-center pt-14 z-20 flex flex-col w-full h-[250px] left-0">
+      <div className="sm:hidden bg-gray-100 fixed top-0  pt-14 z-20 flex flex-col w-full h-[250px] left-0">
 
         <button
           style={{ color: modal === "settings" ? "black" : "" }}
@@ -25,7 +26,7 @@ export default function Sidebar() {
           <IoSettingsOutline />       Settings
         </button>
         <Link className="p-2 pl-4 flex gap-4 items-center text-xl text-gray-500 hover:text-black" href="/history">
-          <BiLibrary />   Library
+          <HiOutlineFolderArrowDown />   Library
         </Link>
         <button
           style={{ color: modal === "profile" ? "black" : "" }}
@@ -35,10 +36,10 @@ export default function Sidebar() {
           <VscAccount />   Profile
         </button>
         <button
-          className="p-2 rounded-md text-xl hover:text-red-500 text-black "
+          className="p-2 pl-4 flex gap-4 items-center text-left rounded-md text-xl hover:text-red-500 text-gray-500 "
           onClick={() => signOut()}
         >
-          Logout
+          <IoIosLogOut />      Logout
         </button>
       </div>
       <div className="h-full relative hidden sm:block w-[300px] bg-gray-100 ">
@@ -51,7 +52,7 @@ export default function Sidebar() {
             <IoSettingsOutline />       Settings
           </button>
           <Link className="p-2 pl-4 flex gap-4 items-center text-xl text-gray-500 hover:text-black" href="/history">
-            <BiLibrary />   Library
+            <HiOutlineFolderArrowDown />   Library
           </Link>
           <button
             style={{ color: modal === "profile" ? "black" : "" }}
