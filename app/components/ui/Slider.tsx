@@ -32,10 +32,10 @@ export default function Slider({ items, setCurrentIndex, currentIndex }: SliderP
   };
   return (
 
-    <div className="relative flex items-center px-10 sm:px-28 w-full">
+    <div className="relative flex w-fit items-center ">
       <button
         onClick={() => scrollLeft(containerRef)}
-        className="absolute size-6 flex items-center justify-center left-1 hover:bg-gray-200 rounded-full"
+        className="absolute size-6 flex items-center justify-center -left-10 hover:bg-gray-200 rounded-full"
       >
         {"<"}
       </button>
@@ -64,7 +64,7 @@ export default function Slider({ items, setCurrentIndex, currentIndex }: SliderP
       </div>
       <button
         onClick={() => scrollRight(containerRef)}
-        className="absolute size-6 flex items-center justify-center right-1 sm:right-20 hover:bg-gray-200 rounded-full"
+        className="absolute size-6 flex items-center justify-center -right-10  hover:bg-gray-200 rounded-full"
       >
         {">"}
       </button>

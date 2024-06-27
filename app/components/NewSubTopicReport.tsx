@@ -3,6 +3,7 @@ import { RxArrowTopRight } from "react-icons/rx";
 import { usePrompt } from "../contexts/PromptContext";
 import ReportContainer from "./ReportContainer";
 import Spinner from "./svgs/Spinner";
+import { getHostname } from "../lib/utils";
 
 type TopicType = {
   title: string;
@@ -24,15 +25,10 @@ export default function NewSubTopicReport({
   const hasFetchStarted = Object.keys(reportLoading).find(
     (key) => key === parentIndex
   );
-  function getHostname(url: string) {
-    const parsedUrl = new URL(url);
-    const name = parsedUrl.hostname;
-    return name;
-  }
 
   return (
     <div
-      className="relative px-10 sm:px-28 w-full h-[700px] sm:h-[630px] flex flex-col  overflow-y-scroll custom-scrollbar"
+      className=" px-10 sm:px-28 h-[85vh] sm:h-[80vh] overflow-y-scroll custom-scrollbar"
       ref={reportContainerRef}>
       <div className="flex flex-col w-full h-full">
         {currentTopic.map((item, i) => (

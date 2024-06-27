@@ -6,13 +6,15 @@ import Spinner from "./svgs/Spinner";
 import ReportContainer from "./ReportContainer";
 import ShareEmail from "./ShareEmail";
 import useFetchQuickReport from "../hooks/useFetchQuickReport";
-import { getHtmlArray } from "../lib/utils";
+import { getHostname, getHtmlArray } from "../lib/utils";
 import QuickReportActions from "./QuickReportActions";
+import { RxArrowTopRight } from "react-icons/rx";
 
 export default function QuickReport() {
   const { prompt } = useQuickReport();
   const [isShare, setIsShare] = useState(false);
-  const { loading, report, savedReport } = useFetchQuickReport(prompt)
+  const { loading, report, savedReport, references } = useFetchQuickReport(prompt)
+  console.log(report)
   return (
     <div className="h-screen  relative w-full text-black flex flex-col justify-end items-center">
       {loading ? (
@@ -24,18 +26,21 @@ export default function QuickReport() {
       ) : (
         <>
           <QuickReportActions setIsShare={setIsShare} htmlArray={getHtmlArray(report)} prompt={prompt} />
-          <div className="relative px-10 sm:px-28 w-full h-[760px]  sm:h-[660px] flex flex-col overflow-y-scroll custom-scrollbar">
-            <div className="flex flex-col w-full h-full ">
-              <ReportContainer>
-                <div className="py-10 ">
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: report,
-                    }}></div>
-                </div>
-              </ReportContainer>
+          <ReportContainer>
+            <div className="py-10 px-10 sm:px-28 h-[90vh] sm:h-[85vh] overflow-y-scroll custom-scrollbar">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: report,
+                }}></div>
+              <div className="flex flex-col gap-2 mt-10">
+                {Object.keys(
+                  references
+                ).map((key, i) => (<a key={i} href={key} className="cursor-pointer flex gap-3 items-center hover:text-blue-500" target="_blank" rel="noopener noreferrer">
+                  {key ? (<>{getHostname(key)} < RxArrowTopRight /></>) : null}</a>
+                ))}
+              </div>
             </div>
-          </div>
+          </ReportContainer>
         </>
       )}
       {isShare && savedReport ? (

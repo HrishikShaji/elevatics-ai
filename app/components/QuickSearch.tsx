@@ -28,7 +28,6 @@ export default function QuickSearch() {
   }
   return (
     <div className="w-full bg-white rounded-3xl overflow-hidden border-gray-200 border-2 shadow-lg focus:outline-gray-300  flex flex-col ">
-
       <form onSubmit={handleSubmit} className="h-[80px] relative  flex items-center justify-center  ">
         <input
           value={input}
@@ -36,8 +35,9 @@ export default function QuickSearch() {
           placeholder="What's on your mind..."
           className="  text-xl h-full   pl-5 w-full focus:outline-none"
         />{" "}
+
         <button
-          className="text-gray-400 absolute  p-2 cursor-pointer rounded-full bg-gray-100  right-5 "
+          className="text-gray-400 absolute glow p-2 cursor-pointer rounded-full bg-gray-100  right-5 "
         >
           <PiRocketLaunchThin size={30} />
         </button>

@@ -38,7 +38,7 @@ export default function DropDown({ defaultValue, width, title, items, onChange }
         </button>
         {isOpen ?
 
-          <div className="w-full flex flex-col rounded-xl shadow-lg overflow-hidden z-10 border-[2px] border-gray-200 bg-white absolute left-0 top-10 divide-gray-100 divide-y">
+          <div className="w-full max-h-[150px] overflow-y-auto custom-scrollbar flex flex-col  rounded-xl shadow-lg overflow-hidden z-10 border-[2px] border-gray-200 bg-white absolute left-0 top-10 divide-gray-100 divide-y">
             {items.map((item, i) => (
               <button className="py-1 px-5 hover:bg-gray-200 text-left" key={i} onClick={() => handleSelect(item)}>{item.label}</button>
             ))}

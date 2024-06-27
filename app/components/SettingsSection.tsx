@@ -19,8 +19,12 @@ export default function SettingsSection() {
     { label: "No Presets", value: "No presets" }, { label: "Structured Data", value: "Structured data" }, { label: "Quantitative Data", value: "Quantitative data" }
   ]
 
-  const topicsItems: DropDownItem[] = [{ label: "1", value: 1 }, { label: "2", value: 2 }, { label: '3', value: 3 }, { label: "4", value: 4 }, { label: "5", value: 5 }]
-  const subTopicsItems: DropDownItem[] = [{ label: "1", value: 1 }, { label: "2", value: 2 }, { label: '3', value: 3 }, { label: "4", value: 4 }, { label: "5", value: 5 }]
+  const topicsItems: DropDownItem[] = [{ label: "1", value: 1 }, { label: "2", value: 2 }, { label: '3', value: 3 }, { label: "4", value: 4 }, { label: "5", value: 5 },
+  { label: "6", value: 6 }, { label: '7', value: 7 }, { label: "8", value: 8 }, { label: "9", value: 9 }, { label: "10", value: 10 }
+  ]
+  const subTopicsItems: DropDownItem[] = [{ label: "1", value: 1 }, { label: "2", value: 2 }, { label: '3', value: 3 }, { label: "4", value: 4 }, { label: "5", value: 5 },
+  { label: "6", value: 6 }, { label: '7', value: 7 }, { label: "8", value: 8 }, { label: "9", value: 9 }, { label: "10", value: 10 }
+  ]
 
   const outputFormatItems: DropDownItem[] = [
     { label: "Chat", value: "chat" }, { label: "Report", value: "report" }, { label: "Report Table", value: "report_table" }
@@ -90,20 +94,20 @@ export default function SettingsSection() {
         <button className="w-full p-2  text-left text-xl" style={{ color: section === "customize" ? "black" : "gray" }} onClick={() => setSection("customize")} >Customize</button>
       </div>
       <div className="sm:w-[70%] w-full">
-        {section === "appearance" ? <div className="w-full flex flex-col gap-4 h-full p-2">
-          <div className="flex gap-10 items-center w-[60%] justify-between">
-            <h1>Theme</h1>
+        {section === "appearance" ? <div className="w-full  sm:border-l-[2px] border-gray-200 flex flex-col gap-4 p-2">
+          <div className="flex sm:gap-10 sm:items-center w-full sm:w-[60%] sm:justify-between flex-col sm:flex-row">
+            <h1 >Theme</h1>
 
-            <DropDown defaultValue={getCurrentThemeValue() as DropDownItem} width="150px" onChange={handleChange} items={items} />
+            <DropDown defaultValue={getCurrentThemeValue() as DropDownItem} width="250px" onChange={handleChange} items={items} />
           </div>
         </div> : null}
-        {section === "customize" ? <div className="w-full  sm:border-l-[2px] border-gray-200 pl-5 p-2 flex flex-col gap-4">
+        {section === "customize" ? <div className="w-full  sm:border-l-[2px] border-gray-200  p-2 flex flex-col gap-4">
           <div className="flex sm:gap-10 sm:items-center w-full sm:w-[60%] sm:justify-between flex-col sm:flex-row">
-            <h1>Data Format</h1>
+            <h1 >Data Format</h1>
 
             <DropDown width="250px" defaultValue={getCurrentDataFormat() as DropDownItem} onChange={dataFormatChange} items={dataFormatItems} />
           </div>
-          <div className="flex gap-10 items-center w-[60%] justify-between">
+          <div className="flex sm:gap-10 sm:items-center w-full sm:w-[60%] sm:justify-between flex-col sm:flex-row">
             <h1>Output Format</h1>
 
             <DropDown width="250px" defaultValue={getCurrentOutputFormat() as DropDownItem} onChange={outputFormatChange} items={outputFormatItems} />
@@ -114,11 +118,11 @@ export default function SettingsSection() {
               <ToggleButton defaultValue={reportOptions.internet} onChange={handleInternet} />
             </div>
           </div>
-          <div className="flex gap-10 items-center w-[60%] justify-between">
+          <div className="flex sm:gap-10 sm:items-center w-full sm:w-[60%] sm:justify-between flex-col sm:flex-row">
             <h1>Topics Limit</h1>
             <DropDown width="250px" defaultValue={getCurrentTopicsLimit() as DropDownItem} onChange={topicsLimitChange} items={topicsItems} />
           </div>
-          <div className="flex gap-10 items-center w-[60%] justify-between">
+          <div className="flex sm:gap-10 sm:items-center w-full sm:w-[60%] sm:justify-between flex-col sm:flex-row">
             <h1>SubTopics Limit</h1>
             <DropDown width="250px" defaultValue={getCurrentSubTopicsLimit() as DropDownItem} onChange={subTopicsLimitChange} items={subTopicsItems} />
           </div>

@@ -11,6 +11,11 @@ export function scrollLeft(ref: RefObject<HTMLDivElement>) {
   }
 }
 
+export function getHostname(url: string) {
+  const parsedUrl = new URL(url);
+  const name = parsedUrl.hostname;
+  return name;
+}
 export function scrollRight(ref: RefObject<HTMLDivElement>) {
   if (ref.current) {
     ref.current.scrollBy({

@@ -2,6 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+.glow {
+  animation:glow 1s ease-in-out infinite alternate;
+}
+
+.glowWrapper {
+  text-align:center;
+  background:radial-gradient(circle,rgba(73,22,94,1)25%,rgba(0,0,0,1),100%)
+}
+
+.icon {
+  color:white;
+}
+
+.neon{
+  text-shadow:
+    0 0 0.5rem #fff,
+    0 0 1rem #fff,
+    0 0 1.5rem #fff,
+    0 0 2.5rem #d400ff,
+    0 0 4rem #d400ff,
+    0 0 5.5rem #d400ff,
+    0 0 6rem #d400ff,
+    0 0 9.5rem #d400ff
+}
+
 .custom-scrollbar::-webkit-scrollbar {
     width: 10px;
     margin: 0px 10px 0px 0px;

@@ -10,6 +10,7 @@ export default function(prompt: string) {
   const [loading, setLoading] = useState(false);
   const [report, setReport] = useState<string>("");
   const { reportOptions } = useSettings()
+  const [references, setReferences] = useState({})
   const { setRefetch } = useUser()
   const [savedReport, setSavedReport] = useState<Report | null>(null);
   useEffect(() => {
@@ -19,6 +20,7 @@ export default function(prompt: string) {
         const data = await generateQuickReport({ prompt: prompt, internet: reportOptions.internet, outputFormat: reportOptions.outputFormat, dataFormat: reportOptions.dataFormat });
 
         setReport(data.report);
+        setReferences(data.references)
       } catch (error) {
         console.log(error);
       } finally {
@@ -45,5 +47,5 @@ export default function(prompt: string) {
     }
   }, [report]);
 
-  return { loading, report, savedReport }
+  return { loading, report, savedReport, references }
 }

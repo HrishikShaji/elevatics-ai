@@ -36,7 +36,7 @@ export default function QuickReportActions({ setIsShare, htmlArray, prompt }: Qu
       <button
         onClick={() => setIsShare(true)}
         className="text-sm gap-2 text-gray-500 sm:border-2 border-gray-500 rounded-md sm:p-2 flex items-center justify-center sm:w-[120px]">
-        <IoMdShare size={25} /> <span className="hidden sm:block"></span>
+        <IoMdShare size={25} /> <span className="hidden sm:block">Share</span>
       </button>
     </div>
   )
