@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useTheme } from "../contexts/ThemeContext";
 import QuickSearch from "./QuickSearch";
+import { ParticlesContainer } from "./ui/ParticlesContainer";
 
 export default function HomeContainer() {
   const { theme, isSideBarOpen } = useTheme();
@@ -10,10 +11,12 @@ export default function HomeContainer() {
     <div
       style={{
         color: theme.primary.textColor,
-        backgroundColor: theme.primary.backgroundColor,
       }}
       className="relative flex flex-col items-center pt-[300px] sm:pt-0  justify-center  px-10   h-full  w-full"
     >
+      <div className="left-0 right-0 h-full w-full absolute -z-10">
+        <ParticlesContainer />
+      </div>
       <Link
         className="p-2 text-xl rounded-md bg-white text-gray-500 hover:text-black fixed z-40 top-2 right-4"
         href="/demo"
