@@ -18,7 +18,6 @@ export default function SavedFinalReport() {
 
   return (
     <div className="h-screen w-full flex flex-col justify-end relative items-center">
-      <ReportActions setIsDownload={setIsDownload} setIsShare={setIsShare} />
       <div className="flex flex-col h-[700px] justify-between items-center w-full">
         <Slider items={Object.entries(report)} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
         <div

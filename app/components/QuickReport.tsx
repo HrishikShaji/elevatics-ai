@@ -24,7 +24,7 @@ export default function QuickReport() {
       ) : (
         <>
           <QuickReportActions setIsShare={setIsShare} htmlArray={getHtmlArray(report)} prompt={prompt} />
-          <div className="relative px-28 w-full  h-[660px] flex flex-col overflow-y-scroll custom-scrollbar">
+          <div className="relative px-10 sm:px-28 w-full h-[760px]  sm:h-[660px] flex flex-col overflow-y-scroll custom-scrollbar">
             <div className="flex flex-col w-full h-full ">
               <ReportContainer>
                 <div className="py-10 ">

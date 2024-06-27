@@ -64,7 +64,7 @@ export type SubTopicsType = {
 
 export type DropDownItem = {
   label: string;
-  value: string;
+  value: string | number;
 }
 
 export type DataFormatType = "No presets" | "Structured data" | "Quantitative data"

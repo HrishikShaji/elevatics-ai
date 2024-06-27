@@ -19,6 +19,9 @@ export default function SettingsSection() {
     { label: "No Presets", value: "No presets" }, { label: "Structured Data", value: "Structured data" }, { label: "Quantitative Data", value: "Quantitative data" }
   ]
 
+  const topicsItems: DropDownItem[] = [{ label: "1", value: 1 }, { label: "2", value: 2 }, { label: '3', value: 3 }, { label: "4", value: 4 }, { label: "5", value: 5 }]
+  const subTopicsItems: DropDownItem[] = [{ label: "1", value: 1 }, { label: "2", value: 2 }, { label: '3', value: 3 }, { label: "4", value: 4 }, { label: "5", value: 5 }]
+
   const outputFormatItems: DropDownItem[] = [
     { label: "Chat", value: "chat" }, { label: "Report", value: "report" }, { label: "Report Table", value: "report_table" }
   ]
@@ -29,7 +32,18 @@ export default function SettingsSection() {
     }));
   }, []);
 
-
+  function topicsLimitChange(item: DropDownItem) {
+    setTopicsLimit(prev => ({
+      ...prev,
+      topics: item.value as number
+    }))
+  }
+  function subTopicsLimitChange(item: DropDownItem) {
+    setTopicsLimit(prev => ({
+      ...prev,
+      subTopics: item.value as number
+    }))
+  }
 
   function dataFormatChange(item: DropDownItem) {
     setReportOptions(prev => ({
@@ -46,6 +60,14 @@ export default function SettingsSection() {
   }
   function handleChange(item: DropDownItem) {
     toggleTheme(item.value as "light" | "dark")
+  }
+
+
+  function getCurrentTopicsLimit() {
+    return topicsItems.find(item => item.value === topicsLimit.topics)
+  }
+  function getCurrentSubTopicsLimit() {
+    return subTopicsItems.find(item => item.value === topicsLimit.subTopics)
   }
 
   function getCurrentDataFormat() {
@@ -94,27 +116,11 @@ export default function SettingsSection() {
           </div>
           <div className="flex gap-10 items-center w-[60%] justify-between">
             <h1>Topics Limit</h1>
-            <input
-              className="w-[250px] border-gray-200 border-[2px]  p-1 pl-5 rounded-xl focus:outline-none"
-              value={topicsLimit.topics}
-              type="number"
-              onChange={(e) => setTopicsLimit(prev => ({
-                ...prev,
-                topics: parseInt(e.target.value, 10)
-              }))}
-            />
+            <DropDown width="250px" defaultValue={getCurrentTopicsLimit() as DropDownItem} onChange={topicsLimitChange} items={topicsItems} />
           </div>
           <div className="flex gap-10 items-center w-[60%] justify-between">
             <h1>SubTopics Limit</h1>
-            <input
-              className="w-[250px] border-gray-200 border-[2px]  p-1 pl-5 rounded-xl focus:outline-none"
-              value={topicsLimit.subTopics}
-              type="number"
-              onChange={(e) => setTopicsLimit(prev => ({
-                ...prev,
-                subTopics: parseInt(e.target.value, 10)
-              }))}
-            />
+            <DropDown width="250px" defaultValue={getCurrentSubTopicsLimit() as DropDownItem} onChange={subTopicsLimitChange} items={subTopicsItems} />
           </div>
         </div> : null}
       </div>
