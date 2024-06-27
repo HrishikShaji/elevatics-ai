@@ -15,8 +15,6 @@ export default function TopicSection() {
     selectedSubtopics,
     topics, prompt
   } = usePrompt();
-  const { topicsLimit } = useSettings()
-  console.log(topicsLimit)
   const { isLoading, data, setOpenTopic, openTopic } = useTopics()
   const router = useRouter();
 
@@ -32,7 +30,7 @@ export default function TopicSection() {
         backgroundColor: theme.primary.backgroundColor,
         color: theme.primary.textColor,
       }}
-      className="flex h-full  gap-5"
+      className="flex flex-col sm:flex-row h-full  sm:gap-5"
     >
       {isLoading ? (
         <div className="w-full flex justify-center">
@@ -43,7 +41,7 @@ export default function TopicSection() {
       ) : null}
       {topics.length !== 0 ? (
         <>
-          <div className="w-[50%]  h-full overflow-y-hidden p-10 pt-24">
+          <div className="sm:w-[50%] w-full h-screen  sm:h-full overflow-y-hidden p-10 pt-24">
             <div className="w-full justify-between flex relative items-center">
               <div>
                 <h1 className="text-xl sm:text-3xl font-semibold w-full">
@@ -78,7 +76,7 @@ export default function TopicSection() {
               Continue
             </button>
           </div>
-          <div className="w-[50%] h-full bg-black p-10  text-white pt-24">
+          <div className="w-full sm:w-[50%] h-screen sm:h-full bg-black p-10  text-white pt-24">
             <div className="w-full h-[80vh] custom-scrollbar pr-5 overflow-y-auto">
               {Object.entries(selectedSubtopics).map(([key, value], i) => (
                 <div key={i} className=" w-full">

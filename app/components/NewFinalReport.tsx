@@ -24,7 +24,7 @@ export default function NewFinalReport() {
   return (
     <div className="h-screen w-full  flex flex-col justify-end relative items-center">
       <ReportActions setIsDownload={setIsDownload} setIsShare={setIsShare} />
-      <div className="flex flex-col   h-[700px] justify-between items-center  w-full">
+      <div className="flex flex-col h-[760px]  sm:h-[700px] justify-between items-center  w-full">
         <Slider setCurrentIndex={setCurrentIndex} currentIndex={currentIndex} items={data} />
         {data.length > 0 ? (
           <NewSubTopicReport

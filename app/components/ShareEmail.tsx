@@ -64,7 +64,7 @@ export default function ShareEmail({
   }
   return (
     <div className="fixed z-50 top-0 left-0 h-screen w-full bg-black/70 flex items-center justify-center">
-      <div className="relative w-[50vw] h-[50vh] justify-center items-center  p-10 flex flex-col gap-2 bg-white rounded-md">
+      <div className="relative sm:w-[50vw] w-[85vw] h-[50vh] justify-center items-center  p-10 flex flex-col gap-2 bg-white rounded-md">
         <button
           onClick={() => setIsShare(false)}
           className="absolute text-black p-2 rounded-md bg-gray-300 -top-3 -right-3"
@@ -79,13 +79,13 @@ export default function ShareEmail({
             </h1>
             <div className=" flex gap-5 items-center w-full relative">
               <input
-                className="p-2 w-full rounded-md bg-gray-200"
+                className="p-2 w-full pr-10 rounded-md bg-gray-200"
                 type="text"
                 value={inputValue}
                 onChange={handleInputChange}
                 ref={inputRef}
               />
-              <button className=" absolute right-2 hover:text-gray-700 z-10" onClick={copyToClipboard}><PiCopySimpleFill size={25} /></button>
+              <button className=" absolute right-2  hover:text-gray-700 z-10" onClick={copyToClipboard}><PiCopySimpleFill size={25} /></button>
             </div>
             <h1 className="pb-2 border-b-[1px] font-semibold border-gray-300 ">
               Share Email
@@ -94,7 +94,7 @@ export default function ShareEmail({
               <input
                 type="email"
                 value={email}
-                className="p-2 rounded-md bg-gray-200 w-full focus:outline-none"
+                className="p-2 pr-10 rounded-md bg-gray-200 w-full focus:outline-none"
                 placeholder="Address"
                 onChange={(e) => setEmail(e.target.value)}
                 required

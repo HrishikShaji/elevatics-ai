@@ -15,7 +15,7 @@ export default function Sidebar() {
   if (!isSideBarOpen) return null;
   return (
     <>
-      <div className="sm:hidden bg-white fixed top-14 items-center z-40 flex flex-col w-full h-[200px] left-0">
+      <div className="sm:hidden bg-gray-100 fixed top-0 items-center pt-14 z-20 flex flex-col w-full h-[250px] left-0">
 
         <button
           style={{ color: modal === "settings" ? "black" : "" }}

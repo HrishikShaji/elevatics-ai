@@ -32,7 +32,7 @@ export default function NewSubTopicReport({
 
   return (
     <div
-      className="relative px-28 w-full h-[630px] flex flex-col  overflow-y-scroll custom-scrollbar"
+      className="relative px-10 sm:px-28 w-full h-[700px] sm:h-[630px] flex flex-col  overflow-y-scroll custom-scrollbar"
       ref={reportContainerRef}>
       <div className="flex flex-col w-full h-full">
         {currentTopic.map((item, i) => (

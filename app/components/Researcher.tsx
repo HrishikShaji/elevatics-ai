@@ -47,17 +47,17 @@ export default function Researcher() {
 
   return (
     <div className="flex  w-full h-full">
-      <div className="flex flex-col items-center h-full pt-[200px] w-full">
+      <div className="flex flex-col px-10 items-center h-full pt-[300px] sm:pt-[200px] w-full">
         <h1
           style={{ color: theme.primary.textColor }}
           className="text-3xl font-semibold"
         >
           iResearcher
         </h1>
-        <h1 className="text-[#8282AD] mt-5">
+        <h1 className="text-[#8282AD] mt-5 text-center">
           Take your unbiased research to new level{" "}
         </h1>
-        <div className="w-[50%] flex flex-col gap-3">
+        <div className="w-full sm:w-[50%] flex flex-col gap-3">
           <form
             onSubmit={handleSubmit}
             className="mt-5 flex items-center relative w-full"
@@ -93,7 +93,7 @@ export default function Researcher() {
           {isSuccess ? (
             <div className="flex flex-col gap-1 w-full">
               <span className="text-[#535353] ">Here are some suggestions</span>
-              <div className="p-10 md:p-0 w-full flex flex-col gap-1">
+              <div className="p-0 w-full flex flex-col gap-1">
                 {data.map((recommendation: string, i: number) => (
                   <div
                     onClick={() => handleRecommendation(recommendation)}

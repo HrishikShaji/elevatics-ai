@@ -1,16 +1,11 @@
 "use client";
 import { useTheme } from "../contexts/ThemeContext";
-import { BiNetworkChart } from "react-icons/bi";
 import { PiGraduationCap, PiRocketLaunchThin } from "react-icons/pi";
 import { PiPiggyBank } from "react-icons/pi";
 import { PiCodeBold } from "react-icons/pi";
 import { RiRobot2Line } from "react-icons/ri";
 import { MdAutoGraph } from "react-icons/md";
 import Link from "next/link";
-import { IoDocument, IoDocuments } from "react-icons/io5";
-import { useQuickReport } from "../contexts/QuickReportContext";
-import { useRouter } from "next/navigation";
-import { useUser } from "../contexts/UserContext";
 import QuickSearch from "./QuickSearch";
 import { IoDocumentsOutline } from "react-icons/io5";
 
@@ -69,14 +64,33 @@ export default function Hero() {
         color: theme.primary.textColor,
         backgroundColor: theme.primary.backgroundColor,
       }}
-      className="flex flex-col items-center  justify-center  px-10   h-full relative w-full"
+      className="flex flex-col items-center pt-[300px] sm:pt-0 pb-10 sm:pb-0  justify-center  px-10   h-full relative w-full"
     >
-      <h1 style={{ fontSize: isSideBarOpen ? "30px" : "40px" }} className=" font-semibold  w-[80%] md:w-[60%] text-center">
-        Elevate your thinking,{" "}
-        <span className="text-gray-500">Amplify your impact.</span>
+      <div className="flex flex-col items-start justify-start">
+        <h1
+          className={`whitespace-nowrap font-semibold  text-center bg-clip-text text-transparent bg-gradient-to-r md:py-2 from-black to-gray-400
+    ${isSideBarOpen
+              ? 'text-3xl md:text-3xl lg:text-4xl'
+              : 'text-3xl md:text-4xl lg:text-5xl'}
+  `}
+        >
+          Elevate your thinking,{" "}
+        </h1>
+        <h1
+          className={`font-semibold whitespace-nowrap  text-center bg-clip-text text-transparent bg-gradient-to-l md:py-2 from-black to-gray-400
+    ${isSideBarOpen
+              ? 'text-3xl md:text-3xl lg:text-4xl'
+              : 'text-3xl md:text-4xl lg:text-5xl'}
+  `}
+        >
+          Amplify your impact.
+        </h1>
+      </div>
+      <h1 className="text-xl text-[#8282AD] text-center  font-light mt-3">
+        The smartest way to search the internet.
       </h1>
       <QuickSearch />
-      <div className="grid grid-cols-3 gap-5 w-[90%]  mt-10">
+      <div className="grid grid-cols-1  sm:grid-cols-3 gap-5 w-full sm:w-[90%] mt-20 sm:mt-10">
         {agents.map((agent, i) => {
           const IconComponent = agent.icon;
           return (
