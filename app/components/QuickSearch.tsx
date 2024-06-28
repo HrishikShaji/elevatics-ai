@@ -33,7 +33,7 @@ export default function QuickSearch() {
           value={input}
           onChange={handleChange}
           placeholder="What's on your mind..."
-          className="  text-xl h-full   pl-5 w-full focus:outline-none"
+          className="  text-xl h-full   pl-5 pr-20 w-full focus:outline-none"
         />{" "}
 
         <button

@@ -20,18 +20,18 @@ export default function Hero() {
       icon: IoDocumentsOutline,
     },
     {
+      title: "Investment Agent",
+      url: "/investment",
+      description: "Investment opportunities with data-driven insights.",
+      online: false,
+      icon: PiPiggyBank,
+    },
+    {
       title: "Career Agent",
       url: "/recruitment",
       description: "Unlock your dream job with our  career agent.",
       online: true,
       icon: PiGraduationCap,
-    },
-    {
-      title: "Investment Agent",
-      url: "/test",
-      description: "Investment opportunities with data-driven insights.",
-      online: false,
-      icon: PiPiggyBank,
     },
     {
       title: "Coding Agent",

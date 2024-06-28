@@ -44,7 +44,6 @@ export default function RootLayout({
                     <div className="sm:overflow-hidden sm:h-screen w-full flex">
                       <Sidebar />
                       <ToggleSidebar />
-                      <SignInButton />
                       <div className="  w-full flex flex-col h-full">
                         <div className=" h-full w-full ">{children}</div>
                       </div>

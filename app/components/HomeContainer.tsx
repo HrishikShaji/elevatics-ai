@@ -17,12 +17,6 @@ export default function HomeContainer() {
       <div className="left-0 right-0 h-full w-full absolute -z-10">
         <ParticlesContainer />
       </div>
-      <Link
-        className="p-2 text-xl rounded-md  text-gray-500 hover:text-black fixed z-40 top-2 right-4"
-        href="/demo"
-      >
-        Demo
-      </Link>
       <div className="absolute flex flex-col items-center justify-center top-[200px] sm:top-[100px] w-full">
 
         <div className="flex flex-col items-start justify-start">
