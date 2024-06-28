@@ -14,7 +14,6 @@ export default function QuickReport() {
   const { prompt } = useQuickReport();
   const [isShare, setIsShare] = useState(false);
   const { loading, report, savedReport, references } = useFetchQuickReport(prompt)
-  console.log(report)
   return (
     <div className="h-screen  relative w-full text-black flex flex-col justify-end items-center">
       {loading ? (
@@ -29,10 +28,11 @@ export default function QuickReport() {
           <ReportContainer>
             <div className="py-10 px-10 sm:px-28 h-[90vh] sm:h-[85vh] overflow-y-scroll custom-scrollbar">
               <div
+                className="h-full"
                 dangerouslySetInnerHTML={{
                   __html: report,
                 }}></div>
-              <div className="flex flex-col gap-2 mt-10">
+              <div className="flex flex-col gap-2 mt-10 h-full">
                 {Object.keys(
                   references
                 ).map((key, i) => (<a key={i} href={key} className="cursor-pointer flex gap-3 items-center hover:text-blue-500" target="_blank" rel="noopener noreferrer">

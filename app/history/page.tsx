@@ -4,51 +4,52 @@ import { CiFileOn } from "react-icons/ci";
 import { Report } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { MdDelete } from "react-icons/md";
-import { RxArrowTopRight } from "react-icons/rx";
-import DropDown from "../components/ui/DropDown";
-import { DropDownItem } from "@/types/types";
-import { FaRegTrashAlt } from "react-icons/fa";
 import { FiEdit } from "react-icons/fi";
 import { PiShareNetworkLight } from "react-icons/pi";
 import { IoSearch } from "react-icons/io5";
+import Spinner from "../components/svgs/Spinner";
+import DeleteReport from "../components/DeleteReport";
 export default function Page() {
   const [reports, setReports] = useState<Report[]>([]);
   const [page, setPage] = useState(1);
   const [reportType, setReportType] = useState("")
   const [pageSize, setPageSize] = useState(10);
   const [totalCount, setTotalCount] = useState(0);
+  const [loading, setLoading] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
   const router = useRouter()
+  const [refetch, setRefetch] = useState(false)
 
   useEffect(() => {
     async function fetchReports() {
-      const response = await fetch(`/api/report?page=${page}&pageSize=${pageSize}&reportType=${reportType}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
 
-      if (!response.ok) {
-        throw new Error("error fetching reports");
+      try {
+        setLoading(true)
+        setIsSuccess(false)
+        const response = await fetch(`/api/report?page=${page}&pageSize=${pageSize}&reportType=${reportType}`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        if (!response.ok) {
+          throw new Error("error fetching reports");
+        }
+
+        const result = await response.json();
+        setIsSuccess(true)
+        setReports(result.reports);
+        setTotalCount(result.totalCount);
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setLoading(false)
       }
-
-      const result = await response.json();
-
-      setReports(result.reports);
-      setTotalCount(result.totalCount);
     }
     fetchReports();
-  }, [page, pageSize, reportType]);
+  }, [page, pageSize, reportType, refetch]);
 
 
 
-  async function handleDelete(id: string) {
-    await fetch("/api/report", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id }),
-    });
-
-  }
 
   const totalPages = Math.ceil(totalCount / pageSize);
 
@@ -60,72 +61,71 @@ export default function Page() {
     return dateString
   }
 
-  function onChange(item: DropDownItem) {
-    setReportType(item.value as string)
-  }
-
-  const items: DropDownItem[] = [{ label: 'All', value: "" },
-  { label: "Full", value: "FULL" }, { label: "Quick", value: "QUICK" }]
 
   return (
-    <div className="p-20 w-full flex flex-col items-center justify-center gap-10">
-      <div className="flex w-full flex-start">
-        <div className="relative flex items-center w-[200px]">
+    <div className="p-20 w-full h-screen flex flex-col items-center justify-center gap-10">
+      {loading ? <div className="w-10"><Spinner /></div> : null}
+      {isSuccess ?
+        <>
+          <div className="w-full">
 
-          <input placeholder="search report..." className="p-1 pl-3 rounded-xl border-[2px] border-gray-200" />
-          <button className="absolute right-1">
-            <IoSearch />
-          </button>
-        </div>
-        {/*  
+            <div className="relative flex items-center w-[200px] ">
+              <input placeholder="search report..." className="p-1 pl-3 w-full  rounded-xl border-[2px] border-gray-200" />
+              <button className="absolute right-2">
+                <IoSearch />
+              </button>
+            </div>
+          </div>
+          {/*  
 
         <DropDown width="200px" title="" defaultValue={items[0]} items={items} onChange={onChange} />
         */}
-      </div>
-      <table className="w-full" style={{ borderCollapse: "collapse" }}>
-        <thead>
-          <tr className="" style={{ borderBottom: "1px solid #d1d5db" }}>
-            <th className="text-left text-xl font-normal p-2 w-[40%]">Query</th>
-            <th className="text-left p-2 w-[20%] text-xl font-normal">Report</th>
-            <th className="text-left p-2 w-[20%] text-xl font-normal">Type</th>
-            <th className="text-left p-2 w-[20%] text-xl font-normal">Date</th>
-            <th className="text-left p-2 w-[20%] text-xl font-normal">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {reports.map((item, i) => (
-            <tr key={i} style={{ borderBottom: "1px solid #d1d5db" }}>
-              <td className="p-2 text-gray-600">{item.name}</td>
-              <td className="p-2">
-                <div className="flex gap-5">
-                  <button onClick={() => router.push(item.reportType === "FULL" ? `/full-report/${item.id}` : `/quick-report/${item.id}`)} ><CiFileOn /></button>
-                </div>
-              </td>
-              <td className="p-2 text-gray-600">{item.reportType === "QUICK" ? "short" : "full"}</td>
-              <td className="p-2 text-gray-600">{dateConverter(item.createdAt)}</td>
-              <td className="p-2">
-                <div className="flex gap-5">
-                  <button onClick={() => handleDelete(item.id)} className="hover:text-red-500"><FiEdit /></button>
-                  <button onClick={() => handleDelete(item.id)} className="hover:text-red-500"><FaRegTrashAlt /></button>
-                  <button onClick={() => handleDelete(item.id)} className="hover:text-red-500"><PiShareNetworkLight /></button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          <table className="w-full" style={{ borderCollapse: "collapse" }}>
+            <thead>
+              <tr className="" style={{ borderBottom: "1px solid #d1d5db" }}>
+                <th className="text-left text-xl font-normal p-2 w-[40%]">Query</th>
+                <th className="text-left p-2 w-[20%] text-xl font-normal">Report</th>
+                <th className="text-left p-2 w-[20%] text-xl font-normal">Type</th>
+                <th className="text-left p-2 w-[20%] text-xl font-normal">Date</th>
+                <th className="text-left p-2 w-[20%] text-xl font-normal">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {reports.map((item, i) => (
+                <tr key={i} style={{ borderBottom: "1px solid #d1d5db" }}>
+                  <td className="p-2 text-gray-600">{item.name}</td>
+                  <td className="p-2">
+                    <div className="flex gap-5">
+                      <button onClick={() => router.push(item.reportType === "FULL" ? `/full-report/${item.id}` : `/quick-report/${item.id}`)} ><CiFileOn /></button>
+                    </div>
+                  </td>
+                  <td className="p-2 text-gray-600">{item.reportType === "QUICK" ? "short" : "full"}</td>
+                  <td className="p-2 text-gray-600">{dateConverter(item.createdAt)}</td>
+                  <td className="p-2">
+                    <div className="flex  items-center justify-between h-[30px] w-[100px]">
+                      <button className="hover:text-red-500"><FiEdit /></button>
+                      <DeleteReport setRefetch={setRefetch} id={item.id} />
+                      <button className="hover:text-red-500"><PiShareNetworkLight /></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
 
-      <div className="flex gap-3 items-center">
-        <button className="h-10 w-10 flex items-center justify-center rounded-full bg-gray-200" onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>
-          {`<`}
-        </button>
-        <span>
-          {page}
-        </span>
-        <button className="h-10 w-10 flex items-center justify-center rounded-full bg-gray-200" onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))} disabled={page === totalPages}>
-          {'>'}
-        </button>
-      </div>
+          <div className="flex gap-3 items-center">
+            <button className="h-10 w-10 flex items-center justify-center rounded-full bg-gray-200" onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>
+              {`<`}
+            </button>
+            <span>
+              {page}
+            </span>
+            <button className="h-10 w-10 flex items-center justify-center rounded-full bg-gray-200" onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))} disabled={page === totalPages}>
+              {'>'}
+            </button>
+          </div>
+        </>
+        : null}
     </div>
   );
 }
