@@ -18,14 +18,18 @@ export default function Page() {
   const [loading, setLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
   const router = useRouter()
+  const [firstLoad, setFirstLoad] = useState(false)
   const [refetch, setRefetch] = useState(false)
 
   useEffect(() => {
     async function fetchReports() {
 
       try {
-        setLoading(true)
-        setIsSuccess(false)
+        if (!firstLoad) {
+
+          setLoading(true)
+          setIsSuccess(false)
+        }
         const response = await fetch(`/api/report?page=${page}&pageSize=${pageSize}&reportType=${reportType}`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -36,13 +40,20 @@ export default function Page() {
         }
 
         const result = await response.json();
-        setIsSuccess(true)
+        if (!firstLoad) {
+
+          setIsSuccess(true)
+        }
         setReports(result.reports);
         setTotalCount(result.totalCount);
       } catch (error) {
         console.log(error)
       } finally {
-        setLoading(false)
+        if (!firstLoad) {
+
+          setLoading(false)
+        }
+        setFirstLoad(true)
       }
     }
     fetchReports();
@@ -66,7 +77,7 @@ export default function Page() {
     <div className="p-20 w-full h-screen flex flex-col items-center justify-center gap-10">
       {loading ? <div className="w-10"><Spinner /></div> : null}
       {isSuccess ?
-        <>
+        <div className="h-full w-full flex flex-col gap-3">
           <div className="w-full">
 
             <div className="relative flex items-center w-[200px] ">
@@ -76,10 +87,6 @@ export default function Page() {
               </button>
             </div>
           </div>
-          {/*  
-
-        <DropDown width="200px" title="" defaultValue={items[0]} items={items} onChange={onChange} />
-        */}
           <table className="w-full" style={{ borderCollapse: "collapse" }}>
             <thead>
               <tr className="" style={{ borderBottom: "1px solid #d1d5db" }}>
@@ -113,7 +120,7 @@ export default function Page() {
             </tbody>
           </table>
 
-          <div className="flex gap-3 items-center">
+          <div className="flex gap-3 items-center w-full justify-center mt-5">
             <button className="h-10 w-10 flex items-center justify-center rounded-full bg-gray-200" onClick={() => setPage((prev) => Math.max(prev - 1, 1))} disabled={page === 1}>
               {`<`}
             </button>
@@ -124,7 +131,7 @@ export default function Page() {
               {'>'}
             </button>
           </div>
-        </>
+        </div>
         : null}
     </div>
   );
