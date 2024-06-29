@@ -26,9 +26,9 @@ export default function QuickReport() {
         <>
           <QuickReportActions setIsShare={setIsShare} htmlArray={getHtmlArray(report)} prompt={prompt} />
           <ReportContainer>
-            <div className="py-10 px-10 sm:px-28 h-[90vh] sm:h-[85vh] overflow-y-scroll custom-scrollbar">
+            <div className="py-10  px-10 sm:px-[240px] h-[90vh] sm:h-[80vh] overflow-y-scroll custom-scrollbar">
               <div
-                className=""
+                className=" p-10 bg-[#f9f8fb] rounded-3xl"
                 dangerouslySetInnerHTML={{
                   __html: report,
                 }}></div>

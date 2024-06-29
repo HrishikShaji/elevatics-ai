@@ -13,7 +13,7 @@ export default function ToggleSidebar() {
   const { setModal } = useTheme();
 
   return (
-    <div className="fixed bg-white sm:bg-transparent w-full justify-between top-0 left-0 z-20 flex items-center py-2 px-5 gap-5">
+    <div className="fixed bg-white sm:bg-transparent w-full justify-between top-0 left-0 z-20 flex items-center pt-5 px-5 gap-5">
       <div className="flex gap-4 items-center">
 
         <button
