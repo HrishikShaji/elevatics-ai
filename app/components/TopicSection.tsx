@@ -30,7 +30,7 @@ export default function TopicSection() {
         backgroundColor: theme.primary.backgroundColor,
         color: theme.primary.textColor,
       }}
-      className="flex flex-col sm:flex-row h-full  sm:gap-5"
+      className="flex flex-col sm:flex-row h-full  "
     >
       {isLoading ? (
         <div className="w-full flex justify-center">
@@ -41,7 +41,7 @@ export default function TopicSection() {
       ) : null}
       {topics.length !== 0 ? (
         <>
-          <div className="sm:w-[50%] w-full h-screen  sm:h-full overflow-y-hidden p-10 pt-24">
+          <div className="sm:w-[50%] w-full h-screen  sm:h-full overflow-y-hidden px-28 pt-32">
             <div className="w-full justify-between flex relative items-center">
               <div>
                 <h1 className="text-xl sm:text-3xl font-semibold w-full">
@@ -76,8 +76,8 @@ export default function TopicSection() {
               Continue
             </button>
           </div>
-          <div className="w-full sm:w-[50%] h-screen sm:h-full bg-black p-10  text-white pt-24">
-            <div className="w-full h-[80vh] custom-scrollbar pr-5 overflow-y-auto">
+          <div className="w-full sm:w-[50%] h-screen sm:h-full  p-10 px-28 text-white pt-24">
+            <div className="w-full h-[80vh] custom-scrollbar bg-black rounded-3xl pt-8 px-10 pr-20 overflow-y-auto">
               {Object.entries(selectedSubtopics).map(([key, value], i) => (
                 <div key={i} className=" w-full">
                   <div
@@ -87,7 +87,7 @@ export default function TopicSection() {
                     {value.length !== 0 ? key : null}
                   </div>
                   {value.map((item, j) => (
-                    <div key={j} className="ml-5 py-1">
+                    <div key={j} className="ml-5 py-1 pt-4">
                       <h1>{item.title}</h1>
                       <p className="text-sm text-gray-400">{item.desc}</p>
                     </div>

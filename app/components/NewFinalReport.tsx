@@ -22,10 +22,10 @@ export default function NewFinalReport() {
 
 
   return (
-    <div className="h-screen w-full  flex flex-col justify-end relative items-center">
+    <div className="h-screen w-full  flex flex-col  relative items-center justify-center">
       <ReportActions setIsDownload={setIsDownload} setIsShare={setIsShare} />
-      <div className="flex flex-col  ">
-        <div className="pl-28">
+      <div className="flex flex-col ">
+        <div className="pl-28 ">
 
           <Slider setCurrentIndex={setCurrentIndex} currentIndex={currentIndex} items={data} />
         </div>

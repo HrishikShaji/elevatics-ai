@@ -43,27 +43,27 @@ export default function Sidebar() {
         </button>
       </div>
       <div className="h-full relative hidden sm:block w-[300px] bg-gray-100 ">
-        <div className="mt-20 flex flex-col">
+        <div className="mt-28 flex flex-col">
           <button
             style={{ color: modal === "settings" ? "black" : "" }}
-            className="p-2 flex gap-4 items-center text-xl pl-4 text-left text-gray-500 hover:text-black"
+            className="p-2 flex gap-4 items-center text-xl pl-8 text-left text-gray-500 hover:text-black"
             onClick={() => setModal("settings")}
           >
             <IoSettingsOutline />       Settings
           </button>
-          <Link className="p-2 pl-4 flex gap-4 items-center text-xl text-gray-500 hover:text-black" href="/history">
+          <Link className="p-2 pl-8 flex gap-4 items-center text-xl text-gray-500 hover:text-black" href="/history">
             <HiOutlineFolderArrowDown />   Library
           </Link>
           <button
             style={{ color: modal === "profile" ? "black" : "" }}
-            className="p-2 flex gap-4 items-center text-xl pl-4 text-left text-gray-500 hover:text-black"
+            className="p-2 flex gap-4 items-center text-xl pl-8 text-left text-gray-500 hover:text-black"
             onClick={() => setModal("profile")}
           >
             <VscAccount />   Profile
           </button>
         </div>
         {status === "authenticated" ? (
-          <div className="absolute flex justify-between items-center w-full bottom-5 left-0 px-4 p-2">
+          <div className="absolute flex justify-between items-center w-full bottom-5 left-0 pl-8 px-4 p-2">
             <button
               className="p-2 rounded-md text-xl hover:text-red-500 text-black "
               onClick={() => signOut()}

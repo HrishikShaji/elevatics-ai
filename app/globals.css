@@ -34,7 +34,7 @@
   
   .custom-scrollbar::-webkit-scrollbar-track {
     border-radius: 25px;
-    background-color: #ececec;
+    background-color: transparent;
   }
   
   .custom-scrollbar::-webkit-scrollbar-thumb {

@@ -28,9 +28,9 @@ export default function NewSubTopicReport({
 
   return (
     <div
-      className=" px-10 sm:px-28 h-[85vh] sm:h-[80vh] overflow-y-scroll custom-scrollbar"
+      className=" px-10 sm:px-32 h-[85vh] sm:h-[60vh] overflow-y-scroll custom-scrollbar"
       ref={reportContainerRef}>
-      <div className="flex flex-col w-full h-full">
+      <div className="flex flex-col w-full h-full  ">
         {currentTopic.map((item, i) => (
           <ReportContainer key={i}>
             {!hasFetchStarted ? (
@@ -44,7 +44,7 @@ export default function NewSubTopicReport({
               </div>
             ) : (
               reportData[parentIndex]?.[item.title] && (
-                <div className="py-10 ">
+                <div className="py-20">
                   <div
                     dangerouslySetInnerHTML={{
                       __html: reportData[parentIndex][item.title].report,

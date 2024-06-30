@@ -13,6 +13,7 @@ import AuthProvider from "./providers/AuthProvider";
 import { Toaster } from "react-hot-toast";
 import { UserProvider } from "./contexts/UserContext";
 import { SettingsProvider } from "./contexts/SettingsContext";
+import Footer from "./components/Footer";
 
 
 const poppins = Poppins({
@@ -46,7 +47,9 @@ export default function RootLayout({
                       <ToggleSidebar />
                       <div className="  w-full flex flex-col h-full">
                         <div className=" h-full w-full ">{children}</div>
+                        <Footer />
                       </div>
+
                     </div>
                   </QuickReportProvider>
                 </PromptProvider>

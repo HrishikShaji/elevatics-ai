@@ -40,22 +40,22 @@ export default function Slider({ items, setCurrentIndex, currentIndex }: SliderP
         {"<"}
       </button>
       <div
-        className="flex gap-1 overflow-x-hidden border-[1px] rounded-md border-gray-300 h-[50px]"
+        className="flex gap-1 overflow-x-hidden  rounded-md border-gray-300 h-[50px]"
         ref={containerRef}
       >
         {items.map((item, i) => (
           <div
             key={i}
             onClick={() => handlePageChange(i)}
-            className="w-full cursor-pointer h-full flex items-center border-b-4 relative group"
+            className="w-full cursor-pointer h-full flex items-center  relative group"
             style={{
-              backgroundColor: currentIndex === i ? "#EDF0FF" : "white",
-              borderColor: currentIndex === i ? "#2A42CB" : "white",
+              backgroundColor: currentIndex === i ? "#cbd5e1" : "#f3f4f6",
+              // borderColor: currentIndex === i ? "#2A42CB" : "white",
             }}
           >
             <div
               className="px-10 text-center whitespace-nowrap"
-              style={{ color: currentIndex === i ? "#2A42CB" : "#7F7F7F" }}
+              style={{ color: currentIndex === i ? "#000000" : "#7F7F7F" }}
             >
               {items[i][0]}
             </div>

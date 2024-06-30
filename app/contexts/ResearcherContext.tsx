@@ -3,8 +3,13 @@
 import { ResearcherTopicsResponse } from "@/types/types";
 import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useState } from "react";
 
+type Subtask = {
+  name: string;
+  prompt: string;
+}
+
 interface SelectedSubtasks {
-  [task: string]: string[];
+  [task: string]: Subtask[];
 }
 
 type ResearcherProviderProps = {
