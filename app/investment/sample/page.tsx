@@ -11,9 +11,30 @@ export default function Page() {
   if (!data) return null;
   const sliderData = Object.entries(data.other_info_results)
 
-  console.log(sliderData[currentIndex][1])
+  function getQueryData({ questions, answers }: { questions: string[], answers: string[] }) {
+    const dataLength = questions.length
+    const queryData: string[] = []
+    Array.from({ length: dataLength }).forEach((_, i) => {
+      queryData.push(questions[i])
+      queryData.push(answers[i])
+    })
+
+    return queryData
+  }
+
+  const items = getQueryData({ questions: data.queries, answers: data.query_results })
+  console.log(items)
   return (
     <div className="pt-[200px]">
+      <div className="h-[70vh] overflow-y-scroll flex custom-scrollbar flex-col px-[240px]">
+        {items.map((item, i) => (
+
+          <ReactMarkdown key={i} className="h-full">
+            {item}
+          </ReactMarkdown>
+        ))}
+
+      </div>
       <Slider items={sliderData} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
       <div className="h-[70vh] overflow-y-scroll custom-scrollbar flex-col px-[240px]">
         <ReactMarkdown>
