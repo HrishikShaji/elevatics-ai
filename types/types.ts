@@ -106,3 +106,14 @@ export type InvestorDataResponse = {
   queries: string[];
   query_results: string[]
 }
+
+
+type SubTask = {
+  name: string;
+  prompt: string;
+}
+
+export type ResearcherTopicsResponse = {
+  task: string;
+  subtasks: SubTask[]
+}

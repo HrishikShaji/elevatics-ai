@@ -5,12 +5,12 @@ import fetchTopics from "../lib/fetchTopics";
 import { useSettings } from "../contexts/SettingsContext";
 import fetchNewTopics from "../lib/fetchNewTopics";
 import { useResearcher } from "../contexts/ResearcherContext";
+import { ResearcherTopicsResponse } from "@/types/types";
 
 export default function useNewTopics() {
-  const { prompt } = useResearcher()
+  const { prompt, setData } = useResearcher()
   const [openTopic, setOpenTopic] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState<string[][]>([]);
   const { topicsLimit } = useSettings()
 
 
@@ -31,5 +31,5 @@ export default function useNewTopics() {
 
 
 
-  return { setOpenTopic, openTopic, isLoading, data }
+  return { setOpenTopic, openTopic, isLoading }
 }
