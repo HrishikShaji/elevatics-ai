@@ -28,7 +28,7 @@ export default function Hero() {
     },
     {
       title: "Career Agent",
-      url: "/recruitment",
+      url: "/new-researcher",
       description: "Unlock your dream job with our  career agent.",
       online: true,
       icon: PiGraduationCap,

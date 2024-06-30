@@ -1,5 +1,6 @@
 "use client"
 
+import Spinner from "@/app/components/svgs/Spinner"
 import Slider from "@/app/components/ui/Slider"
 import { useInvestor } from "@/app/contexts/InvestorContext"
 import { useState } from "react"
@@ -7,8 +8,11 @@ import ReactMarkdown from "react-markdown"
 
 export default function Page() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [loading, setLoading] = useState(false)
   const { data } = useInvestor()
   if (!data) return null;
+  console.log("this is data", data)
+  console.log(JSON.stringify(data))
   const sliderData = Object.entries(data.other_info_results)
 
   function getQueryData({ questions, answers }: { questions: string[], answers: string[] }) {
@@ -22,10 +26,29 @@ export default function Page() {
     return queryData
   }
 
+  async function downloadPdf() {
+    try {
+      setLoading(true)
+      const response = await fetch("https://nithin1905-pdf.hf.space/generate_pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      })
+      const result = await response.json()
+      console.log(result)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const items = getQueryData({ questions: data.queries, answers: data.query_results })
   console.log(items)
   return (
     <div className="pt-[200px]">
+      <button onClick={downloadPdf} className="bg-black p-2 rounded-md text-white">{loading ? <div className="w-10"><Spinner /></div>
+        : "Download"}</button>
       <div className="h-[70vh] overflow-y-scroll flex custom-scrollbar flex-col px-[240px]">
         {items.map((item, i) => (
 

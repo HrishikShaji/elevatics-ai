@@ -25,6 +25,8 @@ interface PromptData {
   setSubtopics: Dispatch<SetStateAction<SubTopicsType>>;
   setPrompt: Dispatch<SetStateAction<string>>;
   selectedSubtopics: SelectedSubTopicsType;
+  handleSelectSubtopic: (topic: string, subtopic: SubTopicType) => void;
+  handleUnselectSubtopic: (topic: string, subtopic: SubTopicType) => void;
   setSelectedSubtopics: Dispatch<SetStateAction<SelectedSubTopicsType>>;
   finalTopics: SelectedSubTopicsType;
   setFinalTopics: Dispatch<SetStateAction<SelectedSubTopicsType>>;
@@ -37,8 +39,6 @@ interface PromptData {
   reportLoading: ReportLoading;
   setReportLoading: Dispatch<SetStateAction<ReportLoading>>;
   reportContainerRef: RefObject<HTMLDivElement>;
-  handleSelectSubtopic: (topic: string, subtopic: SubTopicType) => void;
-  handleUnselectSubtopic: (topic: string, subtopic: SubTopicType) => void;
 }
 const PromptContext = createContext<PromptData | undefined>(undefined);
 
