@@ -11,10 +11,8 @@ export default function Page() {
   const [loading, setLoading] = useState(false)
   const { data, fileName } = useInvestor()
   if (!data) return null;
-  console.log("this is data", data)
-  console.log(JSON.stringify(data))
   const sliderData = Object.entries(data.other_info_results)
-
+  console.log(sliderData)
   function getQueryData({ questions, answers }: { questions: string[], answers: string[] }) {
     const dataLength = questions.length
     const queryData: string[] = []
@@ -39,7 +37,6 @@ export default function Page() {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         const name = fileName.replace(".pdf", "")
-        console.log("the name is", name)
         a.href = url;
 
         a.download = `${name}.pdf`;
@@ -60,41 +57,19 @@ export default function Page() {
   }
 
   const items = getQueryData({ questions: data.queries, answers: data.query_results })
-  console.log(items)
+  const joinedQueries = items.join(" ")
+  const firstArray: [string, string] = ["Queries", joinedQueries]
+  sliderData.unshift(firstArray)
   return (
-    <div className="pt-[200px]">
+    <div className="pt-[100px] ">
       <button onClick={downloadPdf} className="bg-black p-2 rounded-md text-white">{loading ? <div className="w-10"><Spinner /></div>
         : "Download"}</button>
-      <div className="h-[70vh] overflow-y-scroll flex custom-scrollbar flex-col px-[240px]">
-        {items.map((item, i) => (
+      <Slider items={sliderData} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
+      <div className="h-[70vh] overflow-y-scroll custom-scrollbar flex-col px-[240px]">
+        <ReactMarkdown>
 
-          <ReactMarkdown key={i} className="h-full">
-            {item}
-          </ReactMarkdown>
-        ))}
-
-        <Slider items={sliderData} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} />
-        <div className="h-[70vh] overflow-y-scroll custom-scrollbar flex-col px-[240px]">
-          <ReactMarkdown>
-
-            {sliderData[currentIndex][1]}
-          </ReactMarkdown>
-        </div>
-        <div className="">{Array.from({ length: data.queries.length }).map((_, i) => (
-          <div className="flex bg-green-500 flex-col gap-2 " key={i}>
-            <ReactMarkdown>{data.queries[i]}</ReactMarkdown>
-            <ReactMarkdown>{data.query_results[i]}</ReactMarkdown>
-          </div>
-        ))}
-          <div className="bg-blue-500">
-            {Object.entries(data.other_info_results).map(([k, v], i) => (
-              <div className="" key={i}>
-                <h1 className="bg-red-500">{k}</h1>
-                <h1>{v}</h1>
-              </div>
-            ))}
-          </div>
-        </div>
+          {sliderData[currentIndex][1]}
+        </ReactMarkdown>
       </div>
     </div>
   )
