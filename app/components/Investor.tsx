@@ -12,10 +12,10 @@ export default function Investor() {
   const [loading, setLoading] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const router = useRouter()
-  const { setData } = useInvestor()
+  const { setData, setFileName } = useInvestor()
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
-
+      setFileName(event.target.files[0].name)
       setFile(event.target.files[0]);
     }
   };

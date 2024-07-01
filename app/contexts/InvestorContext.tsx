@@ -13,6 +13,8 @@ import React, {
 
 interface InvestorData {
   prompt: string;
+  fileName: string;
+  setFileName: Dispatch<SetStateAction<string>>;
   setPrompt: Dispatch<SetStateAction<string>>;
   setData: Dispatch<SetStateAction<InvestorDataResponse | null>>;
   data: InvestorDataResponse | null;
@@ -33,12 +35,15 @@ type InvestorProviderProps = {
 
 export const InvestorProvider = ({ children }: InvestorProviderProps) => {
   const [prompt, setPrompt] = useState("");
+  const [fileName, setFileName] = useState("")
   const [data, setData] = useState<InvestorDataResponse | null>(null)
   const investorData = {
     prompt,
     setPrompt,
     data,
-    setData
+    setData,
+    fileName,
+    setFileName
   };
 
   return (
