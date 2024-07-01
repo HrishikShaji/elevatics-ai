@@ -43,6 +43,53 @@ export default function NewReport() {
     return result;
   };
 
+
+  useEffect(() => {
+    const token = process.env.NEXT_PUBLIC_HFSPACE_TOKEN || "";
+    const headers = {
+      Authorization: token,
+      "Content-Type": "application/json",
+    };
+
+    const transformedData = transformData(selectedSubtasks);
+
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        const responses = await Promise.all(
+          transformedData.map((item) =>
+            fetch("https://pvanand-search-generate-staging.hf.space/generate_report", {
+              method: "POST",
+              cache: "no-store",
+              headers: headers,
+              body: JSON.stringify({
+                topic: item.name,
+                description: item.prompt,
+                user_id: "",
+                user_name: "",
+                internet: reportOptions.internet,
+                output_format: reportOptions.outputFormat,
+                data_format: reportOptions.dataFormat,
+              }),
+            })
+          )
+        );
+
+        const data = await Promise.all(responses.map(response => response.json()));
+        console.log(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false)
+      }
+    };
+
+    fetchData();
+
+  }, [selectedSubtasks, reportOptions]);
+
+  {/*     
+
   useEffect(() => {
     const transformedData = transformData(selectedSubtasks)
     const fetchData = async () => {
@@ -69,6 +116,8 @@ export default function NewReport() {
 
     fetchData();
   }, []);
+*/}
+
 
   return <div className="h-full w-full flex items-center justify-center">
     {loading ? <div className="w-10"><Spinner /></div> : null}
